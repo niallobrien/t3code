@@ -2289,8 +2289,33 @@ export const makeGitVcsDriverCore = Effect.fn("makeGitVcsDriverCore")(function* 
     };
   });
 
+  // Working-tree diffs are anchored at HEAD. On an unborn HEAD (a repository
+  // with no commits yet) `git diff HEAD` fails outright, which dropped staged
+  // changes from the review. Diff against the empty tree instead so index
+  // content stays visible before the first commit.
+  const resolveWorktreeDiffBase = (cwd: string) =>
+    executeGit(
+      "GitVcsDriver.resolveWorktreeDiffBase.head",
+      cwd,
+      ["rev-parse", "--verify", "--quiet", "HEAD"],
+      { allowNonZeroExit: true },
+    ).pipe(
+      Effect.flatMap((headResult) => {
+        if (headResult.exitCode === 0 && headResult.stdout.trim().length > 0) {
+          return Effect.succeed("HEAD");
+        }
+        return executeGit(
+          "GitVcsDriver.resolveWorktreeDiffBase.emptyTree",
+          cwd,
+          ["hash-object", "-t", "tree", "--stdin"],
+          { stdin: "" },
+        ).pipe(Effect.map((emptyTreeResult) => emptyTreeResult.stdout.trim()));
+      }),
+    );
+
   const readTrackedReviewDiff = Effect.fn("readTrackedReviewDiff")(function* (
     cwd: string,
+    baseRef: string,
     ignoreWhitespace: boolean | undefined,
   ) {
     const result = yield* executeGit(
@@ -2306,7 +2331,7 @@ export const makeGitVcsDriverCore = Effect.fn("makeGitVcsDriverCore")(function* 
         ...PATCH_RENDER_PREFIX_ARGS,
         "--find-renames",
         ...(ignoreWhitespace ? ["--ignore-all-space"] : []),
-        "HEAD",
+        baseRef,
         "--",
       ],
       {
@@ -2321,6 +2346,7 @@ export const makeGitVcsDriverCore = Effect.fn("makeGitVcsDriverCore")(function* 
     cwd: string,
     untrackedPaths: ReadonlyArray<string>,
     pathsTruncated: boolean,
+    baseRef: string,
     ignoreWhitespace: boolean | undefined,
   ) {
     const [stagedDeletionsStdout, indexValue] = yield* Effect.all(
@@ -2331,7 +2357,7 @@ export const makeGitVcsDriverCore = Effect.fn("makeGitVcsDriverCore")(function* 
           "--name-only",
           "--diff-filter=D",
           "-z",
-          "HEAD",
+          baseRef,
           "--",
         ]),
         runGitStdout("GitVcsDriver.readUnifiedWorkingTreeReviewDiff.indexPath", cwd, [
@@ -2345,7 +2371,7 @@ export const makeGitVcsDriverCore = Effect.fn("makeGitVcsDriverCore")(function* 
     const stagedDeletions = new Set(stagedDeletionsStdout.split("\0").filter(Boolean));
     const pathsToAdd = untrackedPaths.filter((relativePath) => !stagedDeletions.has(relativePath));
     if (pathsToAdd.length === 0) {
-      const tracked = yield* readTrackedReviewDiff(cwd, ignoreWhitespace);
+      const tracked = yield* readTrackedReviewDiff(cwd, baseRef, ignoreWhitespace);
       return { ...tracked, truncated: pathsTruncated || tracked.truncated };
     }
 
@@ -2396,7 +2422,7 @@ export const makeGitVcsDriverCore = Effect.fn("makeGitVcsDriverCore")(function* 
         ...PATCH_RENDER_PREFIX_ARGS,
         "--find-renames",
         ...(ignoreWhitespace ? ["--ignore-all-space"] : []),
-        "HEAD",
+        baseRef,
         "--",
       ],
       {
@@ -2412,6 +2438,7 @@ export const makeGitVcsDriverCore = Effect.fn("makeGitVcsDriverCore")(function* 
     cwd: string,
     ignoreWhitespace: boolean | undefined,
   ) {
+    const baseRef = yield* resolveWorktreeDiffBase(cwd);
     const untrackedResult = yield* executeGit(
       "GitVcsDriver.readWorkingTreeReviewDiff.listUntracked",
       cwd,
@@ -2422,11 +2449,11 @@ export const makeGitVcsDriverCore = Effect.fn("makeGitVcsDriverCore")(function* 
       },
     ).pipe(Effect.option);
     if (untrackedResult._tag === "None") {
-      return yield* readTrackedReviewDiff(cwd, ignoreWhitespace);
+      return yield* readTrackedReviewDiff(cwd, baseRef, ignoreWhitespace);
     }
     const untrackedPaths = splitNullSeparatedGitStdoutPaths(untrackedResult.value);
     if (untrackedPaths.length === 0) {
-      const tracked = yield* readTrackedReviewDiff(cwd, ignoreWhitespace);
+      const tracked = yield* readTrackedReviewDiff(cwd, baseRef, ignoreWhitespace);
       return { ...tracked, truncated: untrackedResult.value.stdoutTruncated || tracked.truncated };
     }
 
@@ -2434,12 +2461,13 @@ export const makeGitVcsDriverCore = Effect.fn("makeGitVcsDriverCore")(function* 
       cwd,
       untrackedPaths,
       untrackedResult.value.stdoutTruncated,
+      baseRef,
       ignoreWhitespace,
     ).pipe(
       Effect.scoped,
       Effect.catch(() =>
         Effect.all([
-          readTrackedReviewDiff(cwd, ignoreWhitespace).pipe(
+          readTrackedReviewDiff(cwd, baseRef, ignoreWhitespace).pipe(
             Effect.orElseSucceed(() => ({ diff: "", truncated: false })),
           ),
           readUntrackedReviewDiffs(cwd).pipe(
