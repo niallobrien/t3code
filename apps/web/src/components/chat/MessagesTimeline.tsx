@@ -4,7 +4,7 @@ import {
   getQuestionAnswerPreview,
   getQuestionAnswerText,
   hasQuestionAnswer,
-} from "@t3tools/client-runtime/work-log/user-input";
+} from "@agentsmith/client-runtime/work-log/user-input";
 import {
   deriveTimelineMinimapItems,
   resolveTimelineMinimapPreview,
@@ -20,37 +20,37 @@ import {
   type ToolActivityIcon,
   type TurnId,
   type WorktreeSetupSnapshot,
-} from "@t3tools/contracts";
-import { parseScopedThreadKey } from "@t3tools/client-runtime/environment";
-import { replaceComposerContextReferences } from "@t3tools/shared/composerContextReferences";
-import type { CodexArtifactTemplate } from "@t3tools/client-runtime/codex-artifact-templates";
+} from "@agentsmith/contracts";
+import { parseScopedThreadKey } from "@agentsmith/client-runtime/environment";
+import { replaceComposerContextReferences } from "@agentsmith/shared/composerContextReferences";
+import type { CodexArtifactTemplate } from "@agentsmith/client-runtime/codex-artifact-templates";
 import {
   resolveWorkEntryToolPresentation,
   resolveViewedImageAsset,
   workEntryViewedImagePath,
-} from "@t3tools/client-runtime/work-log/presentation";
-import { resolveWorkGroupScrollAnchor } from "@t3tools/client-runtime/work-log/scroll-anchor";
+} from "@agentsmith/client-runtime/work-log/presentation";
+import { resolveWorkGroupScrollAnchor } from "@agentsmith/client-runtime/work-log/scroll-anchor";
 import type {
   AgentPanelModel,
   RuntimeSubagent,
-} from "@t3tools/client-runtime/state/subagentRuntime";
-import { formatAttachmentSize } from "@t3tools/client-runtime/state/attachments";
+} from "@agentsmith/client-runtime/state/subagentRuntime";
+import { formatAttachmentSize } from "@agentsmith/client-runtime/state/attachments";
 import {
   emptyAgentPanelModel,
   formatSubagentModelLabel,
   formatSubagentTokenCount,
   isActiveSubagentStatus,
   isTerminalSubagentStatus,
-} from "@t3tools/client-runtime/state/subagentRuntime";
+} from "@agentsmith/client-runtime/state/subagentRuntime";
 
 const EMPTY_AGENT_PANEL_MODEL = emptyAgentPanelModel();
 const NOOP_OPEN_AGENTS = () => {};
 const NOOP_USE_ARTIFACT_TEMPLATE = () => {};
 const NOOP_OPEN_ATTACHMENT = (_attachment: ChatFileAttachment) => {};
-import { resolveChatListAnchoredEndSpace } from "@t3tools/shared/chatList";
-import { toolActivityFaviconUrl } from "@t3tools/shared/favicon";
-import { formatDuration } from "@t3tools/shared/orchestrationTiming";
-import { getProjectFaviconCacheKey } from "@t3tools/shared/projectFavicon";
+import { resolveChatListAnchoredEndSpace } from "@agentsmith/shared/chatList";
+import { toolActivityFaviconUrl } from "@agentsmith/shared/favicon";
+import { formatDuration } from "@agentsmith/shared/orchestrationTiming";
+import { getProjectFaviconCacheKey } from "@agentsmith/shared/projectFavicon";
 import { observeVisibleAnimation } from "../../lib/visibleAnimation";
 import {
   createContext,
@@ -98,7 +98,7 @@ import {
 } from "../../lib/diffRendering";
 import { PREFERRED_HIGHLIGHTER } from "../../lib/syntaxHighlighting";
 import ChatMarkdown, { ChatMarkdownAssetImage } from "../ChatMarkdown";
-import { T3Wordmark } from "../T3Wordmark";
+import { AgentsmithWordmark } from "../AgentsmithWordmark";
 import {
   BotIcon,
   BrainIcon,
@@ -129,7 +129,7 @@ import type {
   ComposerContextId,
   ComposerContextRecord,
   KnownComposerContextRecord,
-} from "@t3tools/contracts";
+} from "@agentsmith/contracts";
 import { Button } from "../ui/button";
 import { useAssetUrlRefresh, useAssetUrls, useAssetUrlState } from "../../assets/assetUrls";
 import { MediaVideoPlayer } from "../media/MediaVideoPlayer";
@@ -210,12 +210,12 @@ import {
 import {
   collectComposerContextReferences,
   formatComposerContextReference,
-} from "@t3tools/shared/composerContextReferences";
+} from "@agentsmith/shared/composerContextReferences";
 import {
   COMPOSER_CONTEXT_CLIPBOARD_MIME,
   encodeComposerContextClipboardHtml,
   encodeComposerContextFragment,
-} from "@t3tools/shared/composerContextClipboard";
+} from "@agentsmith/shared/composerContextClipboard";
 import { chatMarkdownClipboardPayload } from "../../markdown-clipboard";
 import {
   CHAT_INLINE_CHIP_CLASS_NAME,
@@ -232,7 +232,7 @@ import type { ChatMarkdownContextReference } from "../ChatMarkdown";
 import { useMediaQuery } from "~/hooks/useMediaQuery";
 import { cn } from "~/lib/utils";
 import { useUiStateStore } from "~/uiStateStore";
-import { type TimestampFormat } from "@t3tools/contracts/settings";
+import { type TimestampFormat } from "@agentsmith/contracts/settings";
 import { formatChatTimestampTooltip, formatDayAwareTimestamp } from "../../timestampFormat";
 
 import { SkillInlineText } from "./SkillInlineText";
@@ -1932,7 +1932,7 @@ function AssistantTimelineRow({ row }: { row: Extract<TimelineRow, { kind: "mess
   return (
     <>
       <div className="relative min-w-0 px-1 py-0.5">
-        <MessageAuthorHeading>T3 Code</MessageAuthorHeading>
+        <MessageAuthorHeading>AgentSmith</MessageAuthorHeading>
         <AssistantCitationSource
           messageId={row.message.id}
           {...(ctx.threadRef ? { threadRef: ctx.threadRef } : {})}
@@ -3430,7 +3430,7 @@ type WorkEntryIconName =
   | "square-pen"
   | "terminal"
   | "pull-request"
-  | "t3-code"
+  | "agentsmith"
   | "wrench"
   | "x"
   | "zap";
@@ -3646,8 +3646,8 @@ function WorkEntryIcon({ name, className }: { name: WorkEntryIconName; className
       return <ComputerUseAppIcon className={className} />;
     case "device":
       return <SmartphoneIcon className={className} aria-hidden />;
-    case "t3-code":
-      return <T3Wordmark className={className} aria-hidden />;
+    case "agentsmith":
+      return <AgentsmithWordmark className={className} aria-hidden />;
     case "check":
       return <CheckIcon className={className} aria-hidden />;
     case "circle-alert":
@@ -4245,7 +4245,7 @@ const PlainWorkEntryRow = memo(function PlainWorkEntryRow(props: {
 function QuestionAnswerHistory({
   answer,
 }: {
-  answer: import("@t3tools/contracts").UserInputAttachmentAnswerPayload;
+  answer: import("@agentsmith/contracts").UserInputAttachmentAnswerPayload;
 }) {
   const { activeThreadEnvironmentId } = use(TimelineRowCtx);
   const attachments = useMemo(() => Object.values(answer.attachmentsByQuestionId).flat(), [answer]);

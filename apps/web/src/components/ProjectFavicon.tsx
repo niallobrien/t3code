@@ -1,9 +1,9 @@
-import type { ProjectIconColor } from "@t3tools/contracts";
-import type { EnvironmentProject } from "@t3tools/client-runtime/state/shell";
+import type { ProjectIconColor } from "@agentsmith/contracts";
+import type { EnvironmentProject } from "@agentsmith/client-runtime/state/shell";
 import {
   getProjectFaviconResourceKey,
   isProjectFaviconFallbackUrl,
-} from "@t3tools/shared/projectFavicon";
+} from "@agentsmith/shared/projectFavicon";
 import {
   BotIcon,
   BookOpenIcon,

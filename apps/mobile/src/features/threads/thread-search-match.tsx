@@ -1,4 +1,4 @@
-import type { EnvironmentThreadSearchMatch } from "@t3tools/client-runtime/state/thread-search";
+import type { EnvironmentThreadSearchMatch } from "@agentsmith/client-runtime/state/thread-search";
 
 import { AppText as Text } from "../../components/AppText";
 import { cn } from "../../lib/cn";
@@ -67,7 +67,7 @@ export function ThreadSearchMatchExcerpt(props: {
     >
       <Text
         className={cn(
-          props.compact ? "text-sm font-t3-medium" : "text-xs font-t3-medium",
+          props.compact ? "text-sm font-agentsmith-medium" : "text-xs font-agentsmith-medium",
           props.selected
             ? materialYouStyleLayoutActive
               ? "text-thread-selected-foreground"
@@ -83,7 +83,7 @@ export function ThreadSearchMatchExcerpt(props: {
         <Text
           className={cn(
             props.compact ? "text-sm" : "text-xs",
-            part.highlighted && "font-t3-bold",
+            part.highlighted && "font-agentsmith-bold",
             props.selected
               ? materialYouStyleLayoutActive
                 ? "text-thread-selected-foreground"

@@ -10,7 +10,7 @@ import {
   type ServerProvider,
   ThreadId,
   TurnId,
-} from "@t3tools/contracts";
+} from "@agentsmith/contracts";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { Atom, AsyncResult } from "effect/unstable/reactivity";
 import { appAtomRegistry } from "../rpc/atomRegistry";
@@ -18,8 +18,8 @@ import { environmentThreadDetails } from "../state/threads";
 
 import type { Thread, ThreadShell, TurnDiffSummary } from "../types";
 import { deriveProviderInstanceEntries, NO_PROVIDER_MODEL_SELECTION } from "../providerInstances";
-import type { CodexArtifactTemplate } from "@t3tools/client-runtime/codex-artifact-templates";
-import { scopeThreadRef } from "@t3tools/client-runtime/environment";
+import type { CodexArtifactTemplate } from "@agentsmith/client-runtime/codex-artifact-templates";
+import { scopeThreadRef } from "@agentsmith/client-runtime/environment";
 import {
   type RightPanelSurface,
   pullRequestSurface,
@@ -317,20 +317,20 @@ describe("proactive panels", () => {
   it("follows a changed server PR link without replacing an unrelated open panel", () => {
     const previous = {
       projectId: ProjectId.make("project-1"),
-      repository: "pingdotgg/t3code",
+      repository: "pingdotgg/agentsmith",
       number: 42,
-      url: "https://github.com/pingdotgg/t3code/pull/42",
+      url: "https://github.com/pingdotgg/agentsmith/pull/42",
     };
     const current = {
       ...previous,
       number: 43,
-      url: "https://github.com/pingdotgg/t3code/pull/43",
+      url: "https://github.com/pingdotgg/agentsmith/pull/43",
     };
     const surface = {
       id: "pull-request:previous",
       kind: "pull-request",
       projectId: previous.projectId,
-      repository: "PingDotGG/T3Code",
+      repository: "PingDotGG/AgentSmith",
       number: previous.number,
     } satisfies RightPanelSurface;
 
@@ -1580,7 +1580,7 @@ describe("buildRunningThreadTurnInterruptInput", () => {
 describe("deriveComposerSendState", () => {
   it("treats expired terminal pills as non-sendable content", () => {
     const state = deriveComposerSendState({
-      prompt: "[Terminal 1 line 4](t3-context://v1/terminal/ctx-expired)",
+      prompt: "[Terminal 1 line 4](agentsmith-context://v1/terminal/ctx-expired)",
       imageCount: 0,
       terminalContexts: [
         {
@@ -1604,7 +1604,7 @@ describe("deriveComposerSendState", () => {
 
   it("keeps text sendable while excluding expired terminal pills", () => {
     const state = deriveComposerSendState({
-      prompt: "yoo [Terminal 1 line 4](t3-context://v1/terminal/ctx-expired) waddup",
+      prompt: "yoo [Terminal 1 line 4](agentsmith-context://v1/terminal/ctx-expired) waddup",
       imageCount: 0,
       terminalContexts: [
         {
@@ -2320,7 +2320,7 @@ describe("rewind draft recovery", () => {
           {
             turnId: completedTurn.turnId,
             checkpointTurnCount: 1,
-            checkpointRef: CheckpointRef.make("refs/t3/checkpoints/1"),
+            checkpointRef: CheckpointRef.make("refs/agentsmith/checkpoints/1"),
             status: "ready",
             files: [],
             assistantMessageId: null,

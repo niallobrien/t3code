@@ -1,0 +1,17 @@
+{
+  "name": "@agentsmith/mobile-terminal-native",
+  "version": "0.0.0",
+  "private": true,
+  "expo-module": {
+    "ios": {
+      "modules": [
+        "AgentsmithTerminalModule"
+      ]
+    },
+    "android": {
+      "modules": [
+        "expo.modules.agentsmithterminal.AgentsmithTerminalModule"
+      ]
+    }
+  }
+}

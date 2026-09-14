@@ -5,7 +5,7 @@ import {
   isWindowsDrivePath,
   normalizeProjectPathForComparison,
   normalizeProjectPathForDispatch,
-} from "@t3tools/shared/path";
+} from "@agentsmith/shared/path";
 
 export { normalizeProjectPathForComparison, normalizeProjectPathForDispatch };
 

@@ -33,8 +33,8 @@ import {
   ThreadPullRequestSnapshot,
   ThreadPullRequestStack,
   type ThreadPullRequestLink,
-} from "@t3tools/contracts";
-import { legacyLinkedPullRequestOf } from "@t3tools/shared/threadPullRequests";
+} from "@agentsmith/contracts";
+import { legacyLinkedPullRequestOf } from "@agentsmith/shared/threadPullRequests";
 import * as Arr from "effect/Array";
 import * as Effect from "effect/Effect";
 import * as Layer from "effect/Layer";

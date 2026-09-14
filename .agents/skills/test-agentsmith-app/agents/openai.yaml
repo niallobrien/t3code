@@ -1,0 +1,4 @@
+interface:
+  display_name: "AgentSmith App Testing"
+  short_description: "Launch and retain isolated AgentSmith test environments"
+  default_prompt: "Use $test-agentsmith-app to launch an isolated AgentSmith environment and iteratively test it in the browser while preserving state."

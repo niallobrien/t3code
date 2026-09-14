@@ -1,5 +1,5 @@
-import { scopeProjectRef } from "@t3tools/client-runtime/environment";
-import { EnvironmentId, ProjectId, type ScopedThreadRef } from "@t3tools/contracts";
+import { scopeProjectRef } from "@agentsmith/client-runtime/environment";
+import { EnvironmentId, ProjectId, type ScopedThreadRef } from "@agentsmith/contracts";
 import { useMemo } from "react";
 
 import {

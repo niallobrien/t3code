@@ -11,8 +11,8 @@ import {
   type PullRequestSummary,
   type ServerSettings,
   type ServerSettingsPatch,
-} from "@t3tools/contracts";
-import { applyServerSettingsPatch } from "@t3tools/shared/serverSettings";
+} from "@agentsmith/contracts";
+import { applyServerSettingsPatch } from "@agentsmith/shared/serverSettings";
 import { assert, describe, it } from "@effect/vitest";
 import * as Crypto from "effect/Crypto";
 import * as Deferred from "effect/Deferred";

@@ -1,8 +1,8 @@
 import ChatMarkdown from "./ChatMarkdown";
 import { ReadOnlySourcePreview } from "./files/AttachmentFilePreview";
-import type { PreviewAnnotationPayload } from "@t3tools/contracts";
-import { formatAttachmentSize } from "@t3tools/client-runtime/state/attachments";
-import { videoMimeType } from "@t3tools/shared/video";
+import type { PreviewAnnotationPayload } from "@agentsmith/contracts";
+import { formatAttachmentSize } from "@agentsmith/client-runtime/state/attachments";
+import { videoMimeType } from "@agentsmith/shared/video";
 import { GitPullRequestIcon, MessageCircleIcon, MousePointerClickIcon } from "lucide-react";
 import { createContext, type MouseEvent, type ReactElement, type ReactNode, use } from "react";
 

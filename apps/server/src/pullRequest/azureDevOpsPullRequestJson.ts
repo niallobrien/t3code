@@ -8,9 +8,9 @@ import type {
   PullRequestMergeMethod,
   PullRequestMergeability,
   PullRequestState,
-} from "@t3tools/contracts";
-import { TrimmedNonEmptyString } from "@t3tools/contracts";
-import { decodeJsonResult } from "@t3tools/shared/schemaJson";
+} from "@agentsmith/contracts";
+import { TrimmedNonEmptyString } from "@agentsmith/contracts";
+import { decodeJsonResult } from "@agentsmith/shared/schemaJson";
 
 import {
   azureDevOpsOrganizationBaseFromRestApiUrl,

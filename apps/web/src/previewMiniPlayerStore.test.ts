@@ -1,5 +1,5 @@
-import { scopeThreadRef } from "@t3tools/client-runtime/environment";
-import { type EnvironmentId, ThreadId } from "@t3tools/contracts";
+import { scopeThreadRef } from "@agentsmith/client-runtime/environment";
+import { type EnvironmentId, ThreadId } from "@agentsmith/contracts";
 import { beforeEach, describe, expect, it } from "vite-plus/test";
 
 import {

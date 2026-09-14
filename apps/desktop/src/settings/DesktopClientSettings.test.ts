@@ -4,7 +4,7 @@ import {
   ClientSettingsSchema,
   DEFAULT_CLIENT_SETTINGS,
   type ClientSettings,
-} from "@t3tools/contracts";
+} from "@agentsmith/contracts";
 import * as Effect from "effect/Effect";
 import * as FileSystem from "effect/FileSystem";
 import * as Layer from "effect/Layer";
@@ -89,7 +89,7 @@ function makeLayer(baseDir: string) {
     runningUnderArm64Translation: false,
   }).pipe(
     Layer.provide(
-      Layer.mergeAll(NodeServices.layer, DesktopConfig.layerTest({ T3CODE_HOME: baseDir })),
+      Layer.mergeAll(NodeServices.layer, DesktopConfig.layerTest({ AGENTSMITH_HOME: baseDir })),
     ),
   );
 
@@ -105,7 +105,7 @@ const withClientSettings = <A, E, R>(
   Effect.gen(function* () {
     const fileSystem = yield* FileSystem.FileSystem;
     const baseDir = yield* fileSystem.makeTempDirectoryScoped({
-      prefix: "t3-desktop-client-settings-test-",
+      prefix: "agentsmith-desktop-client-settings-test-",
     });
     return yield* effect.pipe(Effect.provide(makeLayer(baseDir)));
   }).pipe(Effect.provide(NodeServices.layer), Effect.scoped);

@@ -1,7 +1,7 @@
 import { isElectron } from "~/env";
 import { isMacPlatform, isWindowsPlatform, normalizeSearchText } from "~/lib/utils";
-import type { EnvironmentId } from "@t3tools/contracts";
-import type { EnvironmentConnectionPhase } from "@t3tools/client-runtime/connection";
+import type { EnvironmentId } from "@agentsmith/contracts";
+import type { EnvironmentConnectionPhase } from "@agentsmith/client-runtime/connection";
 import {
   validateSettingsScopeSearch,
   type ResolvedSettingsScope,
@@ -618,7 +618,7 @@ export const SETTINGS_SEARCH_ITEMS = [
     id: "project-actions",
     title: "Actions",
     to: "/settings/projects",
-    searchTerms: ["commands scripts setup run dev server checkout worktree t3.json import"],
+    searchTerms: ["commands scripts setup run dev server checkout worktree agentsmith.json import"],
   },
   {
     id: "environment-icon",
@@ -666,9 +666,9 @@ export const SETTINGS_SEARCH_ITEMS = [
     wslAvailableOnly: true,
   },
   {
-    id: "t3-connect",
+    id: "agentsmith-connect",
     localEnvironmentOnly: true,
-    title: "T3 Connect",
+    title: "AgentSmith Connect",
     to: "/settings/connections",
     targetId: "connections-environment",
     searchTerms: ["managed tunnel cloud other devices remote"],
@@ -696,7 +696,7 @@ export const SETTINGS_SEARCH_ITEMS = [
     id: "remote-environments",
     title: "Environments",
     to: "/settings/connections",
-    searchTerms: ["add pair backend host code ssh config agent tunnel saved t3 connect"],
+    searchTerms: ["add pair backend host code ssh config agent tunnel saved agentsmith connect"],
   },
   {
     id: "load-balancing",

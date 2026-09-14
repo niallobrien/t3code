@@ -11,14 +11,14 @@ import type {
   ProjectId,
   ThreadId,
   TurnId,
-} from "@t3tools/contracts";
+} from "@agentsmith/contracts";
 import type {
   RelayAgentActivityPublishProofPayload,
   RelayAgentActivityState,
-} from "@t3tools/contracts/relay";
-import { CommandId, ProviderInstanceId } from "@t3tools/contracts";
-import { RelayClientTracer } from "@t3tools/shared/relayTracing";
-import { RELAY_ACTIVITY_PUBLISH_TYP, verifyRelayJwt } from "@t3tools/shared/relayJwt";
+} from "@agentsmith/contracts/relay";
+import { CommandId, ProviderInstanceId } from "@agentsmith/contracts";
+import { RelayClientTracer } from "@agentsmith/shared/relayTracing";
+import { RELAY_ACTIVITY_PUBLISH_TYP, verifyRelayJwt } from "@agentsmith/shared/relayJwt";
 import { describe, expect, it } from "@effect/vitest";
 import * as Deferred from "effect/Deferred";
 import * as Effect from "effect/Effect";
@@ -354,7 +354,7 @@ describe.sequential("signRelayAgentActivityPublishProof", () => {
         projects: [
           {
             id: projectId,
-            title: "T3 Code",
+            title: "AgentSmith",
           },
         ],
         threads: [
@@ -399,7 +399,7 @@ describe.sequential("signRelayAgentActivityPublishProof", () => {
         publicKeyEncoding: { format: "pem", type: "spki" },
       });
       const payload = {
-        iss: "t3-env:env",
+        iss: "agentsmith-env:env",
         aud: "https://relay.example.test",
         sub: "env",
         jti: "nonce-1",
@@ -418,7 +418,7 @@ describe.sequential("signRelayAgentActivityPublishProof", () => {
           publicKey: keyPair.publicKey,
           token,
           typ: RELAY_ACTIVITY_PUBLISH_TYP,
-          issuer: "t3-env:env",
+          issuer: "agentsmith-env:env",
           audience: "https://relay.example.test",
           nowEpochSeconds: 150,
         });
@@ -460,7 +460,7 @@ describe.sequential("signRelayAgentActivityPublishProof", () => {
 
         const project = {
           id: projectId,
-          title: "T3 Code",
+          title: "AgentSmith",
           workspaceRoot: "/workspace",
           repositoryIdentity: null,
           defaultModelSelection: null,
@@ -652,7 +652,7 @@ describe.sequential("signRelayAgentActivityPublishProof", () => {
 
         const project = {
           id: projectId,
-          title: "T3 Code",
+          title: "AgentSmith",
           workspaceRoot: "/workspace",
           repositoryIdentity: null,
           defaultModelSelection: null,

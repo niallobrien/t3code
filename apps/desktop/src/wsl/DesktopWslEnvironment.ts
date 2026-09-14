@@ -9,8 +9,8 @@ import * as Schema from "effect/Schema";
 import * as Stream from "effect/Stream";
 import { ChildProcess, ChildProcessSpawner } from "effect/unstable/process";
 
-import { buildRemoteNodeEnvScript } from "@t3tools/ssh/tunnel";
-import { satisfiesSemverRange } from "@t3tools/shared/semver";
+import { buildRemoteNodeEnvScript } from "@agentsmith/ssh/tunnel";
+import { satisfiesSemverRange } from "@agentsmith/shared/semver";
 
 import * as DesktopEnvironment from "../app/DesktopEnvironment.ts";
 import { parseWslDistroList, type WslDistro } from "./wslPathParsing.ts";
@@ -121,7 +121,7 @@ export class DesktopWslEnvironment extends Context.Service<
     readonly pruneRuntimes: (distro: string | null, runtimeId: string) => Effect.Effect<void>;
     // Marks a staged runtime as unusable so the next launch reinstalls it.
     readonly invalidateRuntime: (distro: string | null, runtimeId: string) => Effect.Effect<void>;
-    // Proves a staged self-contained runtime can run (`<root>/t3 --version`)
+    // Proves a staged self-contained runtime can run (`<root>/agentsmith --version`)
     // and captures the user's login-shell PATH for the launch. Needs no Node
     // in the distro; the mounted server tree still goes through ensureNodePty.
     readonly probeRuntime: (
@@ -134,7 +134,7 @@ export class DesktopWslEnvironment extends Context.Service<
       options?: EnsureWslNodePtyOptions,
     ) => Effect.Effect<EnsureWslNodePtyResult>;
   }
->()("@t3tools/desktop/wsl/DesktopWslEnvironment") {}
+>()("@agentsmith/desktop/wsl/DesktopWslEnvironment") {}
 
 const buildDistroArgs = (distro: string | null): ReadonlyArray<string> =>
   distro ? ["-d", distro] : [];
@@ -276,12 +276,12 @@ const runWslShell = (
 
 const shellQuote = (value: string): string => `'${value.replaceAll("'", "'\\''")}'`;
 
-// Holds the sha256 of the runtime's `t3` executable, written when the install
+// Holds the sha256 of the runtime's `agentsmith` executable, written when the install
 // promotes a verified tree. Presence alone only says an install once finished
 // here; the digest is what lets a later launch prove the entry still is what
 // that install wrote.
-const WSL_RUNTIME_READY_MARKER = ".t3code-wsl-runtime-ready";
-const WSL_RUNTIME_SELECTED_MARKER = ".t3code-wsl-runtime-selected";
+const WSL_RUNTIME_READY_MARKER = ".agentsmith-wsl-runtime-ready";
+const WSL_RUNTIME_SELECTED_MARKER = ".agentsmith-wsl-runtime-selected";
 const WSL_RUNTIME_SELECTION_GRACE_MINUTES = 5;
 
 const sanitizeWslRuntimeId = (value: string): string => value.replace(/[^A-Za-z0-9._-]/g, "_");
@@ -297,24 +297,24 @@ export const buildWslRuntimeInstallScript = (
   const safeRuntimeId = sanitizeWslRuntimeId(runtimeId);
   return [
     "set -eu",
-    'runtime_parent="$HOME/.t3/wsl-runtime"',
+    'runtime_parent="$HOME/.agentsmith/wsl-runtime"',
     `runtime_root="$runtime_parent/${safeRuntimeId}"`,
     `ready_marker="$runtime_root/${WSL_RUNTIME_READY_MARKER}"`,
-    // The runtime is a self-contained `t3` executable with Node inside, so the
+    // The runtime is a self-contained `agentsmith` executable with Node inside, so the
     // readiness proof is the same one the SSH runner and the CLI installers
-    // use: the file is executable and `t3 --version` exits 0. That covers the
+    // use: the file is executable and `agentsmith --version` exits 0. That covers the
     // truncated-binary and wrong-arch cases without a separate native probe.
     "runtime_entry_runs() {",
-    '  [ -x "$1/t3" ] && "$1/t3" --version >/dev/null 2>&1',
+    '  [ -x "$1/agentsmith" ] && "$1/agentsmith" --version >/dev/null 2>&1',
     "}",
-    // Hashing the entry is what tells a working cache from one whose `t3` was
+    // Hashing the entry is what tells a working cache from one whose `agentsmith` was
     // swapped or half-written after install: the file is still there and may
     // even still run, and launch then picks an executable that is not what
     // this install verified. Hashing the executable measures in tens of
     // milliseconds inside the distro, once per launch, against a cold
     // reinstall of a few hundred megabytes.
     "runtime_server_entry_digest() {",
-    `  sha256sum "$1/t3" 2>/dev/null | cut -d ' ' -f 1`,
+    `  sha256sum "$1/agentsmith" 2>/dev/null | cut -d ' ' -f 1`,
     "}",
     "runtime_is_ready() {",
     '  [ -f "$ready_marker" ] &&',
@@ -381,14 +381,14 @@ export const buildWslRuntimeInstallScript = (
     `runtime_tmp=$(mktemp -d "$runtime_parent/.${safeRuntimeId}.tmp.XXXXXX")`,
     'cleanup_runtime_install() { rm -rf "$runtime_tmp"; }',
     "trap cleanup_runtime_install EXIT",
-    // The release archive has one top-level `t3-<version>-linux-<arch>/`
-    // directory; strip it so the executable lands at `$runtime_root/t3`.
+    // The release archive has one top-level `agentsmith-<version>-linux-<arch>/`
+    // directory; strip it so the executable lands at `$runtime_root/agentsmith`.
     `tar -xzf ${shellQuote(linuxArchivePath)} -C "$runtime_tmp" --strip-components=1`,
     // Never write the ready marker over a tree whose executable does not run.
     // Failing here drops out to the mounted-tree fallback, which is
     // recoverable; promoting it would mark the defect ready and cache it.
     'if ! runtime_entry_runs "$runtime_tmp"; then',
-    "  printf 'WSL runtime archive does not contain a working t3 executable\\n' >&2",
+    "  printf 'WSL runtime archive does not contain a working agentsmith executable\\n' >&2",
     "  exit 1",
     "fi",
     // The archive's bytes were verified against archiveSha256 above, so the
@@ -422,7 +422,7 @@ export const buildWslRuntimePruneScript = (runtimeId: string): string => {
   const safeRuntimeId = sanitizeWslRuntimeId(runtimeId);
   return [
     "set -eu",
-    'runtime_parent="$HOME/.t3/wsl-runtime"',
+    'runtime_parent="$HOME/.agentsmith/wsl-runtime"',
     `current_runtime="$runtime_parent/${safeRuntimeId}"`,
     '[ -d "$runtime_parent" ] || exit 0',
     // Serialize the whole retention decision so two backends cannot select
@@ -486,7 +486,7 @@ export const buildWslRuntimeInvalidateScript = (runtimeId: string): string => {
   const safeRuntimeId = sanitizeWslRuntimeId(runtimeId);
   return [
     "set -eu",
-    `rm -f "$HOME/.t3/wsl-runtime/${safeRuntimeId}/${WSL_RUNTIME_READY_MARKER}"`,
+    `rm -f "$HOME/.agentsmith/wsl-runtime/${safeRuntimeId}/${WSL_RUNTIME_READY_MARKER}"`,
   ].join("\n");
 };
 
@@ -505,7 +505,7 @@ const NODE_PTY_BINARY_MISSING_EXIT_CODE = 4;
 
 const formatNodePtyProbeFailureReason = (exitCode: number): string | null =>
   exitCode === NODE_PTY_BINARY_MISSING_EXIT_CODE
-    ? "WSL support is missing from this T3 Code build: the packaged Linux node-pty binary was not included. Install a build that includes WSL support."
+    ? "WSL support is missing from this AgentSmith build: the packaged Linux node-pty binary was not included. Install a build that includes WSL support."
     : null;
 
 // Captures the login-shell PATH as `resolvedPath:` so the launch can forward the
@@ -552,7 +552,7 @@ NODE`;
 const RUNTIME_PROBE_SCRIPT = (linuxAppRoot: string) =>
   [
     `bash -lc ${shellQuote(RESOLVED_PATH_LINE)} 2>/dev/null || ${RESOLVED_PATH_LINE}`,
-    `${shellQuote(`${linuxAppRoot}/t3`)} --version >/dev/null 2>&1`,
+    `${shellQuote(`${linuxAppRoot}/agentsmith`)} --version >/dev/null 2>&1`,
   ].join("\n");
 
 const TOOLCHAIN_CHECK_SCRIPT = [
@@ -690,7 +690,7 @@ const probeWslRuntimeImpl = (
       const trimmedTail = probe.stderr.trim().slice(-500);
       return {
         ok: false,
-        reason: `${linuxAppRoot}/t3 --version failed (exit ${probe.exitCode})${trimmedTail ? `: ${trimmedTail}` : ""}`,
+        reason: `${linuxAppRoot}/agentsmith --version failed (exit ${probe.exitCode})${trimmedTail ? `: ${trimmedTail}` : ""}`,
       } as const;
     }
     const resolvedPath = parseResolvedPath(probe.stdout);

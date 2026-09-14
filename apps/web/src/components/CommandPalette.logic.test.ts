@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vite-plus/test";
-import { EnvironmentId, ProjectId, ProviderInstanceId, ThreadId } from "@t3tools/contracts";
+import { EnvironmentId, ProjectId, ProviderInstanceId, ThreadId } from "@agentsmith/contracts";
 import type { Project, Thread } from "../types";
 import {
   buildBrowseGroups,
@@ -72,24 +72,24 @@ describe("buildCommandPaletteProjectMetadata", () => {
       projects: [
         {
           environmentId: localEnvironmentId,
-          title: "T3 Code",
-          workspaceRoot: "/Users/theo/Projects/t3code",
+          title: "AgentSmith",
+          workspaceRoot: "/Users/theo/Projects/agentsmith",
         },
         {
           environmentId: remoteEnvironmentId,
-          title: "t3code",
-          workspaceRoot: "/srv/t3code",
+          title: "agentsmith",
+          workspaceRoot: "/srv/agentsmith",
         },
       ],
       locationByEnvironmentId: locations,
     });
 
     expect(metadata.searchTerms).toEqual([
-      "T3 Code",
-      "/Users/theo/Projects/t3code",
+      "AgentSmith",
+      "/Users/theo/Projects/agentsmith",
       "Local",
-      "t3code",
-      "/srv/t3code",
+      "agentsmith",
+      "/srv/agentsmith",
       "Build box",
     ]);
     expect(metadata.environmentLabels).toEqual(["Local", "Build box"]);
@@ -101,8 +101,8 @@ describe("buildCommandPaletteProjectMetadata", () => {
       projectSearchItems: [
         {
           kind: "action",
-          value: "project:t3code",
-          title: "T3 Code",
+          value: "project:agentsmith",
+          title: "AgentSmith",
           searchTerms: metadata.searchTerms,
           icon: null,
           run: async () => undefined,
@@ -118,13 +118,13 @@ describe("buildCommandPaletteProjectMetadata", () => {
       projects: [
         {
           environmentId: remoteEnvironmentId,
-          title: "T3 Code",
-          workspaceRoot: "/srv/t3code",
+          title: "AgentSmith",
+          workspaceRoot: "/srv/agentsmith",
         },
         {
           environmentId: remoteEnvironmentId,
-          title: "T3 Code worktree",
-          workspaceRoot: "/srv/t3code-feature",
+          title: "AgentSmith worktree",
+          workspaceRoot: "/srv/agentsmith-feature",
         },
       ],
       locationByEnvironmentId: locations,
@@ -139,13 +139,13 @@ describe("buildCommandPaletteProjectMetadata", () => {
       projects: [
         {
           environmentId: remoteEnvironmentId,
-          title: "T3 Code",
-          workspaceRoot: "/srv/t3code",
+          title: "AgentSmith",
+          workspaceRoot: "/srv/agentsmith",
         },
         {
           environmentId: secondRemoteEnvironmentId,
-          title: "T3 Code mirror",
-          workspaceRoot: "/srv/mirror/t3code",
+          title: "AgentSmith mirror",
+          workspaceRoot: "/srv/mirror/agentsmith",
         },
       ],
       locationByEnvironmentId: new Map([
@@ -162,8 +162,8 @@ describe("buildCommandPaletteProjectMetadata", () => {
       projects: [
         {
           environmentId: remoteEnvironmentId,
-          title: "T3 Code",
-          workspaceRoot: "/srv/t3code",
+          title: "AgentSmith",
+          workspaceRoot: "/srv/agentsmith",
         },
       ],
       locationByEnvironmentId: new Map(),
@@ -348,7 +348,7 @@ describe("buildProjectActionItems", () => {
     const project = makeProject({ title: "fleet", workspaceRoot: "/Users/theo/Code/p/fleet" });
     const iconTitles: string[] = [];
     const [item] = buildProjectActionItems({
-      projects: [{ ...project, displayName: "t3dotgg/fleet" }],
+      projects: [{ ...project, displayName: "agentsmithdotgg/fleet" }],
       valuePrefix: "project",
       icon: (candidate) => {
         iconTitles.push(candidate.title);
@@ -357,9 +357,9 @@ describe("buildProjectActionItems", () => {
       runProject: async () => undefined,
     });
 
-    expect(item?.title).toBe("t3dotgg/fleet");
+    expect(item?.title).toBe("agentsmithdotgg/fleet");
     expect(item?.searchTerms).toEqual(
-      expect.arrayContaining(["t3dotgg/fleet", "fleet", "/Users/theo/Code/p/fleet"]),
+      expect.arrayContaining(["agentsmithdotgg/fleet", "fleet", "/Users/theo/Code/p/fleet"]),
     );
     expect(iconTitles).toEqual(["fleet"]);
   });
@@ -563,7 +563,7 @@ describe("buildThreadActionItems", () => {
   it("keeps message excerpts searchable without replacing thread metadata", () => {
     const [item] = buildThreadActionItems({
       threads: [makeThread({ branch: "feat/search" })],
-      projectTitleById: new Map([[PROJECT_ID, "T3 Code"]]),
+      projectTitleById: new Map([[PROJECT_ID, "AgentSmith"]]),
       sortOrder: "updated_at",
       icon: null,
       getContentMatch: () => ({
@@ -580,13 +580,13 @@ describe("buildThreadActionItems", () => {
       snippet: "The relay reconnect is now bounded.",
       query: "reconnect",
     });
-    expect(item?.description).toBe("T3 Code · #feat/search");
+    expect(item?.description).toBe("AgentSmith · #feat/search");
   });
 
   it("prefers renderDescription when provided", () => {
     const [item] = buildThreadActionItems({
       threads: [makeThread({ branch: "feat/search", worktreePath: "/tmp/wt" })],
-      projectTitleById: new Map([[PROJECT_ID, "T3 Code"]]),
+      projectTitleById: new Map([[PROJECT_ID, "AgentSmith"]]),
       sortOrder: "updated_at",
       icon: null,
       renderDescription: (thread, { projectTitle }) =>
@@ -594,7 +594,7 @@ describe("buildThreadActionItems", () => {
       runThread: async (_thread) => undefined,
     });
 
-    expect(item?.description).toBe("T3 Code:feat/search:wt");
+    expect(item?.description).toBe("AgentSmith:feat/search:wt");
   });
 
   it("filters archived threads out of thread search items", () => {
@@ -700,8 +700,8 @@ describe("filterPinnedBrowseEntries", () => {
 it.each([
   "#10839",
   "10839",
-  "pingdotgg/t3code#10839",
-  "https://github.com/pingdotgg/t3code/pull/10839",
+  "pingdotgg/agentsmith#10839",
+  "https://github.com/pingdotgg/agentsmith/pull/10839",
 ])("finds linked threads from PR query %s", (query) => {
   const items = buildThreadActionItems({
     threads: [
@@ -710,9 +710,9 @@ it.each([
         pullRequests: [
           {
             host: "github.com",
-            repository: "pingdotgg/t3code",
+            repository: "pingdotgg/agentsmith",
             number: 10839,
-            url: "https://github.com/pingdotgg/t3code/pull/10839",
+            url: "https://github.com/pingdotgg/agentsmith/pull/10839",
             source: "manual",
             linkedAt: "2026-09-08T00:00:00Z",
             snapshot: null,

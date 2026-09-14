@@ -3,7 +3,7 @@ import {
   EnvironmentId,
   ProjectId,
   type ServerSettings,
-} from "@t3tools/contracts";
+} from "@agentsmith/contracts";
 import { describe, expect, it, vi } from "vite-plus/test";
 
 import type { SidebarProjectSnapshot } from "../../sidebarProjectGrouping";
@@ -341,7 +341,7 @@ describe("project overrides at environment scope", () => {
   const laptop = EnvironmentId.make("laptop");
   const desk = EnvironmentId.make("desk");
   const fleet = ProjectId.make("fleet");
-  const t3 = ProjectId.make("t3");
+  const agentsmith = ProjectId.make("agentsmith");
   const environment = (
     environmentId: EnvironmentId,
     overrides: ServerSettings["projectSettingsOverrides"],
@@ -360,7 +360,7 @@ describe("project overrides at environment scope", () => {
       [
         environment(laptop, {
           [fleet]: { defaultAutoPull: true, defaultThreadEnvMode: "local" },
-          [t3]: { defaultThreadEnvMode: "local" },
+          [agentsmith]: { defaultThreadEnvMode: "local" },
         }),
         environment(desk, { [fleet]: { defaultAutoPull: false } }),
       ],
@@ -377,12 +377,12 @@ describe("project overrides at environment scope", () => {
       [
         environment(laptop, {
           [fleet]: { defaultAutoPull: true, defaultThreadEnvMode: "local" },
-          [t3]: { defaultAutoPull: true },
+          [agentsmith]: { defaultAutoPull: true },
         }),
       ],
       [
         { environmentId: laptop, projectId: fleet },
-        { environmentId: laptop, projectId: t3 },
+        { environmentId: laptop, projectId: agentsmith },
       ],
       ["defaultAutoPull"],
     );
@@ -391,7 +391,7 @@ describe("project overrides at environment scope", () => {
         environmentId: laptop,
         label: laptop,
         patch: {
-          projectSettingsOverrides: { [fleet]: { defaultThreadEnvMode: "local" }, [t3]: null },
+          projectSettingsOverrides: { [fleet]: { defaultThreadEnvMode: "local" }, [agentsmith]: null },
         },
       },
     ]);

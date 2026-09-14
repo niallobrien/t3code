@@ -13,9 +13,9 @@ import {
   type ModelSelection,
   type ServerProviderModel,
   TextGenerationError,
-} from "@t3tools/contracts";
-import { sanitizeBranchFragment, sanitizeFeatureBranchName } from "@t3tools/shared/git";
-import { resolveSpawnCommand } from "@t3tools/shared/shell";
+} from "@agentsmith/contracts";
+import { sanitizeBranchFragment, sanitizeFeatureBranchName } from "@agentsmith/shared/git";
+import { resolveSpawnCommand } from "@agentsmith/shared/shell";
 
 import { resolveAttachmentPath } from "../attachmentStore.ts";
 import * as ServerConfig from "../config.ts";
@@ -35,7 +35,7 @@ import {
   sanitizeThreadTitle,
   toJsonSchemaObject,
 } from "./TextGenerationUtils.ts";
-import { codexModelFamily, getModelSelectionStringOptionValue } from "@t3tools/shared/model";
+import { codexModelFamily, getModelSelectionStringOptionValue } from "@agentsmith/shared/model";
 import { getCodexServiceTierOptionValue } from "../codexModelOptions.ts";
 
 const CODEX_TIMEOUT_MS = 180_000;
@@ -81,7 +81,7 @@ export const makeCodexTextGeneration = Effect.fn("makeCodexTextGeneration")(func
   ): Effect.Effect<string, TextGenerationError, Scope.Scope> =>
     fileSystem
       .makeTempFileScoped({
-        prefix: `t3code-${prefix}-${process.pid}-`,
+        prefix: `agentsmith-${prefix}-${process.pid}-`,
       })
       .pipe(
         Effect.tap((filePath) => fileSystem.writeFileString(filePath, content)),

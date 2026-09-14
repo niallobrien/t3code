@@ -34,7 +34,7 @@ import {
   type DeviceHostSummary,
   LOCAL_DEVICE_HOST_ID,
   type ThreadId,
-} from "@t3tools/contracts";
+} from "@agentsmith/contracts";
 import * as FileSystem from "effect/FileSystem";
 import * as Path from "effect/Path";
 import { ensureAgentDevice } from "./DeviceToolchain.ts";
@@ -151,7 +151,7 @@ export class DeviceService extends Context.Service<
     readonly currentReadiness: (hostId?: DeviceHostId) => Effect.Effect<DeviceReadiness | null>;
     readonly sessionsForThread: (threadId: ThreadId) => Effect.Effect<ReadonlyArray<DeviceSession>>;
   }
->()("t3/device/DeviceService") {}
+>()("agentsmith/device/DeviceService") {}
 
 interface ServiceState {
   readonly state: DeviceServiceState;
@@ -592,7 +592,7 @@ export const makeWithHosts = Effect.fn("DeviceService.makeWithHosts")(function* 
         return yield* new DeviceNotFoundError({ hostId: host.id, deviceId: bootedId });
       }
     } else if (device.platform === "ios" && device.booted) {
-      // A simulator booted outside T3 has no helper attached yet.
+      // A simulator booted outside AgentSmith has no helper attached yet.
       yield* HttpClientRequest.post(
         `${ready.hub.origin}${vendorPrefix("ios")}/grid/api/start`,
       ).pipe(

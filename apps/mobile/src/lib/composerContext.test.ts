@@ -1,17 +1,17 @@
-import { upgradeLegacyContextMessage } from "@t3tools/shared/composerContextLegacy";
+import { upgradeLegacyContextMessage } from "@agentsmith/shared/composerContextLegacy";
 import { buildProjectThreadStartTurnInput } from "./projectThreadStartTurn";
 import {
   ProjectId,
   ProviderInstanceId,
   ComposerContextId,
   type OrchestrationMessageContext,
-} from "@t3tools/contracts";
-import { collectComposerInlineTokens } from "@t3tools/shared/composerInlineTokens";
+} from "@agentsmith/contracts";
+import { collectComposerInlineTokens } from "@agentsmith/shared/composerInlineTokens";
 import {
   collectComposerContextReferences,
   formatComposerContextReference,
   projectComposerContextForProvider,
-} from "@t3tools/shared/composerContextReferences";
+} from "@agentsmith/shared/composerContextReferences";
 import { describe, expect, it } from "vite-plus/test";
 import {
   composerContextEditorTokens,
@@ -254,7 +254,7 @@ describe("host context compatibility", () => {
             worktreeBranchName: "unused",
           }).message;
     expect(message).not.toHaveProperty("context");
-    expect(message.text).not.toContain("t3-context://");
+    expect(message.text).not.toContain("agentsmith-context://");
     expect(
       upgradeLegacyContextMessage(message.text).records.find(
         (record) => record.kind === "terminal",
