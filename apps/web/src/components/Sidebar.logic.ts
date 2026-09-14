@@ -910,7 +910,8 @@ export interface SidebarProjectScopeMenuState {
 export type SidebarProjectScopeMenuAction =
   | { readonly type: "query-changed"; readonly query: string }
   | { readonly type: "open-changed"; readonly open: boolean }
-  | { readonly type: "project-settings-opened" };
+  | { readonly type: "project-settings-opened" }
+  | { readonly type: "toggle-requested" };
 
 export function reduceSidebarProjectScopeMenuState(
   state: SidebarProjectScopeMenuState,
@@ -923,6 +924,8 @@ export function reduceSidebarProjectScopeMenuState(
       return { open: action.open, query: "" };
     case "project-settings-opened":
       return { open: false, query: "" };
+    case "toggle-requested":
+      return { open: !state.open, query: "" };
   }
 }
 

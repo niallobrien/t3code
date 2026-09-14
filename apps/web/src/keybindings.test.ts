@@ -131,6 +131,11 @@ const DEFAULT_BINDINGS = compile([
     whenAst: whenNot(whenIdentifier("terminalFocus")),
   },
   {
+    shortcut: modShortcut("e", { shiftKey: true }),
+    command: "projectScope.toggle",
+    whenAst: whenNot(whenIdentifier("terminalFocus")),
+  },
+  {
     shortcut: modShortcut("t", { altKey: true, shiftKey: true }),
     command: "themeEditor.toggle",
   },
@@ -634,6 +639,30 @@ describe("chat/editor shortcuts", () => {
         context: { terminalFocus: true },
       }),
       "projectSearch.toggle",
+    );
+  });
+
+  it("matches projectScope.toggle shortcut outside terminal focus", () => {
+    assert.strictEqual(
+      resolveShortcutCommand(event({ key: "e", metaKey: true, shiftKey: true }), DEFAULT_BINDINGS, {
+        platform: "MacIntel",
+        context: { terminalFocus: false },
+      }),
+      "projectScope.toggle",
+    );
+    assert.strictEqual(
+      resolveShortcutCommand(event({ key: "e", ctrlKey: true, shiftKey: true }), DEFAULT_BINDINGS, {
+        platform: "Linux",
+        context: { terminalFocus: false },
+      }),
+      "projectScope.toggle",
+    );
+    assert.notStrictEqual(
+      resolveShortcutCommand(event({ key: "e", metaKey: true, shiftKey: true }), DEFAULT_BINDINGS, {
+        platform: "MacIntel",
+        context: { terminalFocus: true },
+      }),
+      "projectScope.toggle",
     );
   });
 

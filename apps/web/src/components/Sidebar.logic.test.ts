@@ -891,6 +891,15 @@ describe("reduceSidebarProjectScopeMenuState", () => {
       ),
     ).toEqual({ open: true, query: "beta" });
   });
+
+  it("toggles the popup and clears the query when a keybinding toggles it", () => {
+    expect(
+      reduceSidebarProjectScopeMenuState({ open: false, query: "" }, { type: "toggle-requested" }),
+    ).toEqual({ open: true, query: "" });
+    expect(
+      reduceSidebarProjectScopeMenuState(queriedOpenState, { type: "toggle-requested" }),
+    ).toEqual({ open: false, query: "" });
+  });
 });
 
 describe("sortThreadsForSidebar", () => {

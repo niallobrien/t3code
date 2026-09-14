@@ -4225,6 +4225,12 @@ export default function Sidebar() {
           modelPickerOpen: isModelPickerOpen(),
         },
       });
+      if (command === "projectScope.toggle") {
+        event.preventDefault();
+        event.stopPropagation();
+        dispatchProjectScopeMenu({ type: "toggle-requested" });
+        return;
+      }
       const navigateToThreadKey = (targetThreadKey: string | null) => {
         if (!targetThreadKey) return false;
         const targetThread = threadByKey.get(targetThreadKey);
