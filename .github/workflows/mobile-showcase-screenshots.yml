@@ -27,8 +27,8 @@ on:
         default: agentsmith-chat
         type: choice
         options:
--chat
--chat
+          - agentsmith
+          - agentsmith-chat
           - grove
           - ocean
           - ember
