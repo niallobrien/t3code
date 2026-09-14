@@ -116,6 +116,7 @@ import { WorkspacePageHeader } from "../components/WorkspacePageHeader";
 import { isCommandPaletteOpen } from "../commandPaletteBus";
 import { isElectron } from "../env";
 import { resolveShortcutCommand, shortcutLabelForCommand } from "../keybindings";
+import { focusPreviewPanel, isPreviewFocused } from "../lib/previewFocus";
 import { isTerminalFocused } from "../lib/terminalFocus";
 import { PanelLayoutControls } from "../components/chat/PanelLayoutControls";
 import { Button } from "../components/ui/button";
@@ -131,6 +132,7 @@ import {
   PULL_REQUESTS_PANEL_REF,
   pullRequestSurfaceId,
   selectActiveRightPanelSurface,
+  selectAdjacentRightPanelSurface,
   selectSelectedRightPanelSurface,
   selectThreadRightPanelState,
   useRightPanelStore,
@@ -1919,16 +1921,37 @@ function PullRequestsRouteView() {
     if (!rightPanelAvailable) return;
     event.preventDefault();
     event.stopPropagation();
-    if (!event.repeat) toggleRightPanel();
+    if (event.repeat) return;
+    // Open but unfocused: claim focus first so a second press toggles.
+    if (rightPanelState.isOpen && !isPreviewFocused()) {
+      focusPreviewPanel();
+      return;
+    }
+    toggleRightPanel();
+  });
+  const cycleSurfaceFromShortcut = useEffectEvent((event: KeyboardEvent, delta: 1 | -1) => {
+    const target = selectAdjacentRightPanelSurface(
+      renderedRightPanelSurfaces,
+      renderedPullRequestSurface?.id ?? null,
+      delta,
+    );
+    // This page only creates pull-request surfaces; ignore anything else.
+    if (target?.kind !== "pull-request") return;
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.repeat) return;
+    activateSurface(target);
   });
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.defaultPrevented || isCommandPaletteOpen()) return;
       const command = resolveShortcutCommand(event, keybindings, {
-        context: { terminalFocus: isTerminalFocused() },
+        context: { terminalFocus: isTerminalFocused(), previewFocus: isPreviewFocused() },
       });
       if (command === "rightPanel.close") closeActiveSurfaceFromShortcut(event);
       if (command === "rightPanel.toggle") toggleRightPanelFromShortcut(event);
+      if (command === "rightPanel.nextSurface") cycleSurfaceFromShortcut(event, 1);
+      if (command === "rightPanel.previousSurface") cycleSurfaceFromShortcut(event, -1);
       if (command === "thread.copyReference") copyPullRequestFromShortcut(event);
     };
     window.addEventListener("keydown", onKeyDown);

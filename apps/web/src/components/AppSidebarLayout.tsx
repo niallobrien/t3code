@@ -12,6 +12,7 @@ import { useLocation, useNavigate } from "@tanstack/react-router";
 import { isElectron } from "../env";
 import { getLocalStorageItem, removeLocalStorageItem } from "../hooks/useLocalStorage";
 import { resolveShortcutCommand, shortcutLabelForCommand } from "../keybindings";
+import { focusAppSidebar, isAppSidebarFocused } from "../lib/sidebarFocus";
 import { cn, isMacPlatform } from "../lib/utils";
 import { primaryServerKeybindingsAtom } from "../state/server";
 import { useEnvironmentIdentificationMode, useLegacySidebarEnabled } from "../hooks/useSettings";
@@ -71,7 +72,7 @@ function readInitialThreadSidebarWidth(): number {
 
 function SidebarControl() {
   const keybindings = useAtomValue(primaryServerKeybindingsAtom);
-  const { toggleSidebar } = useSidebar();
+  const { isMobile, toggleSidebar } = useSidebar();
   const isSidebarVisible = useSidebarVisibility();
   const environmentIdentificationMode = useEnvironmentIdentificationMode();
   const stageBackdropVariant = useSidebarStageBackdropVariant(
@@ -92,13 +93,18 @@ function SidebarControl() {
 
       event.preventDefault();
       event.stopPropagation();
+      // Open but unfocused: claim focus first so a second press toggles.
+      if (!isMobile && isSidebarVisible && !isAppSidebarFocused()) {
+        focusAppSidebar();
+        return;
+      }
       toggleSidebar();
     };
 
     // Capture before focused editors consume commands such as Mod+B for rich-text formatting.
     window.addEventListener("keydown", onKeyDown, true);
     return () => window.removeEventListener("keydown", onKeyDown, true);
-  }, [keybindings, toggleSidebar]);
+  }, [isMobile, isSidebarVisible, keybindings, toggleSidebar]);
 
   return (
     // The right-side layout controls carry mr-px (border compensation inside
@@ -231,7 +237,8 @@ export function AppSidebarLayout({ children }: { children: ReactNode }) {
           side="left"
           collapsible="offcanvas"
           data-app-sidebar=""
-          className="border-r border-sidebar-border bg-sidebar text-sidebar-foreground"
+          tabIndex={-1}
+          className="border-r border-sidebar-border bg-sidebar text-sidebar-foreground outline-none"
           resizable={{
             maxWidth: sidebarMaximumWidth,
             minWidth: THREAD_SIDEBAR_MIN_WIDTH,

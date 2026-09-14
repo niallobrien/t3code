@@ -36,6 +36,7 @@ import {
   type ReactNode,
   useCallback,
   useEffect,
+  useImperativeHandle,
   useRef,
   useState,
 } from "react";
@@ -129,7 +130,13 @@ interface RightPanelTabsProps {
   pullRequestStatusSeeds?: Readonly<Record<string, PullRequestTabStatusSeed>>;
   /** Running + waiting subagents; badges the Agents card in the empty state. */
   liveAgentCount: number;
+  /** Wired imperatively so keybindings can open the add-surface menu. */
+  addSurfaceMenuRef?: React.RefObject<RightPanelTabsHandle | null>;
   children: ReactNode;
+}
+
+export interface RightPanelTabsHandle {
+  openAddSurfaceMenu: () => void;
 }
 
 export interface PullRequestTabStatus {
@@ -823,6 +830,11 @@ export function RightPanelTabs(props: RightPanelTabsProps) {
   const tabListRef = useRef<HTMLDivElement>(null);
   const [renamingDevice, setRenamingDevice] = useState<string | null>(null);
   const [addSurfaceMenuOpen, setAddSurfaceMenuOpen] = useState(false);
+  useImperativeHandle(
+    props.addSurfaceMenuRef,
+    () => ({ openAddSurfaceMenu: () => setAddSurfaceMenuOpen(true) }),
+    [],
+  );
   const [tabScrollState, setTabScrollState] = useState({
     hasOverflow: false,
     canScrollLeft: false,
