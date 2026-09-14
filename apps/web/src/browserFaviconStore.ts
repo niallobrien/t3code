@@ -3,7 +3,11 @@ import {
   scopedThreadKey,
   scopeProjectRef,
 } from "@agentsmith/client-runtime/environment";
-import type { DesktopPreviewFavicon, ScopedProjectRef, ScopedThreadRef } from "@agentsmith/contracts";
+import type {
+  DesktopPreviewFavicon,
+  ScopedProjectRef,
+  ScopedThreadRef,
+} from "@agentsmith/contracts";
 import * as Option from "effect/Option";
 import { useMemo } from "react";
 import { create } from "zustand";

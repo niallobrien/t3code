@@ -6,7 +6,10 @@ import {
   type AtomCommandResult,
 } from "@agentsmith/client-runtime/state/runtime";
 import type { ContextMenuItem } from "@agentsmith/contracts";
-import type { SidebarProjectSortOrder, SidebarThreadSortOrder } from "@agentsmith/contracts/settings";
+import type {
+  SidebarProjectSortOrder,
+  SidebarThreadSortOrder,
+} from "@agentsmith/contracts/settings";
 import type { AsyncResult } from "effect/unstable/reactivity";
 import { planPinnedReorder } from "@agentsmith/client-runtime/state/thread-sort";
 import {
@@ -872,7 +875,10 @@ export { sortActiveThreadsByOrderKey as sortThreadsForSidebar } from "@agentsmit
 
 // Pinned-reorder key math and the keyed sort live in client-runtime
 // (state/thread-sort) so web and mobile compute identical pinned orders.
-export { pinOrderKeyBetween, planPinnedReorder } from "@agentsmith/client-runtime/state/thread-sort";
+export {
+  pinOrderKeyBetween,
+  planPinnedReorder,
+} from "@agentsmith/client-runtime/state/thread-sort";
 export { sortPinnedThreadsByOrderKey as sortPinnedThreadsForSidebar } from "@agentsmith/client-runtime/state/thread-sort";
 
 /**

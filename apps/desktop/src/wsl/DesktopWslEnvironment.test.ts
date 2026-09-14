@@ -261,7 +261,9 @@ describe("WSL runtime cache", () => {
     // The same proof the SSH runner and CLI installers use: executable, and
     // `--version` exits 0. That is what decides arch and loadability, so no
     // separate native probe is needed.
-    expect(script).toContain('  [ -x "$1/agentsmith" ] && "$1/agentsmith" --version >/dev/null 2>&1');
+    expect(script).toContain(
+      '  [ -x "$1/agentsmith" ] && "$1/agentsmith" --version >/dev/null 2>&1',
+    );
 
     // Readiness gates the short-circuit, so a cache whose executable broke
     // reinstalls from the archive instead of being reused forever.
@@ -382,7 +384,9 @@ describe("WSL runtime cache", () => {
 
     // Readiness is a presence check, so a tree whose pty.node is present but
     // unloadable stays ready forever unless the probe can revoke the marker.
-    expect(script).toContain('rm -f "$HOME/.agentsmith/wsl-runtime/1.2.3_x64/.agentsmith-wsl-runtime-ready"');
+    expect(script).toContain(
+      'rm -f "$HOME/.agentsmith/wsl-runtime/1.2.3_x64/.agentsmith-wsl-runtime-ready"',
+    );
     // Deleting the tree here would pull it out from under any backend still
     // running from it; the next install moves an unready root aside instead.
     expect(script).not.toContain("rm -rf");

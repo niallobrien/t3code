@@ -821,7 +821,9 @@ export function buildRemoteNodeEnvScript(input?: RemoteAgentsmithRunnerOptions):
   return stripTrailingNewlines(
     applyScriptPlaceholders(REMOTE_NODE_ENV_SCRIPT, {
       AGENTSMITH_NODE_ENGINE_RANGE: shellSingleQuote(input?.nodeEngineRange?.trim() || ""),
-      AGENTSMITH_NODE_ENGINE_CHECK_SCRIPT: stripTrailingNewlines(buildRemoteNodeEngineCheckScript()),
+      AGENTSMITH_NODE_ENGINE_CHECK_SCRIPT: stripTrailingNewlines(
+        buildRemoteNodeEngineCheckScript(),
+      ),
     }),
   );
 }

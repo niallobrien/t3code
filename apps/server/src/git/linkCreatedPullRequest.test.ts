@@ -193,7 +193,10 @@ describe("linkCreatedPullRequest", () => {
       }).pipe(Effect.provide(dependencies));
       yield* linkCreatedPullRequest({
         threadId: THREAD_ID,
-        result: prResult({ status: "created", url: "https://github.com/agentsmith/agentsmith/pull/42" }),
+        result: prResult({
+          status: "created",
+          url: "https://github.com/agentsmith/agentsmith/pull/42",
+        }),
         commandId,
       }).pipe(Effect.provide(dependencies));
 

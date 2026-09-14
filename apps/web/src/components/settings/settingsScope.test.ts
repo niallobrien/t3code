@@ -181,7 +181,9 @@ describe("settings scope resolution", () => {
       kind: "project",
       members: [first, second],
     });
-    expect(resolveSettingsScope(search, [group("agentsmith", [third])], environments)).toMatchObject({
+    expect(
+      resolveSettingsScope(search, [group("agentsmith", [third])], environments),
+    ).toMatchObject({
       kind: "unavailable",
       members: [],
       environmentIds: [],

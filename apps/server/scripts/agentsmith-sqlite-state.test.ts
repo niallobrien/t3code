@@ -29,7 +29,9 @@ it.layer(NodeServices.layer)("agentsmith-sqlite-state", (it) => {
   it.effect("reports each invalid SQL source with a specific error", () =>
     Effect.gen(function* () {
       const fs = yield* FileSystem.FileSystem;
-      const baseDir = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-sqlite-state-input-" });
+      const baseDir = yield* fs.makeTempDirectoryScoped({
+        prefix: "agentsmith-sqlite-state-input-",
+      });
 
       const multipleSources = yield* runSqliteState({
         operation: "query",
@@ -59,7 +61,9 @@ it.layer(NodeServices.layer)("agentsmith-sqlite-state", (it) => {
   it.effect("queries an isolated database through Effect SQL", () =>
     Effect.gen(function* () {
       const fs = yield* FileSystem.FileSystem;
-      const baseDir = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-sqlite-state-query-" });
+      const baseDir = yield* fs.makeTempDirectoryScoped({
+        prefix: "agentsmith-sqlite-state-query-",
+      });
       yield* createFixtureDatabase(baseDir);
 
       const result = yield* runSqliteState({
@@ -81,7 +85,9 @@ it.layer(NodeServices.layer)("agentsmith-sqlite-state", (it) => {
       Effect.gen(function* () {
         const fs = yield* FileSystem.FileSystem;
         const path = yield* Path.Path;
-        const baseDir = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-sqlite-state-exec-" });
+        const baseDir = yield* fs.makeTempDirectoryScoped({
+          prefix: "agentsmith-sqlite-state-exec-",
+        });
         yield* createFixtureDatabase(baseDir);
 
         const mutation = yield* runSqliteState({

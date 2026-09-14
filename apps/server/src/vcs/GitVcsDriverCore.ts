@@ -26,7 +26,10 @@ import {
   type ReviewDiffPreviewSource,
   type VcsRef,
 } from "@agentsmith/contracts";
-import { dedupeRemoteBranchesWithLocalMatches, normalizeGitRemoteUrl } from "@agentsmith/shared/git";
+import {
+  dedupeRemoteBranchesWithLocalMatches,
+  normalizeGitRemoteUrl,
+} from "@agentsmith/shared/git";
 import { compactTraceAttributes } from "@agentsmith/shared/observability";
 import { decodeJsonResult } from "@agentsmith/shared/schemaJson";
 import { gitCommandDuration, gitCommandsTotal, withMetrics } from "../observability/Metrics.ts";

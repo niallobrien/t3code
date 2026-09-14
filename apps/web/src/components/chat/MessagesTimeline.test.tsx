@@ -1361,7 +1361,9 @@ describe("MessagesTimeline", () => {
     );
 
     expect(markup).toContain("Changed 1 file");
-    expect(markup).not.toContain("C:/Users/mike/dev-stuff/agentsmith/apps/web/src/session-logic.ts");
+    expect(markup).not.toContain(
+      "C:/Users/mike/dev-stuff/agentsmith/apps/web/src/session-logic.ts",
+    );
   });
 
   it("keeps mixed-success tool groups neutral", () => {
@@ -1860,7 +1862,9 @@ describe("MessagesTimeline", () => {
     // Images report their size like every other attachment chip.
     expect(markup).toContain('aria-label="Image attachment, shot.png, 1 KB"');
     // Selection copy re-emits chips as their canonical links.
-    expect(markup).toContain('data-markdown-copy="![shot.png](agentsmith-context://v1/image/img-1)"');
+    expect(markup).toContain(
+      'data-markdown-copy="![shot.png](agentsmith-context://v1/image/img-1)"',
+    );
     expect(markup).toContain('aria-label="File attachment, notes.txt, 1 KB"');
     expect(markup).toContain(">1 KB</span>");
     expect(markup).not.toContain('aria-label="Download notes.txt"');

@@ -23,7 +23,9 @@ const makeEnvironmentAuthPolicyLayer = (
           } satisfies ServerConfig.ServerConfig["Service"];
         }),
       ).pipe(
-        Layer.provide(ServerConfig.layerTest(process.cwd(), { prefix: "agentsmith-auth-policy-test-" })),
+        Layer.provide(
+          ServerConfig.layerTest(process.cwd(), { prefix: "agentsmith-auth-policy-test-" }),
+        ),
       ),
     ),
   );

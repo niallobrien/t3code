@@ -6584,7 +6584,9 @@ it.layer(OpenCodeAdapterTestLayer)("OpenCodeAdapterLive", (it) => {
 
         // A symlinked cwd (the macOS `/tmp` → `/private/tmp` shape) resolves to
         // the directory it points at, so the two spellings compare equal.
-        const base = yield* fileSystem.makeTempDirectoryScoped({ prefix: "agentsmith-opencode-dir-" });
+        const base = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "agentsmith-opencode-dir-",
+        });
         const real = path.join(base, "real");
         const link = path.join(base, "link");
         yield* fileSystem.makeDirectory(real);

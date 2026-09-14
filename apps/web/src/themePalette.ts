@@ -18,7 +18,14 @@ import {
   type ThemeVariants,
 } from "@agentsmith/shared/themePalettes";
 
-export { EMBER_THEME, GROVE_THEME, IRIS_THEME, OCEAN_THEME, AGENTSMITH_CHAT_THEME, THEME_COLOR_ROLES };
+export {
+  EMBER_THEME,
+  GROVE_THEME,
+  IRIS_THEME,
+  OCEAN_THEME,
+  AGENTSMITH_CHAT_THEME,
+  THEME_COLOR_ROLES,
+};
 export type { ThemeAppearance, ThemeColorRole, ThemeColors, ThemeDefinition, ThemeVariants };
 
 export const AGENTSMITH_CHAT_THEME_ID = "agentsmith-chat" as const;
@@ -995,7 +1002,9 @@ function standardMutedThemeText(
 
 /** Theme-file defaults follow the flagship palette for the requested mode. */
 export function getDefaultThemeColors(appearance: ThemeAppearance): ThemeColors {
-  return appearance === "dark" ? AGENTSMITH_CHAT_THEME.variants!.dark! : AGENTSMITH_CHAT_THEME.colors;
+  return appearance === "dark"
+    ? AGENTSMITH_CHAT_THEME.variants!.dark!
+    : AGENTSMITH_CHAT_THEME.colors;
 }
 
 /**

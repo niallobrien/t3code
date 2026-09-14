@@ -11,7 +11,9 @@ describe("parsePullRequestReference", () => {
 
   it("accepts Azure DevOps pull request URLs", () => {
     expect(
-      parsePullRequestReference("https://dev.azure.com/acme/project/_git/agentsmith/pullrequest/42"),
+      parsePullRequestReference(
+        "https://dev.azure.com/acme/project/_git/agentsmith/pullrequest/42",
+      ),
     ).toBe("https://dev.azure.com/acme/project/_git/agentsmith/pullrequest/42");
   });
 
@@ -23,7 +25,9 @@ describe("parsePullRequestReference", () => {
 
   it("accepts legacy Azure DevOps pull request URLs", () => {
     expect(
-      parsePullRequestReference("https://acme.visualstudio.com/project/_git/agentsmith/pullrequest/42"),
+      parsePullRequestReference(
+        "https://acme.visualstudio.com/project/_git/agentsmith/pullrequest/42",
+      ),
     ).toBe("https://acme.visualstudio.com/project/_git/agentsmith/pullrequest/42");
   });
 

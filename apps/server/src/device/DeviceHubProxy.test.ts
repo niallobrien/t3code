@@ -84,7 +84,9 @@ describe("device hub proxy", () => {
 
   it("releases resources when upstream acquisition fails", async () => {
     const { handler, finalized } = fixture([AuthOrchestrationReadScope], true);
-    const response = await handler(new Request("http://agentsmith.test/api/device-hub/api/devices"));
+    const response = await handler(
+      new Request("http://agentsmith.test/api/device-hub/api/devices"),
+    );
     expect(response.status).toBe(500);
     expect(finalized()).toBe(1);
   });
@@ -94,7 +96,9 @@ describe("device hub proxy", () => {
     async (path) => {
       const { handler, requests } = fixture([AuthOrchestrationReadScope]);
       const response = await handler(
-        new Request(`http://agentsmith.test/api/device-hub${path}`, { headers: { upgrade: "websocket" } }),
+        new Request(`http://agentsmith.test/api/device-hub${path}`, {
+          headers: { upgrade: "websocket" },
+        }),
       );
       expect(response.status).toBe(403);
       expect(requests).toEqual([]);
@@ -116,7 +120,9 @@ describe("device hub proxy", () => {
     expect(
       (
         await handler(
-          new Request("http://agentsmith.test/api/device-hub/vendor/serve-sim/exec", { method: "POST" }),
+          new Request("http://agentsmith.test/api/device-hub/vendor/serve-sim/exec", {
+            method: "POST",
+          }),
         )
       ).status,
     ).toBe(404);

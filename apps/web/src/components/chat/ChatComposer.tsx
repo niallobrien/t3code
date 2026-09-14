@@ -226,7 +226,10 @@ import {
 } from "~/lib/composerContextRecords";
 import { requestConfirmDialog } from "~/confirmDialog";
 import { encodeComposerContextFragment } from "@agentsmith/shared/composerContextClipboard";
-import type { ComposerContextClipboardFragment, ComposerContextRecord } from "@agentsmith/contracts";
+import type {
+  ComposerContextClipboardFragment,
+  ComposerContextRecord,
+} from "@agentsmith/contracts";
 import { resolveAssetUrl } from "~/assets/assetUrls";
 import { assetEnvironment } from "~/state/assets";
 import { readPreparedConnection } from "~/state/session";

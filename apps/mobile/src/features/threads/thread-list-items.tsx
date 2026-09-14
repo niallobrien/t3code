@@ -406,7 +406,10 @@ export const PendingTaskListRow = memo(function PendingTaskListRow(props: {
     >
       <View className="gap-[3px]">
         <View className="flex-row items-center justify-between gap-2">
-          <Text className="flex-1 text-base font-agentsmith-medium text-foreground" numberOfLines={1}>
+          <Text
+            className="flex-1 text-base font-agentsmith-medium text-foreground"
+            numberOfLines={1}
+          >
             {pendingTask.title}
           </Text>
           <View className="flex-row items-center gap-2">

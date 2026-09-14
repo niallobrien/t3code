@@ -80,7 +80,9 @@ const resolveNewestVersion = Effect.fn("cli.update.resolve_newest")(function* (
       .pipe(
         Effect.flatMap(HttpClientResponse.filterStatusOk),
         Effect.flatMap((response) => response.text),
-        Effect.mapError(() => new CliUpdateError({ reason: "Could not list agentsmith releases." })),
+        Effect.mapError(
+          () => new CliUpdateError({ reason: "Could not list agentsmith releases." }),
+        ),
         Effect.timeoutOrElse({
           duration: RELEASE_INDEX_TIMEOUT,
           orElse: () =>
@@ -89,7 +91,8 @@ const resolveNewestVersion = Effect.fn("cli.update.resolve_newest")(function* (
       );
     const releases = yield* decodeReleaseIndex(body).pipe(
       Effect.mapError(
-        () => new CliUpdateError({ reason: "The agentsmith release index had an unexpected shape." }),
+        () =>
+          new CliUpdateError({ reason: "The agentsmith release index had an unexpected shape." }),
       ),
     );
     const version = newestCliReleaseVersion(releases, channel);
@@ -144,7 +147,10 @@ export const repointLauncher = Effect.fn("cli.update.repoint_launcher")(function
       .writeFileString(shimPath, `@echo off\r\n"${input.targetEntryPath}" %*`)
       .pipe(
         Effect.mapError(
-          () => new CliUpdateError({ reason: `Could not rewrite the agentsmith launcher at ${shimPath}.` }),
+          () =>
+            new CliUpdateError({
+              reason: `Could not rewrite the agentsmith launcher at ${shimPath}.`,
+            }),
         ),
       );
     return Option.some(shimPath);
@@ -159,7 +165,9 @@ export const repointLauncher = Effect.fn("cli.update.repoint_launcher")(function
     Effect.andThen(fs.rename(tempLink, input.launchedAs)),
     Effect.mapError(
       () =>
-        new CliUpdateError({ reason: `Could not repoint the agentsmith launcher at ${input.launchedAs}.` }),
+        new CliUpdateError({
+          reason: `Could not repoint the agentsmith launcher at ${input.launchedAs}.`,
+        }),
     ),
   );
   return Option.some(input.launchedAs);
@@ -204,7 +212,9 @@ export const findWindowsShim = Effect.fn("cli.update.find_windows_shim")(functio
   const path = yield* Path.Path;
   const environment = yield* HostProcessEnvironment;
   const candidates = [
-    ...(environment["AGENTSMITH_INSTALL_BIN_DIR"] ? [environment["AGENTSMITH_INSTALL_BIN_DIR"]] : []),
+    ...(environment["AGENTSMITH_INSTALL_BIN_DIR"]
+      ? [environment["AGENTSMITH_INSTALL_BIN_DIR"]]
+      : []),
     ...(environment["PATH"] ?? environment["Path"] ?? "").split(";"),
   ].filter((entry) => entry.trim().length > 0);
   for (const directory of candidates) {
@@ -565,7 +575,9 @@ const runUpdate = Effect.fn("cli.update.run")(function* (input: {
   if (Option.isSome(repointed)) {
     yield* Console.log(`  ${repointed.value} now runs ${targetVersion}`);
   } else {
-    yield* Console.log(`  Run it as ${runtime.entryPath}, or point your \`agentsmith\` launcher at it.`);
+    yield* Console.log(
+      `  Run it as ${runtime.entryPath}, or point your \`agentsmith\` launcher at it.`,
+    );
   }
   if (serviceUpdated) {
     yield* Console.log(`  Background service restarted on ${targetVersion}`);

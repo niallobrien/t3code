@@ -1,4 +1,7 @@
-import type { ResourceTelemetryProcess, ResourceTelemetrySourceStatus } from "@agentsmith/contracts";
+import type {
+  ResourceTelemetryProcess,
+  ResourceTelemetrySourceStatus,
+} from "@agentsmith/contracts";
 
 function processIdentityKey(process: ResourceTelemetryProcess): string {
   return `${process.identity.pid}:${process.identity.startTimeMs}`;

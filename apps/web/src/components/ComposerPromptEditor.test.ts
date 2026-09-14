@@ -630,7 +630,9 @@ describe("context reference paste", () => {
       annotations.push(annotation);
       return new Map([[record.contextId, annotation.contextId]]);
     });
-    expect(text).toContain("agentsmith-context://v1/preview-annotation/preview-annotation_imported");
+    expect(text).toContain(
+      "agentsmith-context://v1/preview-annotation/preview-annotation_imported",
+    );
     expect(annotations[0]?.elements?.[0]).toMatchObject({
       selector: "#save",
       htmlPreview: "<button>Save</button>",

@@ -112,7 +112,10 @@ describe("ProjectSetupScriptRunner", () => {
         terminalId: "setup-default-setup",
         cwd: "/repo/worktrees/a",
         worktreePath: "/repo/worktrees/a",
-        env: { AGENTSMITH_PROJECT_ROOT: "/repo/project", AGENTSMITH_WORKTREE_PATH: "/repo/worktrees/a" },
+        env: {
+          AGENTSMITH_PROJECT_ROOT: "/repo/project",
+          AGENTSMITH_WORKTREE_PATH: "/repo/worktrees/a",
+        },
       });
       expect(write).toHaveBeenCalledWith({
         threadId: "thread-1",
@@ -378,7 +381,8 @@ describe("ProjectSetupScriptRunner", () => {
     },
     {
       shell: "/bin/bash",
-      expected: /^\( bun install\r\); printf '\\n__AGENTSMITH_SETUP_DONE___[0-9a-f]{32}:%s\\n' "\$\?"\r$/,
+      expected:
+        /^\( bun install\r\); printf '\\n__AGENTSMITH_SETUP_DONE___[0-9a-f]{32}:%s\\n' "\$\?"\r$/,
     },
   ])("wraps the command for the $shell syntax", ({ shell, expected }) => {
     const open = vi.fn(() =>

@@ -89,7 +89,8 @@ describe("DesktopPreReadyPlatform", () => {
           desktopName = name;
         });
         writeFileSyncMock.mockImplementation((path: string, contents: string) => {
-          if (path === "/xdg/applications/com.agentsmith.AgentSmith.desktop") desktopEntry = contents;
+          if (path === "/xdg/applications/com.agentsmith.AgentSmith.desktop")
+            desktopEntry = contents;
         });
 
         return Effect.scoped(

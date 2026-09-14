@@ -516,7 +516,9 @@ export const migrateDevDbCommand = Command.make(
     ),
     baseDir: Flag.string("base-dir").pipe(
       Flag.optional,
-      Flag.withDescription("Isolated .agentsmith directory. Defaults to the current worktree's .agentsmith."),
+      Flag.withDescription(
+        "Isolated .agentsmith directory. Defaults to the current worktree's .agentsmith.",
+      ),
     ),
     source: Flag.string("source").pipe(
       Flag.optional,

@@ -391,7 +391,10 @@ describe("project overrides at environment scope", () => {
         environmentId: laptop,
         label: laptop,
         patch: {
-          projectSettingsOverrides: { [fleet]: { defaultThreadEnvMode: "local" }, [agentsmith]: null },
+          projectSettingsOverrides: {
+            [fleet]: { defaultThreadEnvMode: "local" },
+            [agentsmith]: null,
+          },
         },
       },
     ]);

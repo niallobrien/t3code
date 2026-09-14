@@ -2902,7 +2902,8 @@ describe("composerDraftStore inline context references", () => {
     screenshot: null,
     createdAt: "2026-01-01T00:00:00.000Z",
   };
-  const annotationLink = "[Bigger](agentsmith-context://v1/preview-annotation/preview-annotation_ann-1)";
+  const annotationLink =
+    "[Bigger](agentsmith-context://v1/preview-annotation/preview-annotation_ann-1)";
 
   beforeEach(() => {
     resetComposerDraftStore();

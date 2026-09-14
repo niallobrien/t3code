@@ -201,7 +201,10 @@ describe("mobile connection storage", () => {
     await savePreferencesPatch(themes);
     await expect(loadPreferences()).resolves.toEqual(themes);
     await savePreferencesPatch({ lightThemeId: "agentsmith-chat" });
-    await expect(loadPreferences()).resolves.toEqual({ ...themes, lightThemeId: "agentsmith-chat" });
+    await expect(loadPreferences()).resolves.toEqual({
+      ...themes,
+      lightThemeId: "agentsmith-chat",
+    });
   });
 
   it("persists the Material You layout independently of the selected theme", async () => {

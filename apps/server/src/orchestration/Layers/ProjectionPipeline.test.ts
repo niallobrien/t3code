@@ -61,58 +61,59 @@ const exists = (filePath: string) =>
     return fileInfo._tag === "Success";
   });
 
-const BaseTestLayer = makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-pipeline-test-");
+const BaseTestLayer = makeProjectionPipelinePrefixedTestLayer(
+  "agentsmith-projection-pipeline-test-",
+);
 const encodeThreadLinkedPullRequest = Schema.encodeSync(
   Schema.fromJsonString(ThreadLinkedPullRequest),
 );
 
-it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-cursor-batch-")))(
-  "OrchestrationProjectionPipeline cursor batches",
-  (it) => {
-    it.effect("writes a project and all projector cursors in two statements", () =>
-      Effect.gen(function* () {
-        const projectionPipeline = yield* OrchestrationProjectionPipeline;
-        const eventStore = yield* OrchestrationEventStore;
-        const projectionState = yield* ProjectionStateRepository;
-        const counter = makeSqlStatementCounter();
-        const createdAt = "2026-01-01T00:00:00.000Z";
-        const event = yield* eventStore.append({
-          type: "project.created",
-          eventId: EventId.make("evt-cursor-batch-project"),
-          aggregateKind: "project",
-          aggregateId: ProjectId.make("project-cursor-batch"),
-          occurredAt: createdAt,
-          commandId: CommandId.make("cmd-cursor-batch-project"),
-          causationEventId: null,
-          correlationId: null,
-          metadata: {},
-          payload: {
-            projectId: ProjectId.make("project-cursor-batch"),
-            title: "Cursor batch project",
-            workspaceRoot: "/tmp/project-cursor-batch",
-            defaultModelSelection: null,
-            scripts: [],
-            createdAt,
-            updatedAt: createdAt,
-          },
-        });
+it.layer(
+  Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-cursor-batch-")),
+)("OrchestrationProjectionPipeline cursor batches", (it) => {
+  it.effect("writes a project and all projector cursors in two statements", () =>
+    Effect.gen(function* () {
+      const projectionPipeline = yield* OrchestrationProjectionPipeline;
+      const eventStore = yield* OrchestrationEventStore;
+      const projectionState = yield* ProjectionStateRepository;
+      const counter = makeSqlStatementCounter();
+      const createdAt = "2026-01-01T00:00:00.000Z";
+      const event = yield* eventStore.append({
+        type: "project.created",
+        eventId: EventId.make("evt-cursor-batch-project"),
+        aggregateKind: "project",
+        aggregateId: ProjectId.make("project-cursor-batch"),
+        occurredAt: createdAt,
+        commandId: CommandId.make("cmd-cursor-batch-project"),
+        causationEventId: null,
+        correlationId: null,
+        metadata: {},
+        payload: {
+          projectId: ProjectId.make("project-cursor-batch"),
+          title: "Cursor batch project",
+          workspaceRoot: "/tmp/project-cursor-batch",
+          defaultModelSelection: null,
+          scripts: [],
+          createdAt,
+          updatedAt: createdAt,
+        },
+      });
 
-        yield* projectionPipeline.projectEvent(event).pipe(Effect.withTracer(counter.tracer));
-        assert.strictEqual(counter.count(), 2);
-        assert.deepEqual(
-          yield* projectionState.listAll(),
-          Object.values(ORCHESTRATION_PROJECTOR_NAMES)
-            .sort()
-            .map((projector) => ({
-              projector,
-              lastAppliedSequence: event.sequence,
-              updatedAt: createdAt,
-            })),
-        );
-      }),
-    );
-  },
-);
+      yield* projectionPipeline.projectEvent(event).pipe(Effect.withTracer(counter.tracer));
+      assert.strictEqual(counter.count(), 2);
+      assert.deepEqual(
+        yield* projectionState.listAll(),
+        Object.values(ORCHESTRATION_PROJECTOR_NAMES)
+          .sort()
+          .map((projector) => ({
+            projector,
+            lastAppliedSequence: event.sequence,
+            updatedAt: createdAt,
+          })),
+      );
+    }),
+  );
+});
 
 it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-import-shell-")))(
   "imported thread shell projection",
@@ -687,41 +688,41 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-base-")
   },
 );
 
-it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-pull-requests-")))(
-  "OrchestrationProjectionPipeline pull request links",
-  (it) => {
-    it.effect("projects link, sync, unlink, legacy replay and delete into the link table", () =>
-      Effect.gen(function* () {
-        const projectionPipeline = yield* OrchestrationProjectionPipeline;
-        const eventStore = yield* OrchestrationEventStore;
-        const sql = yield* SqlClient.SqlClient;
-        const threadId = ThreadId.make("thread-pr");
-        const projectId = ProjectId.make("project-pr");
-        const t0 = "2026-01-01T00:00:00.000Z";
-        let counter = 0;
-        const base = (occurredAt: string) => {
-          counter += 1;
-          return {
-            eventId: EventId.make(`evt-pr-${counter}`),
-            aggregateKind: "thread",
-            aggregateId: threadId,
-            occurredAt,
-            commandId: CommandId.make(`cmd-pr-${counter}`),
-            causationEventId: null,
-            correlationId: CommandId.make(`cmd-pr-${counter}`),
-            metadata: {},
-          } as const;
-        };
-        const readLinks = () =>
-          sql<{
-            readonly host: string;
-            readonly repository: string;
-            readonly number: number;
-            readonly source: string;
-            readonly linkedAt: string;
-            readonly snapshotJson: string | null;
-            readonly stackJson: string | null;
-          }>`
+it.layer(
+  Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-pull-requests-")),
+)("OrchestrationProjectionPipeline pull request links", (it) => {
+  it.effect("projects link, sync, unlink, legacy replay and delete into the link table", () =>
+    Effect.gen(function* () {
+      const projectionPipeline = yield* OrchestrationProjectionPipeline;
+      const eventStore = yield* OrchestrationEventStore;
+      const sql = yield* SqlClient.SqlClient;
+      const threadId = ThreadId.make("thread-pr");
+      const projectId = ProjectId.make("project-pr");
+      const t0 = "2026-01-01T00:00:00.000Z";
+      let counter = 0;
+      const base = (occurredAt: string) => {
+        counter += 1;
+        return {
+          eventId: EventId.make(`evt-pr-${counter}`),
+          aggregateKind: "thread",
+          aggregateId: threadId,
+          occurredAt,
+          commandId: CommandId.make(`cmd-pr-${counter}`),
+          causationEventId: null,
+          correlationId: CommandId.make(`cmd-pr-${counter}`),
+          metadata: {},
+        } as const;
+      };
+      const readLinks = () =>
+        sql<{
+          readonly host: string;
+          readonly repository: string;
+          readonly number: number;
+          readonly source: string;
+          readonly linkedAt: string;
+          readonly snapshotJson: string | null;
+          readonly stackJson: string | null;
+        }>`
             SELECT
               host,
               repository,
@@ -734,308 +735,306 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-project
             WHERE thread_id = ${threadId}
             ORDER BY number ASC
           `;
-        const readThreadUpdatedAt = () =>
-          sql<{ readonly updatedAt: string }>`
+      const readThreadUpdatedAt = () =>
+        sql<{ readonly updatedAt: string }>`
             SELECT updated_at AS "updatedAt" FROM projection_threads WHERE thread_id = ${threadId}
           `;
 
-        yield* eventStore.append({
-          ...base(t0),
-          type: "thread.created",
-          payload: {
-            threadId,
+      yield* eventStore.append({
+        ...base(t0),
+        type: "thread.created",
+        payload: {
+          threadId,
+          projectId,
+          title: "Thread PR",
+          modelSelection: { instanceId: ProviderInstanceId.make("codex"), model: "gpt-5-codex" },
+          runtimeMode: "full-access",
+          branch: null,
+          worktreePath: null,
+          createdAt: t0,
+          updatedAt: t0,
+        },
+      });
+
+      // Legacy single-link event replays into a manual row with the URL host.
+      yield* eventStore.append({
+        ...base("2026-01-01T00:00:01.000Z"),
+        type: "thread.meta-updated",
+        payload: {
+          threadId,
+          linkedPullRequest: {
             projectId,
-            title: "Thread PR",
-            modelSelection: { instanceId: ProviderInstanceId.make("codex"), model: "gpt-5-codex" },
-            runtimeMode: "full-access",
-            branch: null,
-            worktreePath: null,
-            createdAt: t0,
-            updatedAt: t0,
-          },
-        });
-
-        // Legacy single-link event replays into a manual row with the URL host.
-        yield* eventStore.append({
-          ...base("2026-01-01T00:00:01.000Z"),
-          type: "thread.meta-updated",
-          payload: {
-            threadId,
-            linkedPullRequest: {
-              projectId,
-              repository: "web",
-              number: 41,
-              url: "https://org-a.visualstudio.com/DefaultCollection/project/_git/web/pullrequest/41",
-            },
-            updatedAt: "2026-01-01T00:00:01.000Z",
-          },
-        });
-        yield* eventStore.append({
-          ...base("2026-01-01T00:00:02.000Z"),
-          type: "thread.pull-request-linked",
-          payload: {
-            threadId,
-            link: {
-              host: "github.com",
-              repository: "pingdotgg/agentsmith",
-              number: 42,
-              url: "https://github.com/pingdotgg/agentsmith/pull/42",
-              source: "created",
-              linkedAt: "2026-01-01T00:00:02.000Z",
-              snapshot: null,
-              stack: null,
-            },
-            updatedAt: "2026-01-01T00:00:02.000Z",
-          },
-        });
-        yield* projectionPipeline.bootstrap;
-
-        assert.deepEqual(yield* readLinks(), [
-          {
-            host: "dev.azure.com",
-            repository: "org-a/project/_git/web",
+            repository: "web",
             number: 41,
-            source: "manual",
-            linkedAt: "2026-01-01T00:00:01.000Z",
-            snapshotJson: null,
-            stackJson: null,
+            url: "https://org-a.visualstudio.com/DefaultCollection/project/_git/web/pullrequest/41",
           },
-          {
+          updatedAt: "2026-01-01T00:00:01.000Z",
+        },
+      });
+      yield* eventStore.append({
+        ...base("2026-01-01T00:00:02.000Z"),
+        type: "thread.pull-request-linked",
+        payload: {
+          threadId,
+          link: {
             host: "github.com",
             repository: "pingdotgg/agentsmith",
             number: 42,
+            url: "https://github.com/pingdotgg/agentsmith/pull/42",
             source: "created",
             linkedAt: "2026-01-01T00:00:02.000Z",
-            snapshotJson: null,
-            stackJson: null,
-          },
-        ]);
-        assert.deepEqual(yield* readThreadUpdatedAt(), [{ updatedAt: "2026-01-01T00:00:02.000Z" }]);
-
-        // Sync fills snapshot/stack on the matching row; a sync for an unknown
-        // link is ignored.
-        const snapshot: ThreadPullRequestSnapshot = {
-          state: "open",
-          title: "Add links",
-          headBranch: "feat/links",
-          baseBranch: "main",
-          isDraft: false,
-          updatedAt: "2026-01-01T00:00:02.500Z",
-          syncedAt: "2026-01-01T00:00:03.000Z",
-        };
-        yield* eventStore.append({
-          ...base("2026-01-01T00:00:03.000Z"),
-          type: "thread.pull-request-synced",
-          payload: {
-            threadId,
-            host: "github.com",
-            repository: "pingdotgg/agentsmith",
-            number: 42,
-            snapshot,
+            snapshot: null,
             stack: null,
-            updatedAt: "2026-01-01T00:00:03.000Z",
           },
-        });
-        yield* eventStore.append({
-          ...base("2026-01-01T00:00:03.500Z"),
-          type: "thread.pull-request-synced",
-          payload: {
-            threadId,
-            host: "github.com",
-            repository: "pingdotgg/agentsmith",
-            number: 99,
-            snapshot,
-            stack: null,
-            updatedAt: "2026-01-01T00:00:03.500Z",
-          },
-        });
-        yield* projectionPipeline.bootstrap;
+          updatedAt: "2026-01-01T00:00:02.000Z",
+        },
+      });
+      yield* projectionPipeline.bootstrap;
 
-        const synced = yield* readLinks();
-        assert.equal(synced.length, 2);
-        assert.equal(synced[0]?.snapshotJson, null);
-        // @effect-diagnostics-next-line preferSchemaOverJson:off
-        assert.deepEqual(JSON.parse(synced[1]?.snapshotJson ?? "null"), snapshot);
-        assert.deepEqual(yield* readThreadUpdatedAt(), [{ updatedAt: "2026-01-01T00:00:03.000Z" }]);
+      assert.deepEqual(yield* readLinks(), [
+        {
+          host: "dev.azure.com",
+          repository: "org-a/project/_git/web",
+          number: 41,
+          source: "manual",
+          linkedAt: "2026-01-01T00:00:01.000Z",
+          snapshotJson: null,
+          stackJson: null,
+        },
+        {
+          host: "github.com",
+          repository: "pingdotgg/agentsmith",
+          number: 42,
+          source: "created",
+          linkedAt: "2026-01-01T00:00:02.000Z",
+          snapshotJson: null,
+          stackJson: null,
+        },
+      ]);
+      assert.deepEqual(yield* readThreadUpdatedAt(), [{ updatedAt: "2026-01-01T00:00:02.000Z" }]);
 
-        // A legacy null clears only the manual row; created/agent/stack rows stay.
-        yield* eventStore.append({
-          ...base("2026-01-01T00:00:04.000Z"),
-          type: "thread.meta-updated",
-          payload: {
-            threadId,
-            linkedPullRequest: null,
-            updatedAt: "2026-01-01T00:00:04.000Z",
-          },
-        });
-        yield* projectionPipeline.bootstrap;
-        assert.deepEqual(
-          (yield* readLinks()).map((row) => row.number),
-          [42],
-        );
+      // Sync fills snapshot/stack on the matching row; a sync for an unknown
+      // link is ignored.
+      const snapshot: ThreadPullRequestSnapshot = {
+        state: "open",
+        title: "Add links",
+        headBranch: "feat/links",
+        baseBranch: "main",
+        isDraft: false,
+        updatedAt: "2026-01-01T00:00:02.500Z",
+        syncedAt: "2026-01-01T00:00:03.000Z",
+      };
+      yield* eventStore.append({
+        ...base("2026-01-01T00:00:03.000Z"),
+        type: "thread.pull-request-synced",
+        payload: {
+          threadId,
+          host: "github.com",
+          repository: "pingdotgg/agentsmith",
+          number: 42,
+          snapshot,
+          stack: null,
+          updatedAt: "2026-01-01T00:00:03.000Z",
+        },
+      });
+      yield* eventStore.append({
+        ...base("2026-01-01T00:00:03.500Z"),
+        type: "thread.pull-request-synced",
+        payload: {
+          threadId,
+          host: "github.com",
+          repository: "pingdotgg/agentsmith",
+          number: 99,
+          snapshot,
+          stack: null,
+          updatedAt: "2026-01-01T00:00:03.500Z",
+        },
+      });
+      yield* projectionPipeline.bootstrap;
 
-        yield* eventStore.append({
-          ...base("2026-01-01T00:00:05.000Z"),
-          type: "thread.pull-request-unlinked",
-          payload: {
-            threadId,
-            host: "GitHub.COM",
-            repository: "PingDotGG/AgentSmith",
-            number: 42,
-            updatedAt: "2026-01-01T00:00:05.000Z",
-          },
-        });
-        yield* projectionPipeline.bootstrap;
-        assert.deepEqual(yield* readLinks(), []);
-        assert.deepEqual(yield* readThreadUpdatedAt(), [{ updatedAt: "2026-01-01T00:00:05.000Z" }]);
+      const synced = yield* readLinks();
+      assert.equal(synced.length, 2);
+      assert.equal(synced[0]?.snapshotJson, null);
+      // @effect-diagnostics-next-line preferSchemaOverJson:off
+      assert.deepEqual(JSON.parse(synced[1]?.snapshotJson ?? "null"), snapshot);
+      assert.deepEqual(yield* readThreadUpdatedAt(), [{ updatedAt: "2026-01-01T00:00:03.000Z" }]);
 
-        // Older Forgejo rows stored a portless host; unlink by their URL's authority.
-        yield* eventStore.append({
-          ...base("2026-01-01T00:00:05.100Z"),
-          type: "thread.pull-request-linked",
-          payload: {
-            threadId,
-            link: {
-              host: "forge.example",
-              repository: "team/repo",
-              number: 42,
-              url: "http://forge.example:3000/team/repo/pulls/42",
-              source: "agent",
-              linkedAt: "2026-01-01T00:00:05.100Z",
-              snapshot: null,
-              stack: null,
-            },
-            updatedAt: "2026-01-01T00:00:05.100Z",
-          },
-        });
-        yield* eventStore.append({
-          ...base("2026-01-01T00:00:05.200Z"),
-          type: "thread.pull-request-unlinked",
-          payload: {
-            threadId,
-            host: "forge.example:3000",
+      // A legacy null clears only the manual row; created/agent/stack rows stay.
+      yield* eventStore.append({
+        ...base("2026-01-01T00:00:04.000Z"),
+        type: "thread.meta-updated",
+        payload: {
+          threadId,
+          linkedPullRequest: null,
+          updatedAt: "2026-01-01T00:00:04.000Z",
+        },
+      });
+      yield* projectionPipeline.bootstrap;
+      assert.deepEqual(
+        (yield* readLinks()).map((row) => row.number),
+        [42],
+      );
+
+      yield* eventStore.append({
+        ...base("2026-01-01T00:00:05.000Z"),
+        type: "thread.pull-request-unlinked",
+        payload: {
+          threadId,
+          host: "GitHub.COM",
+          repository: "PingDotGG/AgentSmith",
+          number: 42,
+          updatedAt: "2026-01-01T00:00:05.000Z",
+        },
+      });
+      yield* projectionPipeline.bootstrap;
+      assert.deepEqual(yield* readLinks(), []);
+      assert.deepEqual(yield* readThreadUpdatedAt(), [{ updatedAt: "2026-01-01T00:00:05.000Z" }]);
+
+      // Older Forgejo rows stored a portless host; unlink by their URL's authority.
+      yield* eventStore.append({
+        ...base("2026-01-01T00:00:05.100Z"),
+        type: "thread.pull-request-linked",
+        payload: {
+          threadId,
+          link: {
+            host: "forge.example",
             repository: "team/repo",
             number: 42,
-            updatedAt: "2026-01-01T00:00:05.200Z",
+            url: "http://forge.example:3000/team/repo/pulls/42",
+            source: "agent",
+            linkedAt: "2026-01-01T00:00:05.100Z",
+            snapshot: null,
+            stack: null,
           },
-        });
-        yield* projectionPipeline.bootstrap;
-        assert.deepEqual(yield* readLinks(), []);
+          updatedAt: "2026-01-01T00:00:05.100Z",
+        },
+      });
+      yield* eventStore.append({
+        ...base("2026-01-01T00:00:05.200Z"),
+        type: "thread.pull-request-unlinked",
+        payload: {
+          threadId,
+          host: "forge.example:3000",
+          repository: "team/repo",
+          number: 42,
+          updatedAt: "2026-01-01T00:00:05.200Z",
+        },
+      });
+      yield* projectionPipeline.bootstrap;
+      assert.deepEqual(yield* readLinks(), []);
 
-        // Deleting the thread clears whatever links it still had.
-        yield* eventStore.append({
-          ...base("2026-01-01T00:00:06.000Z"),
-          type: "thread.pull-request-linked",
-          payload: {
-            threadId,
-            link: {
-              host: "github.com",
-              repository: "pingdotgg/agentsmith",
-              number: 43,
-              url: "https://github.com/pingdotgg/agentsmith/pull/43",
-              source: "agent",
-              linkedAt: "2026-01-01T00:00:06.000Z",
-              snapshot: null,
-              stack: null,
+      // Deleting the thread clears whatever links it still had.
+      yield* eventStore.append({
+        ...base("2026-01-01T00:00:06.000Z"),
+        type: "thread.pull-request-linked",
+        payload: {
+          threadId,
+          link: {
+            host: "github.com",
+            repository: "pingdotgg/agentsmith",
+            number: 43,
+            url: "https://github.com/pingdotgg/agentsmith/pull/43",
+            source: "agent",
+            linkedAt: "2026-01-01T00:00:06.000Z",
+            snapshot: null,
+            stack: null,
+          },
+          updatedAt: "2026-01-01T00:00:06.000Z",
+        },
+      });
+      yield* eventStore.append({
+        ...base("2026-01-01T00:00:07.000Z"),
+        type: "thread.deleted",
+        payload: {
+          threadId,
+          deletedAt: "2026-01-01T00:00:07.000Z",
+        },
+      });
+      yield* projectionPipeline.bootstrap;
+      assert.deepEqual(yield* readLinks(), []);
+    }),
+  );
+});
+
+it.layer(
+  Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-safe-")),
+)("OrchestrationProjectionPipeline", (it) => {
+  it.effect("preserves mixed image attachment metadata as-is", () =>
+    Effect.gen(function* () {
+      const projectionPipeline = yield* OrchestrationProjectionPipeline;
+      const eventStore = yield* OrchestrationEventStore;
+      const sql = yield* SqlClient.SqlClient;
+      const now = "2026-01-01T00:00:00.000Z";
+
+      yield* eventStore.append({
+        type: "thread.message-sent",
+        eventId: EventId.make("evt-attachments-safe"),
+        aggregateKind: "thread",
+        aggregateId: ThreadId.make("thread-attachments-safe"),
+        occurredAt: now,
+        commandId: CommandId.make("cmd-attachments-safe"),
+        causationEventId: null,
+        correlationId: CommandId.make("cmd-attachments-safe"),
+        metadata: {},
+        payload: {
+          threadId: ThreadId.make("thread-attachments-safe"),
+          messageId: MessageId.make("message-attachments-safe"),
+          role: "user",
+          text: "Inspect this",
+          attachments: [
+            {
+              type: "image",
+              id: "thread-attachments-safe-att-1",
+              name: "untrusted.exe",
+              mimeType: "image/x-unknown",
+              sizeBytes: 5,
             },
-            updatedAt: "2026-01-01T00:00:06.000Z",
-          },
-        });
-        yield* eventStore.append({
-          ...base("2026-01-01T00:00:07.000Z"),
-          type: "thread.deleted",
-          payload: {
-            threadId,
-            deletedAt: "2026-01-01T00:00:07.000Z",
-          },
-        });
-        yield* projectionPipeline.bootstrap;
-        assert.deepEqual(yield* readLinks(), []);
-      }),
-    );
-  },
-);
+            {
+              type: "image",
+              id: "thread-attachments-safe-att-2",
+              name: "not-image.png",
+              mimeType: "image/png",
+              sizeBytes: 5,
+            },
+          ],
+          turnId: null,
+          streaming: false,
+          createdAt: now,
+          updatedAt: now,
+        },
+      });
 
-it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-safe-")))(
-  "OrchestrationProjectionPipeline",
-  (it) => {
-    it.effect("preserves mixed image attachment metadata as-is", () =>
-      Effect.gen(function* () {
-        const projectionPipeline = yield* OrchestrationProjectionPipeline;
-        const eventStore = yield* OrchestrationEventStore;
-        const sql = yield* SqlClient.SqlClient;
-        const now = "2026-01-01T00:00:00.000Z";
+      yield* projectionPipeline.bootstrap;
 
-        yield* eventStore.append({
-          type: "thread.message-sent",
-          eventId: EventId.make("evt-attachments-safe"),
-          aggregateKind: "thread",
-          aggregateId: ThreadId.make("thread-attachments-safe"),
-          occurredAt: now,
-          commandId: CommandId.make("cmd-attachments-safe"),
-          causationEventId: null,
-          correlationId: CommandId.make("cmd-attachments-safe"),
-          metadata: {},
-          payload: {
-            threadId: ThreadId.make("thread-attachments-safe"),
-            messageId: MessageId.make("message-attachments-safe"),
-            role: "user",
-            text: "Inspect this",
-            attachments: [
-              {
-                type: "image",
-                id: "thread-attachments-safe-att-1",
-                name: "untrusted.exe",
-                mimeType: "image/x-unknown",
-                sizeBytes: 5,
-              },
-              {
-                type: "image",
-                id: "thread-attachments-safe-att-2",
-                name: "not-image.png",
-                mimeType: "image/png",
-                sizeBytes: 5,
-              },
-            ],
-            turnId: null,
-            streaming: false,
-            createdAt: now,
-            updatedAt: now,
-          },
-        });
-
-        yield* projectionPipeline.bootstrap;
-
-        const rows = yield* sql<{
-          readonly attachmentsJson: string | null;
-        }>`
+      const rows = yield* sql<{
+        readonly attachmentsJson: string | null;
+      }>`
             SELECT
               attachments_json AS "attachmentsJson"
             FROM projection_thread_messages
             WHERE message_id = 'message-attachments-safe'
           `;
-        assert.equal(rows.length, 1);
-        // @effect-diagnostics-next-line preferSchemaOverJson:off
-        assert.deepEqual(JSON.parse(rows[0]?.attachmentsJson ?? "null"), [
-          {
-            type: "image",
-            id: "thread-attachments-safe-att-1",
-            name: "untrusted.exe",
-            mimeType: "image/x-unknown",
-            sizeBytes: 5,
-          },
-          {
-            type: "image",
-            id: "thread-attachments-safe-att-2",
-            name: "not-image.png",
-            mimeType: "image/png",
-            sizeBytes: 5,
-          },
-        ]);
-      }),
-    );
-  },
-);
+      assert.equal(rows.length, 1);
+      // @effect-diagnostics-next-line preferSchemaOverJson:off
+      assert.deepEqual(JSON.parse(rows[0]?.attachmentsJson ?? "null"), [
+        {
+          type: "image",
+          id: "thread-attachments-safe-att-1",
+          name: "untrusted.exe",
+          mimeType: "image/x-unknown",
+          sizeBytes: 5,
+        },
+        {
+          type: "image",
+          id: "thread-attachments-safe-att-2",
+          name: "not-image.png",
+          mimeType: "image/png",
+          sizeBytes: 5,
+        },
+      ]);
+    }),
+  );
+});
 
 it.layer(BaseTestLayer)("OrchestrationProjectionPipeline", (it) => {
   it.effect(
@@ -1167,7 +1166,9 @@ it.layer(BaseTestLayer)("OrchestrationProjectionPipeline", (it) => {
 });
 
 it.layer(
-  Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-overwrite-")),
+  Layer.fresh(
+    makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-overwrite-"),
+  ),
 )("OrchestrationProjectionPipeline", (it) => {
   it.effect("overwrites stored attachment references when a message updates attachments", () =>
     Effect.gen(function* () {
@@ -1311,7 +1312,9 @@ it.layer(
 });
 
 it.layer(
-  Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-rollback-")),
+  Layer.fresh(
+    makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-rollback-"),
+  ),
 )("OrchestrationProjectionPipeline", (it) => {
   it.effect("does not persist attachment files when projector transaction rolls back", () =>
     Effect.gen(function* () {
@@ -1455,7 +1458,9 @@ it.layer(
 });
 
 it.layer(
-  Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-overwrite-")),
+  Layer.fresh(
+    makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-overwrite-"),
+  ),
 )("OrchestrationProjectionPipeline", (it) => {
   it.effect("prunes reverted attachments only after every projector commits", () =>
     Effect.gen(function* () {
@@ -1539,7 +1544,9 @@ it.layer(
           threadId,
           turnId: TurnId.make("turn-keep"),
           checkpointTurnCount: 1,
-          checkpointRef: CheckpointRef.make("refs/agentsmith/checkpoints/thread-revert-files/turn/1"),
+          checkpointRef: CheckpointRef.make(
+            "refs/agentsmith/checkpoints/thread-revert-files/turn/1",
+          ),
           status: "ready",
           files: [],
           assistantMessageId: MessageId.make("message-keep"),
@@ -1599,7 +1606,9 @@ it.layer(
           threadId,
           turnId: TurnId.make("turn-remove"),
           checkpointTurnCount: 2,
-          checkpointRef: CheckpointRef.make("refs/agentsmith/checkpoints/thread-revert-files/turn/2"),
+          checkpointRef: CheckpointRef.make(
+            "refs/agentsmith/checkpoints/thread-revert-files/turn/2",
+          ),
           status: "ready",
           files: [],
           assistantMessageId: MessageId.make("message-remove"),
@@ -1808,63 +1817,226 @@ it.layer(
   );
 });
 
-it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-revert-")))(
-  "OrchestrationProjectionPipeline",
-  (it) => {
-    it.effect("removes thread attachment directory when thread is deleted", () =>
-      Effect.gen(function* () {
-        const fileSystem = yield* FileSystem.FileSystem;
-        const path = yield* Path.Path;
-        const projectionPipeline = yield* OrchestrationProjectionPipeline;
-        const eventStore = yield* OrchestrationEventStore;
-        const { attachmentsDir } = yield* ServerConfig;
-        const now = "2026-01-01T00:00:00.000Z";
-        const threadId = ThreadId.make("Thread Delete.Files");
-        const attachmentId = "thread-delete-files-00000000-0000-4000-8000-000000000001";
-        const fileAttachmentId = "thread-delete-files-00000000-0000-4000-8000-000000000003-pdf";
-        const otherThreadAttachmentId =
-          "thread-delete-files-extra-00000000-0000-4000-8000-000000000002";
+it.layer(
+  Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-revert-")),
+)("OrchestrationProjectionPipeline", (it) => {
+  it.effect("removes thread attachment directory when thread is deleted", () =>
+    Effect.gen(function* () {
+      const fileSystem = yield* FileSystem.FileSystem;
+      const path = yield* Path.Path;
+      const projectionPipeline = yield* OrchestrationProjectionPipeline;
+      const eventStore = yield* OrchestrationEventStore;
+      const { attachmentsDir } = yield* ServerConfig;
+      const now = "2026-01-01T00:00:00.000Z";
+      const threadId = ThreadId.make("Thread Delete.Files");
+      const attachmentId = "thread-delete-files-00000000-0000-4000-8000-000000000001";
+      const fileAttachmentId = "thread-delete-files-00000000-0000-4000-8000-000000000003-pdf";
+      const otherThreadAttachmentId =
+        "thread-delete-files-extra-00000000-0000-4000-8000-000000000002";
 
-        const appendAndProject = (event: Parameters<typeof eventStore.append>[0]) =>
-          eventStore
-            .append(event)
-            .pipe(Effect.flatMap((savedEvent) => projectionPipeline.projectEvent(savedEvent)));
+      const appendAndProject = (event: Parameters<typeof eventStore.append>[0]) =>
+        eventStore
+          .append(event)
+          .pipe(Effect.flatMap((savedEvent) => projectionPipeline.projectEvent(savedEvent)));
 
-        yield* appendAndProject({
-          type: "project.created",
-          eventId: EventId.make("evt-delete-files-1"),
-          aggregateKind: "project",
-          aggregateId: ProjectId.make("project-delete-files"),
-          occurredAt: now,
-          commandId: CommandId.make("cmd-delete-files-1"),
-          causationEventId: null,
-          correlationId: CorrelationId.make("cmd-delete-files-1"),
-          metadata: {},
-          payload: {
-            projectId: ProjectId.make("project-delete-files"),
-            title: "Project Delete Files",
-            workspaceRoot: "/tmp/project-delete-files",
-            defaultModelSelection: null,
-            scripts: [],
-            createdAt: now,
-            updatedAt: now,
+      yield* appendAndProject({
+        type: "project.created",
+        eventId: EventId.make("evt-delete-files-1"),
+        aggregateKind: "project",
+        aggregateId: ProjectId.make("project-delete-files"),
+        occurredAt: now,
+        commandId: CommandId.make("cmd-delete-files-1"),
+        causationEventId: null,
+        correlationId: CorrelationId.make("cmd-delete-files-1"),
+        metadata: {},
+        payload: {
+          projectId: ProjectId.make("project-delete-files"),
+          title: "Project Delete Files",
+          workspaceRoot: "/tmp/project-delete-files",
+          defaultModelSelection: null,
+          scripts: [],
+          createdAt: now,
+          updatedAt: now,
+        },
+      });
+
+      yield* appendAndProject({
+        type: "thread.created",
+        eventId: EventId.make("evt-delete-files-2"),
+        aggregateKind: "thread",
+        aggregateId: threadId,
+        occurredAt: now,
+        commandId: CommandId.make("cmd-delete-files-2"),
+        causationEventId: null,
+        correlationId: CorrelationId.make("cmd-delete-files-2"),
+        metadata: {},
+        payload: {
+          threadId,
+          projectId: ProjectId.make("project-delete-files"),
+          title: "Thread Delete Files",
+          modelSelection: {
+            instanceId: ProviderInstanceId.make("codex"),
+            model: "gpt-5-codex",
           },
-        });
+          runtimeMode: "full-access",
+          branch: null,
+          worktreePath: null,
+          createdAt: now,
+          updatedAt: now,
+        },
+      });
 
-        yield* appendAndProject({
+      yield* appendAndProject({
+        type: "thread.message-sent",
+        eventId: EventId.make("evt-delete-files-3"),
+        aggregateKind: "thread",
+        aggregateId: threadId,
+        occurredAt: now,
+        commandId: CommandId.make("cmd-delete-files-3"),
+        causationEventId: null,
+        correlationId: CorrelationId.make("cmd-delete-files-3"),
+        metadata: {},
+        payload: {
+          threadId,
+          messageId: MessageId.make("message-delete-files"),
+          role: "user",
+          text: "Delete",
+          attachments: [
+            {
+              type: "image",
+              id: attachmentId,
+              name: "delete.png",
+              mimeType: "image/png",
+              sizeBytes: 5,
+            },
+            {
+              type: "file",
+              id: fileAttachmentId,
+              name: "delete.pdf",
+              mimeType: "application/pdf",
+              sizeBytes: 6,
+            },
+          ],
+          turnId: null,
+          streaming: false,
+          createdAt: now,
+          updatedAt: now,
+        },
+      });
+
+      const threadAttachmentPath = path.join(attachmentsDir, `${attachmentId}.png`);
+      const threadFileAttachmentPath = path.join(attachmentsDir, `${fileAttachmentId}.pdf`);
+      const otherThreadAttachmentPath = path.join(attachmentsDir, `${otherThreadAttachmentId}.png`);
+      yield* fileSystem.makeDirectory(attachmentsDir, { recursive: true });
+      yield* fileSystem.writeFileString(threadAttachmentPath, "delete");
+      yield* fileSystem.writeFileString(threadFileAttachmentPath, "delete");
+      yield* fileSystem.writeFileString(otherThreadAttachmentPath, "other-thread");
+      assert.isTrue(yield* exists(threadAttachmentPath));
+      assert.isTrue(yield* exists(threadFileAttachmentPath));
+      assert.isTrue(yield* exists(otherThreadAttachmentPath));
+
+      yield* appendAndProject({
+        type: "thread.deleted",
+        eventId: EventId.make("evt-delete-files-4"),
+        aggregateKind: "thread",
+        aggregateId: threadId,
+        occurredAt: now,
+        commandId: CommandId.make("cmd-delete-files-4"),
+        causationEventId: null,
+        correlationId: CorrelationId.make("cmd-delete-files-4"),
+        metadata: {},
+        payload: {
+          threadId,
+          deletedAt: now,
+        },
+      });
+
+      assert.isFalse(yield* exists(threadAttachmentPath));
+      assert.isFalse(yield* exists(threadFileAttachmentPath));
+      assert.isTrue(yield* exists(otherThreadAttachmentPath));
+    }),
+  );
+});
+
+it.layer(
+  Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-delete-")),
+)("OrchestrationProjectionPipeline", (it) => {
+  it.effect("ignores unsafe thread ids for attachment cleanup paths", () =>
+    Effect.gen(function* () {
+      const fileSystem = yield* FileSystem.FileSystem;
+      const path = yield* Path.Path;
+      const projectionPipeline = yield* OrchestrationProjectionPipeline;
+      const eventStore = yield* OrchestrationEventStore;
+      const now = "2026-01-01T00:00:00.000Z";
+      const { attachmentsDir: attachmentsRootDir, stateDir } = yield* ServerConfig;
+      const attachmentsSentinelPath = path.join(attachmentsRootDir, "sentinel.txt");
+      const stateDirSentinelPath = path.join(stateDir, "state-sentinel.txt");
+      yield* fileSystem.makeDirectory(attachmentsRootDir, { recursive: true });
+      yield* fileSystem.writeFileString(attachmentsSentinelPath, "keep-attachments-root");
+      yield* fileSystem.writeFileString(stateDirSentinelPath, "keep-state-dir");
+
+      yield* eventStore.append({
+        type: "thread.deleted",
+        eventId: EventId.make("evt-unsafe-thread-delete"),
+        aggregateKind: "thread",
+        aggregateId: ThreadId.make(".."),
+        occurredAt: now,
+        commandId: CommandId.make("cmd-unsafe-thread-delete"),
+        causationEventId: null,
+        correlationId: CorrelationId.make("cmd-unsafe-thread-delete"),
+        metadata: {},
+        payload: {
+          threadId: ThreadId.make(".."),
+          deletedAt: now,
+        },
+      });
+
+      yield* projectionPipeline.bootstrap;
+
+      assert.isTrue(yield* exists(attachmentsRootDir));
+      assert.isTrue(yield* exists(attachmentsSentinelPath));
+      assert.isTrue(yield* exists(stateDirSentinelPath));
+    }),
+  );
+});
+
+it.layer(
+  Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-replay-")),
+)("OrchestrationProjectionPipeline", (it) => {
+  it.effect("replaying a superseded thread.deleted keeps the re-created thread's files", () =>
+    Effect.gen(function* () {
+      const fileSystem = yield* FileSystem.FileSystem;
+      const path = yield* Path.Path;
+      const projectionPipeline = yield* OrchestrationProjectionPipeline;
+      const eventStore = yield* OrchestrationEventStore;
+      const { attachmentsDir } = yield* ServerConfig;
+      const now = "2026-01-01T00:00:00.000Z";
+      const projectId = ProjectId.make("project-replay");
+      const retriedThreadId = ThreadId.make("thread-replay-retried");
+      const goneThreadId = ThreadId.make("thread-replay-gone");
+      const retriedAttachmentPath = path.join(
+        attachmentsDir,
+        "thread-replay-retried-00000000-0000-4000-8000-000000000001.png",
+      );
+      const goneAttachmentPath = path.join(
+        attachmentsDir,
+        "thread-replay-gone-00000000-0000-4000-8000-000000000002.png",
+      );
+      const threadCreated = (threadId: ThreadId, suffix: string) =>
+        eventStore.append({
           type: "thread.created",
-          eventId: EventId.make("evt-delete-files-2"),
+          eventId: EventId.make(`evt-replay-create-${suffix}`),
           aggregateKind: "thread",
           aggregateId: threadId,
           occurredAt: now,
-          commandId: CommandId.make("cmd-delete-files-2"),
+          commandId: CommandId.make(`cmd-replay-create-${suffix}`),
           causationEventId: null,
-          correlationId: CorrelationId.make("cmd-delete-files-2"),
+          correlationId: CorrelationId.make(`cmd-replay-create-${suffix}`),
           metadata: {},
           payload: {
             threadId,
-            projectId: ProjectId.make("project-delete-files"),
-            title: "Thread Delete Files",
+            projectId,
+            title: `Thread ${suffix}`,
             modelSelection: {
               instanceId: ProviderInstanceId.make("codex"),
               model: "gpt-5-codex",
@@ -1876,230 +2048,61 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-project
             updatedAt: now,
           },
         });
-
-        yield* appendAndProject({
-          type: "thread.message-sent",
-          eventId: EventId.make("evt-delete-files-3"),
+      const threadDeleted = (threadId: ThreadId, suffix: string) =>
+        eventStore.append({
+          type: "thread.deleted",
+          eventId: EventId.make(`evt-replay-delete-${suffix}`),
           aggregateKind: "thread",
           aggregateId: threadId,
           occurredAt: now,
-          commandId: CommandId.make("cmd-delete-files-3"),
+          commandId: CommandId.make(`cmd-replay-delete-${suffix}`),
           causationEventId: null,
-          correlationId: CorrelationId.make("cmd-delete-files-3"),
+          correlationId: CorrelationId.make(`cmd-replay-delete-${suffix}`),
           metadata: {},
-          payload: {
-            threadId,
-            messageId: MessageId.make("message-delete-files"),
-            role: "user",
-            text: "Delete",
-            attachments: [
-              {
-                type: "image",
-                id: attachmentId,
-                name: "delete.png",
-                mimeType: "image/png",
-                sizeBytes: 5,
-              },
-              {
-                type: "file",
-                id: fileAttachmentId,
-                name: "delete.pdf",
-                mimeType: "application/pdf",
-                sizeBytes: 6,
-              },
-            ],
-            turnId: null,
-            streaming: false,
-            createdAt: now,
-            updatedAt: now,
-          },
+          payload: { threadId, deletedAt: now },
         });
 
-        const threadAttachmentPath = path.join(attachmentsDir, `${attachmentId}.png`);
-        const threadFileAttachmentPath = path.join(attachmentsDir, `${fileAttachmentId}.pdf`);
-        const otherThreadAttachmentPath = path.join(
-          attachmentsDir,
-          `${otherThreadAttachmentId}.png`,
-        );
-        yield* fileSystem.makeDirectory(attachmentsDir, { recursive: true });
-        yield* fileSystem.writeFileString(threadAttachmentPath, "delete");
-        yield* fileSystem.writeFileString(threadFileAttachmentPath, "delete");
-        yield* fileSystem.writeFileString(otherThreadAttachmentPath, "other-thread");
-        assert.isTrue(yield* exists(threadAttachmentPath));
-        assert.isTrue(yield* exists(threadFileAttachmentPath));
-        assert.isTrue(yield* exists(otherThreadAttachmentPath));
+      yield* eventStore.append({
+        type: "project.created",
+        eventId: EventId.make("evt-replay-project"),
+        aggregateKind: "project",
+        aggregateId: projectId,
+        occurredAt: now,
+        commandId: CommandId.make("cmd-replay-project"),
+        causationEventId: null,
+        correlationId: CorrelationId.make("cmd-replay-project"),
+        metadata: {},
+        payload: {
+          projectId,
+          title: "Replay",
+          workspaceRoot: "/tmp/project-replay",
+          defaultModelSelection: null,
+          scripts: [],
+          createdAt: now,
+          updatedAt: now,
+        },
+      });
+      // A failed first send: create, roll back, then the draft retries the id.
+      yield* threadCreated(retriedThreadId, "retried-1");
+      yield* threadDeleted(retriedThreadId, "retried");
+      yield* threadCreated(retriedThreadId, "retried-2");
+      // A thread that was deleted for good.
+      yield* threadCreated(goneThreadId, "gone");
+      yield* threadDeleted(goneThreadId, "gone");
 
-        yield* appendAndProject({
-          type: "thread.deleted",
-          eventId: EventId.make("evt-delete-files-4"),
-          aggregateKind: "thread",
-          aggregateId: threadId,
-          occurredAt: now,
-          commandId: CommandId.make("cmd-delete-files-4"),
-          causationEventId: null,
-          correlationId: CorrelationId.make("cmd-delete-files-4"),
-          metadata: {},
-          payload: {
-            threadId,
-            deletedAt: now,
-          },
-        });
+      // Files on disk are not event-sourced: by the time anything replays,
+      // the retried thread's attachments already belong to its second life.
+      yield* fileSystem.makeDirectory(attachmentsDir, { recursive: true });
+      yield* fileSystem.writeFileString(retriedAttachmentPath, "second incarnation");
+      yield* fileSystem.writeFileString(goneAttachmentPath, "gone");
 
-        assert.isFalse(yield* exists(threadAttachmentPath));
-        assert.isFalse(yield* exists(threadFileAttachmentPath));
-        assert.isTrue(yield* exists(otherThreadAttachmentPath));
-      }),
-    );
-  },
-);
+      yield* projectionPipeline.bootstrap;
 
-it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-delete-")))(
-  "OrchestrationProjectionPipeline",
-  (it) => {
-    it.effect("ignores unsafe thread ids for attachment cleanup paths", () =>
-      Effect.gen(function* () {
-        const fileSystem = yield* FileSystem.FileSystem;
-        const path = yield* Path.Path;
-        const projectionPipeline = yield* OrchestrationProjectionPipeline;
-        const eventStore = yield* OrchestrationEventStore;
-        const now = "2026-01-01T00:00:00.000Z";
-        const { attachmentsDir: attachmentsRootDir, stateDir } = yield* ServerConfig;
-        const attachmentsSentinelPath = path.join(attachmentsRootDir, "sentinel.txt");
-        const stateDirSentinelPath = path.join(stateDir, "state-sentinel.txt");
-        yield* fileSystem.makeDirectory(attachmentsRootDir, { recursive: true });
-        yield* fileSystem.writeFileString(attachmentsSentinelPath, "keep-attachments-root");
-        yield* fileSystem.writeFileString(stateDirSentinelPath, "keep-state-dir");
-
-        yield* eventStore.append({
-          type: "thread.deleted",
-          eventId: EventId.make("evt-unsafe-thread-delete"),
-          aggregateKind: "thread",
-          aggregateId: ThreadId.make(".."),
-          occurredAt: now,
-          commandId: CommandId.make("cmd-unsafe-thread-delete"),
-          causationEventId: null,
-          correlationId: CorrelationId.make("cmd-unsafe-thread-delete"),
-          metadata: {},
-          payload: {
-            threadId: ThreadId.make(".."),
-            deletedAt: now,
-          },
-        });
-
-        yield* projectionPipeline.bootstrap;
-
-        assert.isTrue(yield* exists(attachmentsRootDir));
-        assert.isTrue(yield* exists(attachmentsSentinelPath));
-        assert.isTrue(yield* exists(stateDirSentinelPath));
-      }),
-    );
-  },
-);
-
-it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-replay-")))(
-  "OrchestrationProjectionPipeline",
-  (it) => {
-    it.effect("replaying a superseded thread.deleted keeps the re-created thread's files", () =>
-      Effect.gen(function* () {
-        const fileSystem = yield* FileSystem.FileSystem;
-        const path = yield* Path.Path;
-        const projectionPipeline = yield* OrchestrationProjectionPipeline;
-        const eventStore = yield* OrchestrationEventStore;
-        const { attachmentsDir } = yield* ServerConfig;
-        const now = "2026-01-01T00:00:00.000Z";
-        const projectId = ProjectId.make("project-replay");
-        const retriedThreadId = ThreadId.make("thread-replay-retried");
-        const goneThreadId = ThreadId.make("thread-replay-gone");
-        const retriedAttachmentPath = path.join(
-          attachmentsDir,
-          "thread-replay-retried-00000000-0000-4000-8000-000000000001.png",
-        );
-        const goneAttachmentPath = path.join(
-          attachmentsDir,
-          "thread-replay-gone-00000000-0000-4000-8000-000000000002.png",
-        );
-        const threadCreated = (threadId: ThreadId, suffix: string) =>
-          eventStore.append({
-            type: "thread.created",
-            eventId: EventId.make(`evt-replay-create-${suffix}`),
-            aggregateKind: "thread",
-            aggregateId: threadId,
-            occurredAt: now,
-            commandId: CommandId.make(`cmd-replay-create-${suffix}`),
-            causationEventId: null,
-            correlationId: CorrelationId.make(`cmd-replay-create-${suffix}`),
-            metadata: {},
-            payload: {
-              threadId,
-              projectId,
-              title: `Thread ${suffix}`,
-              modelSelection: {
-                instanceId: ProviderInstanceId.make("codex"),
-                model: "gpt-5-codex",
-              },
-              runtimeMode: "full-access",
-              branch: null,
-              worktreePath: null,
-              createdAt: now,
-              updatedAt: now,
-            },
-          });
-        const threadDeleted = (threadId: ThreadId, suffix: string) =>
-          eventStore.append({
-            type: "thread.deleted",
-            eventId: EventId.make(`evt-replay-delete-${suffix}`),
-            aggregateKind: "thread",
-            aggregateId: threadId,
-            occurredAt: now,
-            commandId: CommandId.make(`cmd-replay-delete-${suffix}`),
-            causationEventId: null,
-            correlationId: CorrelationId.make(`cmd-replay-delete-${suffix}`),
-            metadata: {},
-            payload: { threadId, deletedAt: now },
-          });
-
-        yield* eventStore.append({
-          type: "project.created",
-          eventId: EventId.make("evt-replay-project"),
-          aggregateKind: "project",
-          aggregateId: projectId,
-          occurredAt: now,
-          commandId: CommandId.make("cmd-replay-project"),
-          causationEventId: null,
-          correlationId: CorrelationId.make("cmd-replay-project"),
-          metadata: {},
-          payload: {
-            projectId,
-            title: "Replay",
-            workspaceRoot: "/tmp/project-replay",
-            defaultModelSelection: null,
-            scripts: [],
-            createdAt: now,
-            updatedAt: now,
-          },
-        });
-        // A failed first send: create, roll back, then the draft retries the id.
-        yield* threadCreated(retriedThreadId, "retried-1");
-        yield* threadDeleted(retriedThreadId, "retried");
-        yield* threadCreated(retriedThreadId, "retried-2");
-        // A thread that was deleted for good.
-        yield* threadCreated(goneThreadId, "gone");
-        yield* threadDeleted(goneThreadId, "gone");
-
-        // Files on disk are not event-sourced: by the time anything replays,
-        // the retried thread's attachments already belong to its second life.
-        yield* fileSystem.makeDirectory(attachmentsDir, { recursive: true });
-        yield* fileSystem.writeFileString(retriedAttachmentPath, "second incarnation");
-        yield* fileSystem.writeFileString(goneAttachmentPath, "gone");
-
-        yield* projectionPipeline.bootstrap;
-
-        assert.isTrue(yield* exists(retriedAttachmentPath));
-        assert.isFalse(yield* exists(goneAttachmentPath));
-      }),
-    );
-  },
-);
+      assert.isTrue(yield* exists(retriedAttachmentPath));
+      assert.isFalse(yield* exists(goneAttachmentPath));
+    }),
+  );
+});
 
 it.layer(BaseTestLayer)("OrchestrationProjectionPipeline", (it) => {
   it.effect("replays a bootstrap backlog larger than the event store default limit", () =>

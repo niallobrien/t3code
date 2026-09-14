@@ -3767,12 +3767,16 @@ describe("PreviewManager", () => {
   effectIt.effect("reveals only files inside the configured browser artifact directory", () =>
     withManager((manager) =>
       Effect.gen(function* () {
-        yield* manager.revealArtifact("/tmp/agentsmith/dev/browser-artifacts/browser-screenshot-test.png");
+        yield* manager.revealArtifact(
+          "/tmp/agentsmith/dev/browser-artifacts/browser-screenshot-test.png",
+        );
 
         expect(showItemInFolder).toHaveBeenCalledWith(
           "/tmp/agentsmith/dev/browser-artifacts/browser-screenshot-test.png",
         );
-        const exit = yield* Effect.exit(manager.revealArtifact("/tmp/agentsmith/dev/settings.json"));
+        const exit = yield* Effect.exit(
+          manager.revealArtifact("/tmp/agentsmith/dev/settings.json"),
+        );
         expect(Exit.isFailure(exit)).toBe(true);
         if (Exit.isSuccess(exit)) return;
         const error = Option.getOrThrow(Cause.findErrorOption(exit.cause));

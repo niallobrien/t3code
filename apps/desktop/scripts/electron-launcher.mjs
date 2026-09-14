@@ -269,7 +269,8 @@ export function resolveMacBundleInfoPlistStrings(executableName) {
     CFBundleIconFile: "icon.icns",
     NSScreenCaptureUsageDescription:
       "AgentSmith captures the active window when you use the snapshot shortcut.",
-    NSDocumentsFolderUsageDescription: "AgentSmith reads project files you open in the desktop app.",
+    NSDocumentsFolderUsageDescription:
+      "AgentSmith reads project files you open in the desktop app.",
   };
 }
 

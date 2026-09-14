@@ -868,7 +868,10 @@ it.layer(NodeServices.layer)("dev-runner", (it) => {
         if (error._tag !== "DevRunnerConfigurationError") {
           assert.fail(`Unexpected error: ${error._tag}`);
         }
-        assert.deepStrictEqual(error.configKeys, ["AGENTSMITH_PORT_OFFSET", "AGENTSMITH_DEV_INSTANCE"]);
+        assert.deepStrictEqual(error.configKeys, [
+          "AGENTSMITH_PORT_OFFSET",
+          "AGENTSMITH_DEV_INSTANCE",
+        ]);
         assert.ok(error.cause !== undefined);
         assert.ok(!error.message.includes(String((error.cause as Error).message)));
       }),
@@ -1274,7 +1277,10 @@ it.layer(NodeServices.layer)("dev-runner", (it) => {
             }),
           );
 
-          yield* runDevRunnerWithInput({ ...devServerInput, agentsmithHome: input.agentsmithHome }).pipe(
+          yield* runDevRunnerWithInput({
+            ...devServerInput,
+            agentsmithHome: input.agentsmithHome,
+          }).pipe(
             Effect.provide(Layer.mergeAll(emptyConfigLayer, netServiceLayer, spawnerLayer)),
             Effect.provideService(HostProcessPlatform, "linux"),
             Effect.provideService(HostProcessWorkingDirectory, input.cwd),

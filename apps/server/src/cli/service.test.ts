@@ -150,7 +150,9 @@ it.layer(Layer.mergeAll(NodeServices.layer, NetService.layer))("service commands
     (command) =>
       Effect.gen(function* () {
         const fs = yield* FileSystem.FileSystem;
-        const baseDir = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-service-cli-test-" });
+        const baseDir = yield* fs.makeTempDirectoryScoped({
+          prefix: "agentsmith-service-cli-test-",
+        });
         const { service, installOptions } = makeTestService(newerServiceStatus);
         vi.spyOn(BootService, "layer").mockReturnValue(
           Layer.succeed(BootService.BootService, service),

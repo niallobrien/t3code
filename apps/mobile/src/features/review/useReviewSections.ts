@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useMemo } from "react";
 
-import type { EnvironmentId, OrchestrationCheckpointSummary, ThreadId } from "@agentsmith/contracts";
+import type {
+  EnvironmentId,
+  OrchestrationCheckpointSummary,
+  ThreadId,
+} from "@agentsmith/contracts";
 
 import { useCheckpointDiff } from "../../state/queries";
 import { useEnvironmentQuery } from "../../state/query";

@@ -433,7 +433,9 @@ export function NewTaskFlowProvider(props: React.PropsWithChildren) {
   const agentsmithProjectFileData = agentsmithProjectFileQuery.data as ProjectReadFileResult | null;
   const agentsmithProjectFileDefaultMode = useMemo(() => {
     if (agentsmithProjectFileData === null || agentsmithProjectFileData.truncated) return null;
-    return parseAgentsmithProjectFile(agentsmithProjectFileData.contents)?.defaultThreadEnvMode ?? null;
+    return (
+      parseAgentsmithProjectFile(agentsmithProjectFileData.contents)?.defaultThreadEnvMode ?? null
+    );
   }, [agentsmithProjectFileData]);
   // Environment settings with the project's overrides applied; the
   // aggregate's own legacy fields still count until the server folds them.

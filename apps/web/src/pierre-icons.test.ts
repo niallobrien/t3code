@@ -28,8 +28,14 @@ describe("Pierre file icons", () => {
   });
 
   it("extends Pierre with AgentSmith-specific exact filename icons", () => {
-    assert.equal(resolvePierreIconForEntry("AGENTS.md", "file")?.name, "agentsmith-file-icon-agents");
-    assert.equal(resolvePierreIconForEntry("pnpm-lock.yaml", "file")?.name, "agentsmith-file-icon-pnpm");
+    assert.equal(
+      resolvePierreIconForEntry("AGENTS.md", "file")?.name,
+      "agentsmith-file-icon-agents",
+    );
+    assert.equal(
+      resolvePierreIconForEntry("pnpm-lock.yaml", "file")?.name,
+      "agentsmith-file-icon-pnpm",
+    );
     assert.equal(
       resolvePierreIconForEntry("pnpm-workspace.yaml", "file")?.name,
       "agentsmith-file-icon-pnpm",
@@ -38,7 +44,9 @@ describe("Pierre file icons", () => {
 
   it("ships every custom icon referenced by the extended resolver", () => {
     const customIconNames = new Set(
-      Object.values(AGENTSMITH_PIERRE_ICONS.byFileName).filter((name) => name.startsWith("agentsmith-")),
+      Object.values(AGENTSMITH_PIERRE_ICONS.byFileName).filter((name) =>
+        name.startsWith("agentsmith-"),
+      ),
     );
     for (const iconName of customIconNames) {
       assert.include(AGENTSMITH_PIERRE_ICONS.spriteSheet, `id="${iconName}"`);

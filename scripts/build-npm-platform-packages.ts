@@ -415,7 +415,9 @@ const command = Command.make(
   "build-npm-platform-packages",
   {
     archivesDir: Flag.string("archives-dir").pipe(
-      Flag.withDescription("Directory holding the release's agentsmith-<version>-<platform> archives."),
+      Flag.withDescription(
+        "Directory holding the release's agentsmith-<version>-<platform> archives.",
+      ),
     ),
     version: Flag.string("version").pipe(
       Flag.withDescription(

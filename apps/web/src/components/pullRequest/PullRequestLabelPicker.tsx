@@ -5,7 +5,11 @@
  * reads its people then: they are worth a request when somebody wants them and worth nothing on
  * every pull request they merely open.
  */
-import type { EnvironmentId, PullRequestLabelCandidate, PullRequestRef } from "@agentsmith/contracts";
+import type {
+  EnvironmentId,
+  PullRequestLabelCandidate,
+  PullRequestRef,
+} from "@agentsmith/contracts";
 import { CheckIcon, TagIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 

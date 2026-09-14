@@ -27,7 +27,9 @@ const makeServerConfigLayer = (
       } satisfies ServerConfig.ServerConfig["Service"];
     }),
   ).pipe(
-    Layer.provide(ServerConfig.layerTest(process.cwd(), { prefix: "agentsmith-auth-bootstrap-test-" })),
+    Layer.provide(
+      ServerConfig.layerTest(process.cwd(), { prefix: "agentsmith-auth-bootstrap-test-" }),
+    ),
   );
 
 const makePairingGrantStoreLayer = (

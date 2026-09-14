@@ -366,7 +366,8 @@ const config: ExpoConfig = {
     [
       "expo-camera",
       {
-        cameraPermission: "Allow AgentSmith to access your camera so you can scan pairing QR codes.",
+        cameraPermission:
+          "Allow AgentSmith to access your camera so you can scan pairing QR codes.",
         microphonePermission: false,
         barcodeScannerEnabled: true,
         recordAudioAndroid: false,

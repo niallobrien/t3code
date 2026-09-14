@@ -956,7 +956,9 @@ it.layer(NodeServices.layer)("build-desktop-artifact", (it) => {
       Effect.gen(function* () {
         const fs = yield* FileSystem.FileSystem;
         const path = yield* Path.Path;
-        const tempDir = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-windows-preflight-" });
+        const tempDir = yield* fs.makeTempDirectoryScoped({
+          prefix: "agentsmith-windows-preflight-",
+        });
         const pythonPath = path.join(tempDir, "python.exe");
         yield* fs.writeFileString(pythonPath, "python");
         const spawner = Layer.succeed(
@@ -998,7 +1000,9 @@ it.layer(NodeServices.layer)("build-desktop-artifact", (it) => {
       Effect.gen(function* () {
         const fs = yield* FileSystem.FileSystem;
         const path = yield* Path.Path;
-        const tempDir = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-windows-preflight-" });
+        const tempDir = yield* fs.makeTempDirectoryScoped({
+          prefix: "agentsmith-windows-preflight-",
+        });
         const pythonPath = path.join(tempDir, "python.exe");
         yield* fs.writeFileString(pythonPath, "python");
         const commands: string[] = [];
@@ -1040,7 +1044,9 @@ it.layer(NodeServices.layer)("build-desktop-artifact", (it) => {
       Effect.gen(function* () {
         const fs = yield* FileSystem.FileSystem;
         const path = yield* Path.Path;
-        const tempDir = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-python2-preflight-" });
+        const tempDir = yield* fs.makeTempDirectoryScoped({
+          prefix: "agentsmith-python2-preflight-",
+        });
         const pythonPath = path.join(tempDir, "python");
         yield* fs.writeFileString(pythonPath, "python2");
         const spawner = Layer.succeed(
@@ -1087,7 +1093,9 @@ it.layer(NodeServices.layer)("build-desktop-artifact", (it) => {
       Effect.gen(function* () {
         const fs = yield* FileSystem.FileSystem;
         const path = yield* Path.Path;
-        const repoRoot = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-kde-stage-test-" });
+        const repoRoot = yield* fs.makeTempDirectoryScoped({
+          prefix: "agentsmith-kde-stage-test-",
+        });
         const protocols = path.join(repoRoot, "native/hyprland-snap-shot/protocols");
         yield* fs.makeDirectory(protocols, { recursive: true });
         yield* fs.writeFileString(path.join(protocols, "capture.xml"), "BSD protocol notice");
@@ -1836,7 +1844,10 @@ it.layer(NodeServices.layer)("build-desktop-artifact", (it) => {
     });
     assert.instanceOf(invalidPublishableKeyError, InvalidMacPasskeyPublishableKeyError);
     assert.ok(invalidPublishableKeyError.cause);
-    assert.equal(invalidPublishableKeyError.message, "AGENTSMITH_CLERK_PUBLISHABLE_KEY is invalid.");
+    assert.equal(
+      invalidPublishableKeyError.message,
+      "AGENTSMITH_CLERK_PUBLISHABLE_KEY is invalid.",
+    );
     assert.notProperty(invalidPublishableKeyError, "publishableKey");
     assert.notInclude(invalidPublishableKeyError.message, "pk_test_%");
   });
@@ -1963,7 +1974,9 @@ it.layer(NodeServices.layer)("build-desktop-artifact", (it) => {
 
   it("parses Windows bsdtar member listings with CRLF line endings", () => {
     assert.deepStrictEqual(
-      parseWslRuntimeArchiveMembers("./agentsmith-1.2.3-linux-x64/agentsmith\r\nagentsmith-1.2.3-linux-x64/client/\r\n"),
+      parseWslRuntimeArchiveMembers(
+        "./agentsmith-1.2.3-linux-x64/agentsmith\r\nagentsmith-1.2.3-linux-x64/client/\r\n",
+      ),
       ["agentsmith-1.2.3-linux-x64/agentsmith", "agentsmith-1.2.3-linux-x64/client"],
     );
   });
@@ -2002,7 +2015,9 @@ it.layer(NodeServices.layer)("build-desktop-artifact", (it) => {
       Effect.gen(function* () {
         const fs = yield* FileSystem.FileSystem;
         const path = yield* Path.Path;
-        const root = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-wsl-runtime-missing-" });
+        const root = yield* fs.makeTempDirectoryScoped({
+          prefix: "agentsmith-wsl-runtime-missing-",
+        });
         const error = yield* stageWslRuntimeArchive({
           sourceArchivePath: path.join(root, "agentsmith-1.2.3-linux-x64.tar.gz"),
           archivePath: path.join(root, WSL_RUNTIME_ARCHIVE_NAME),

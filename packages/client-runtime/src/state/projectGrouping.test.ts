@@ -168,7 +168,11 @@ describe("buildProjectGroups", () => {
     const groups = buildProjectGroups({ projects, settings: settings("separate") });
     expect(groups).toHaveLength(3);
     expect(groups.flatMap((group) => group.members)).toHaveLength(3);
-    expect(groups.map((group) => group.label)).toEqual(["agentsmith", "agentsmith-2", "agentsmith-3"]);
+    expect(groups.map((group) => group.label)).toEqual([
+      "agentsmith",
+      "agentsmith-2",
+      "agentsmith-3",
+    ]);
   });
 
   it("applies a physical-project override without dropping its siblings", () => {

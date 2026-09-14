@@ -1022,14 +1022,20 @@ export function ResourceTelemetryDiagnostics({
               icon={<CpuIcon className="size-3.5" />}
               label="Current CPU"
               value={allAgentsmith ? `${allAgentsmith.currentCpuPercent.toFixed(1)}%` : "..."}
-              detail={allAgentsmith ? `${formatCpuTime(allAgentsmith.cpuTimeMs)} observed CPU time` : undefined}
+              detail={
+                allAgentsmith
+                  ? `${formatCpuTime(allAgentsmith.cpuTimeMs)} observed CPU time`
+                  : undefined
+              }
             />
             <IconStat
               icon={<MemoryStickIcon className="size-3.5" />}
               label="Resident memory"
               value={allAgentsmith ? formatBytes(allAgentsmith.currentRssBytes) : "..."}
               detail={
-                allAgentsmith ? `${formatBytes(allAgentsmith.peakRssBytes)} combined process peaks` : undefined
+                allAgentsmith
+                  ? `${formatBytes(allAgentsmith.peakRssBytes)} combined process peaks`
+                  : undefined
               }
             />
             <IconStat
@@ -1037,20 +1043,26 @@ export function ResourceTelemetryDiagnostics({
               label="Process count"
               value={allAgentsmith ? String(allAgentsmith.processCount) : "..."}
               detail={
-                allAgentsmith ? `${allAgentsmith.processStarts} starts · ${allAgentsmith.processExits} exits` : undefined
+                allAgentsmith
+                  ? `${allAgentsmith.processStarts} starts · ${allAgentsmith.processExits} exits`
+                  : undefined
               }
             />
             <IconStat
               icon={<HardDriveIcon className="size-3.5" />}
               label="Read throughput"
               value={allAgentsmith ? formatRate(allAgentsmith.ioReadBytesPerSecond) : "..."}
-              detail={allAgentsmith ? `${formatBytes(allAgentsmith.ioReadBytes)} observed` : undefined}
+              detail={
+                allAgentsmith ? `${formatBytes(allAgentsmith.ioReadBytes)} observed` : undefined
+              }
             />
             <IconStat
               icon={<DatabaseIcon className="size-3.5" />}
               label="Write throughput"
               value={allAgentsmith ? formatRate(allAgentsmith.ioWriteBytesPerSecond) : "..."}
-              detail={allAgentsmith ? `${formatBytes(allAgentsmith.ioWriteBytes)} observed` : undefined}
+              detail={
+                allAgentsmith ? `${formatBytes(allAgentsmith.ioWriteBytes)} observed` : undefined
+              }
               tone={
                 allAgentsmith && allAgentsmith.ioWriteBytesPerSecond >= 10 * 1_024 * 1_024
                   ? "danger"
@@ -1288,8 +1300,8 @@ export function ResourceTelemetryDiagnostics({
         <div className="overflow-hidden rounded-2xl border border-border/70 bg-card shadow-[0_1px_1px_rgb(0_0_0/0.03)]">
           <div className="bg-muted/15 px-4 py-3 text-[11px] leading-relaxed text-muted-foreground sm:px-5">
             Native counters identify which process is reading or writing. These application-level
-            counters identify known AgentSmith operations so process spikes can be correlated with specific
-            persistence and logging paths.
+            counters identify known AgentSmith operations so process spikes can be correlated with
+            specific persistence and logging paths.
           </div>
           <AttributionTable entries={snapshot?.attribution.entries ?? []} />
         </div>

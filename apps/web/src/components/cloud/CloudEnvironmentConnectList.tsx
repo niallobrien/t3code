@@ -139,9 +139,15 @@ export function CloudEnvironmentConnectRows({
     }
     const cause = squashAtomCommandFailure(result);
     const message =
-      cause instanceof Error ? cause.message : "Could not connect the AgentSmith Connect environment.";
+      cause instanceof Error
+        ? cause.message
+        : "Could not connect the AgentSmith Connect environment.";
     const traceId = findErrorTraceId(cause);
-    console.error("[agentsmith-connect] Could not connect environment", { message, traceId, cause });
+    console.error("[agentsmith-connect] Could not connect environment", {
+      message,
+      traceId,
+      cause,
+    });
     toastManager.add({
       type: "error",
       title: "Could not connect environment",

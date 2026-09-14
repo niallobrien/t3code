@@ -1,4 +1,7 @@
-import { ASSISTANT_CITATION_MAX_COMMENT_LENGTH, type AssistantCitation } from "@agentsmith/contracts";
+import {
+  ASSISTANT_CITATION_MAX_COMMENT_LENGTH,
+  type AssistantCitation,
+} from "@agentsmith/contracts";
 import { useState, type Ref } from "react";
 
 import { Button } from "../ui/button";

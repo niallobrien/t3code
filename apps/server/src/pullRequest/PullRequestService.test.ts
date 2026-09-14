@@ -326,7 +326,12 @@ it.effect("reads nothing from a host with no implementation, but reports it", ()
     const listed: string[] = [];
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
         project({ id: "p2", title: "notes", workspaceRoot: "/b" }),
         project({
           id: "p3",
@@ -374,7 +379,12 @@ it.effect("asks for a whole page of a host, and for the reader's own size when g
     const limits: number[] = [];
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", {
@@ -399,7 +409,12 @@ it.effect("says where each repository carries on, and from nothing it has run ou
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
         project({ id: "p2", title: "web", workspaceRoot: "/b", repository: "acme/web" }),
       ],
       providers: [
@@ -428,7 +443,12 @@ it.effect("offers no continuation for a host that cannot be carried on from", ()
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", {
@@ -491,7 +511,12 @@ it.effect("reads only the repositories it was asked to carry on with", () =>
     const cursors: Array<unknown> = [];
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
         project({ id: "p2", title: "web", workspaceRoot: "/b", repository: "acme/web" }),
       ],
       providers: [
@@ -523,7 +548,12 @@ it.effect("keeps a row already sent at the boundary instant from arriving twice"
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", {
@@ -563,7 +593,12 @@ it.effect("keeps the earlier exclusions when a slice ends on the instant it bega
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", {
@@ -601,7 +636,12 @@ it.effect("refuses a continuation it did not issue, before asking any host anyth
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", { listChangeRequests: () => Effect.die("should not be read") }),
@@ -624,7 +664,12 @@ it.effect("calls a transient viewer failure a failed operation, not a signed-out
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", {
@@ -652,7 +697,12 @@ it.effect("reports an unusable host over a merely failing one", () =>
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
         project({
           id: "p2",
           title: "on gitlab",
@@ -690,7 +740,12 @@ it.effect("lists every host that has an implementation", () =>
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
         project({
           id: "p2",
           title: "on gitlab",
@@ -738,7 +793,12 @@ it.effect("narrows the listing to one host when asked", () =>
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
         project({
           id: "p2",
           title: "on gitlab",
@@ -817,7 +877,12 @@ it.effect("keeps one host listed when another is not set up", () =>
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
         project({
           id: "p2",
           title: "on gitlab",
@@ -861,7 +926,12 @@ it.effect("fails as unavailable only when no host can be read", () =>
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", {
@@ -885,7 +955,12 @@ it.effect("reads a repository once when several worktrees share it", () =>
     let calls = 0;
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
         project({
           id: "p2",
           title: "agentsmith worktree",
@@ -918,7 +993,12 @@ it.effect("keeps healthy repositories when one of them cannot be read", () =>
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
         project({ id: "p2", title: "broken", workspaceRoot: "/b", repository: "pingdotgg/broken" }),
       ],
       providers: [
@@ -1571,7 +1651,12 @@ it.effect("flags a review request for the viewer but not on their own change req
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", {
@@ -1605,7 +1690,12 @@ it.effect("refuses a repository that does not belong to the requested project", 
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [fakeProvider("github")],
     });
@@ -2054,7 +2144,12 @@ it.effect("rejects an empty comment before reaching the host", () =>
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [fakeProvider("github", { comment: () => Effect.die("must not be called") })],
     });
@@ -2131,7 +2226,12 @@ it.effect("refuses line comments on a host that takes only a summary", () =>
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", {
@@ -2209,7 +2309,12 @@ it.effect("refuses to resolve a conversation on a host that cannot", () =>
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", {
@@ -2250,7 +2355,12 @@ it.effect("refuses to react on a host with no reactions", () =>
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", {
@@ -2287,7 +2397,12 @@ it.effect("refuses to react on a host whose capabilities omit reactions entirely
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", {
@@ -2328,7 +2443,12 @@ it.effect("passes a reaction through with its subject id on a host that has them
     } | null = null;
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", {
@@ -2393,7 +2513,12 @@ it.effect("refuses an empty reply before it reaches the host", () =>
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", { replyToThread: () => Effect.die("must not be called") }),
@@ -2419,7 +2544,12 @@ it.effect("refuses a merge strategy the host does not offer", () =>
     let ranWith: string | null = null;
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", {
@@ -2501,7 +2631,12 @@ it.effect("asks every host the reader's search, rather than filtering what came 
     };
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
         project({
           id: "p2",
           title: "on gitlab",
@@ -2529,7 +2664,12 @@ it.effect("asks for no search when the reader has typed nothing", () =>
     const asked: Array<string | undefined> = [];
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
       ],
       providers: [
         fakeProvider("github", {
@@ -3212,7 +3352,12 @@ it.effect("reads a host's repositories in one search, and files the rows back un
     const separately: string[] = [];
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
         project({ id: "p2", title: "web", workspaceRoot: "/b", repository: "acme/web" }),
         project({
           id: "p3",
@@ -3273,7 +3418,12 @@ it.effect("carries every repository of a slice on from the oldest row in it", ()
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "agentsmith", workspaceRoot: "/a", repository: "pingdotgg/agentsmith" }),
+        project({
+          id: "p1",
+          title: "agentsmith",
+          workspaceRoot: "/a",
+          repository: "pingdotgg/agentsmith",
+        }),
         project({ id: "p2", title: "web", workspaceRoot: "/b", repository: "acme/web" }),
         project({ id: "p3", title: "docs", workspaceRoot: "/c", repository: "acme/docs" }),
       ],

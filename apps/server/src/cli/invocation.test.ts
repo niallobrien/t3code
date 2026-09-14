@@ -9,7 +9,10 @@ it("formats package runner commands from their cache entry paths", () => {
       "C:\\Users\\theo\\AppData\\Local\\npm-cache\\_npx\\abc\\node_modules\\agentsmith\\dist\\bin.mjs",
       "npx agentsmith serve",
     ],
-    ["/home/theo/.cache/pnpm/dlx/abc/node_modules/agentsmith/dist/bin.mjs", "pnpm dlx agentsmith serve"],
+    [
+      "/home/theo/.cache/pnpm/dlx/abc/node_modules/agentsmith/dist/bin.mjs",
+      "pnpm dlx agentsmith serve",
+    ],
     [
       "/home/theo/.local/share/pnpm/.pnpm/dlx/abc/node_modules/agentsmith/dist/bin.mjs",
       "pnpm dlx agentsmith serve",
@@ -19,7 +22,10 @@ it("formats package runner commands from their cache entry paths", () => {
       "pnpm dlx agentsmith serve",
     ],
     ["/home/theo/.bun/install/cache/agentsmith@0.0.31/dist/bin.mjs", "bunx agentsmith serve"],
-    ["/tmp/bunx-1000-agentsmith@latest/node_modules/agentsmith/dist/bin.mjs", "bunx agentsmith serve"],
+    [
+      "/tmp/bunx-1000-agentsmith@latest/node_modules/agentsmith/dist/bin.mjs",
+      "bunx agentsmith serve",
+    ],
     [
       "C:\\Users\\theo\\AppData\\Local\\Temp\\bunx-0-agentsmith@latest\\node_modules\\agentsmith\\dist\\bin.mjs",
       "bunx agentsmith serve",

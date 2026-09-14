@@ -36,7 +36,10 @@ import {
   resolveComposerControlledEventCount,
   type ComposerNativeEventSnapshot,
 } from "./composerEditorRevision";
-import type { ComposerEditorProps, ComposerEditorSelection } from "./AgentsmithComposerEditor.types";
+import type {
+  ComposerEditorProps,
+  ComposerEditorSelection,
+} from "./AgentsmithComposerEditor.types";
 
 const NATIVE_MODULE_NAME = "AgentsmithComposerEditor";
 const EMPTY_SKILLS: NonNullable<ComposerEditorProps["skills"]> = [];

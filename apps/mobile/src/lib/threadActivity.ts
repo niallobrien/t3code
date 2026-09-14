@@ -39,7 +39,10 @@ import { commandProgramName } from "@agentsmith/client-runtime/work-log/command-
 import * as Arr from "effect/Array";
 import * as Order from "effect/Order";
 
-export type { PendingApproval, PendingUserInput } from "@agentsmith/client-runtime/pending-requests";
+export type {
+  PendingApproval,
+  PendingUserInput,
+} from "@agentsmith/client-runtime/pending-requests";
 
 export interface PendingUserInputDraftAnswer {
   readonly selectedOptionValues?: ReadonlyArray<string>;

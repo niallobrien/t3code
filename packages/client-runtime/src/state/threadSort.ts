@@ -1,5 +1,8 @@
 import type { OrchestrationThreadShell, ProjectId } from "@agentsmith/contracts";
-import type { SidebarProjectSortOrder, SidebarThreadSortOrder } from "@agentsmith/contracts/settings";
+import type {
+  SidebarProjectSortOrder,
+  SidebarThreadSortOrder,
+} from "@agentsmith/contracts/settings";
 
 export interface ThreadSortInput {
   readonly createdAt: string;

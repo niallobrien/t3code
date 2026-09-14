@@ -629,7 +629,9 @@ describe("terminalLinkAtPositionWithRange", () => {
       isWrapContinuation: false,
       wrapsToNext: false,
     };
-    expect(terminalLinkAtPositionWithRange([unwrittenTail], 0, 8)?.text).toBe("https://agentsmith.dev");
+    expect(terminalLinkAtPositionWithRange([unwrittenTail], 0, 8)?.text).toBe(
+      "https://agentsmith.dev",
+    );
   });
 });
 

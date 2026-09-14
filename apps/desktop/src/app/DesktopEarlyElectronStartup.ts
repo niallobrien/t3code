@@ -32,7 +32,9 @@ export interface EarlyLinuxElectronOptions {
 }
 
 export const resolveLinuxDesktopEntryName = (isDevelopment: boolean): string =>
-  isDevelopment ? "com.agentsmith.AgentSmith.Development.desktop" : "com.agentsmith.AgentSmith.desktop";
+  isDevelopment
+    ? "com.agentsmith.AgentSmith.Development.desktop"
+    : "com.agentsmith.AgentSmith.desktop";
 
 const trimNonEmpty = (value: string | undefined): string | null => {
   const trimmed = value?.trim();

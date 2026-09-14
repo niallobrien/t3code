@@ -119,7 +119,9 @@ describe.runIf(process.env.AGENTSMITH_GROK_ACP_PROBE === "1")("Grok ACP CLI prob
           return Effect.void;
         }).pipe(Effect.forkChild);
         const result = yield* runtime.prompt({
-          prompt: [{ type: "text", text: "Reply exactly GROK_AGENTSMITH_OK. Do not use any tools." }],
+          prompt: [
+            { type: "text", text: "Reply exactly GROK_AGENTSMITH_OK. Do not use any tools." },
+          ],
         });
         yield* runtime.drainEvents;
         expect(result.stopReason).toBe("end_turn");

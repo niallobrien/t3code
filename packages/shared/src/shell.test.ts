@@ -158,9 +158,11 @@ describe("readEnvironmentFromLoginShell", () => {
         options: { encoding: "utf8"; timeout: number },
       ) => string
     >(() =>
-      ["__AGENTSMITH_ENV_CUSTOM_VAR_START__", "  padded value  ", "__AGENTSMITH_ENV_CUSTOM_VAR_END__"].join(
-        "\n",
-      ),
+      [
+        "__AGENTSMITH_ENV_CUSTOM_VAR_START__",
+        "  padded value  ",
+        "__AGENTSMITH_ENV_CUSTOM_VAR_END__",
+      ].join("\n"),
     );
 
     expect(readEnvironmentFromLoginShell("/bin/zsh", ["CUSTOM_VAR"], execFile)).toEqual({
@@ -416,7 +418,9 @@ effectIt.layer(NodeServices.layer)("resolveCommandPath", (it) => {
       Effect.gen(function* () {
         const fs = yield* FileSystem.FileSystem;
         const path = yield* Path.Path;
-        const cwd = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-case-sensitive-path-" });
+        const cwd = yield* fs.makeTempDirectoryScoped({
+          prefix: "agentsmith-case-sensitive-path-",
+        });
         const executable = path.join(cwd, "audit-command.cmd");
         yield* fs.writeFileString(executable, "@echo off\n");
 

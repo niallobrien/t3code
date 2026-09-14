@@ -42,7 +42,10 @@ import {
   type TurnDiffSummary,
 } from "./types";
 
-export type { PendingApproval, PendingUserInput } from "@agentsmith/client-runtime/pending-requests";
+export type {
+  PendingApproval,
+  PendingUserInput,
+} from "@agentsmith/client-runtime/pending-requests";
 
 export { formatDuration } from "@agentsmith/shared/orchestrationTiming";
 

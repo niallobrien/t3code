@@ -23,7 +23,10 @@ import {
 } from "@agentsmith/client-runtime/connection";
 import { bootstrapRemoteBearerSession } from "@agentsmith/client-runtime/authorization";
 import { fetchRemoteEnvironmentDescriptor } from "@agentsmith/client-runtime/environment";
-import { managedRelayAccountChanges, managedRelaySessionAtom } from "@agentsmith/client-runtime/relay";
+import {
+  managedRelayAccountChanges,
+  managedRelaySessionAtom,
+} from "@agentsmith/client-runtime/relay";
 import { EnvironmentRpcRequestObserver } from "@agentsmith/client-runtime/rpc";
 import {
   AuthStandardClientScopes,

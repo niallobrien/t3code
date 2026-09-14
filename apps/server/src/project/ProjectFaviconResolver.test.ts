@@ -182,18 +182,20 @@ it.layer(TestLayer)("ProjectFaviconResolverLive", (it) => {
       }),
     );
 
-    it.effect("falls back to well-known files when the agentsmith.json iconPath does not exist", () =>
-      Effect.gen(function* () {
-        const resolver = yield* ProjectFaviconResolver.ProjectFaviconResolver;
-        const cwd = yield* makeTempDir;
-        yield* writeTextFile(cwd, "agentsmith.json", '{ "iconPath": "brand/missing.svg" }');
-        yield* writeTextFile(cwd, "favicon.svg", "<svg>favicon</svg>");
+    it.effect(
+      "falls back to well-known files when the agentsmith.json iconPath does not exist",
+      () =>
+        Effect.gen(function* () {
+          const resolver = yield* ProjectFaviconResolver.ProjectFaviconResolver;
+          const cwd = yield* makeTempDir;
+          yield* writeTextFile(cwd, "agentsmith.json", '{ "iconPath": "brand/missing.svg" }');
+          yield* writeTextFile(cwd, "favicon.svg", "<svg>favicon</svg>");
 
-        const resolved = yield* resolver.resolvePath(cwd);
+          const resolved = yield* resolver.resolvePath(cwd);
 
-        expect(resolved).not.toBeNull();
-        expect(resolved).toContain("favicon.svg");
-      }),
+          expect(resolved).not.toBeNull();
+          expect(resolved).toContain("favicon.svg");
+        }),
     );
 
     it.effect("ignores invalid agentsmith.json files", () =>

@@ -1,4 +1,8 @@
-import { AGENTSMITH_PROJECT_FILE_NAME, type EnvironmentId, type ThreadEnvMode } from "@agentsmith/contracts";
+import {
+  AGENTSMITH_PROJECT_FILE_NAME,
+  type EnvironmentId,
+  type ThreadEnvMode,
+} from "@agentsmith/contracts";
 import { parseAgentsmithProjectFile } from "@agentsmith/shared/agentsmithProjectFile";
 import { executeAtomQuery } from "@agentsmith/client-runtime/state/runtime";
 

@@ -17,7 +17,10 @@ import {
 } from "@agentsmith/contracts";
 import { safeErrorLogAttributes } from "@agentsmith/client-runtime/errors";
 import { clampFileAttachmentUploadBytes } from "@agentsmith/client-runtime/state/attachments";
-import { nextPastedTextFileName, pastedTextDisposition } from "@agentsmith/client-runtime/text-paste";
+import {
+  nextPastedTextFileName,
+  pastedTextDisposition,
+} from "@agentsmith/client-runtime/text-paste";
 import {
   parseCodexFeedbackCommand,
   submitCodexFeedback,

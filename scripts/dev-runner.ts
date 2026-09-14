@@ -6,7 +6,10 @@ import * as NodeRuntime from "@effect/platform-node/NodeRuntime";
 import * as NodeServices from "@effect/platform-node/NodeServices";
 import * as NetService from "@agentsmith/shared/Net";
 import { resolveGitWorktreePath, resolveWorktreeAgentsmithHome } from "@agentsmith/shared/devHome";
-import { HostProcessEnvironment, HostProcessWorkingDirectory } from "@agentsmith/shared/hostProcess";
+import {
+  HostProcessEnvironment,
+  HostProcessWorkingDirectory,
+} from "@agentsmith/shared/hostProcess";
 import { resolveSpawnCommand } from "@agentsmith/shared/shell";
 import * as Config from "effect/Config";
 import * as Effect from "effect/Effect";
@@ -877,7 +880,9 @@ const devRunnerCli = Command.make("dev-runner", {
     Flag.withFallbackConfig(optionalBooleanConfig("AGENTSMITH_AUTO_BOOTSTRAP_PROJECT_FROM_CWD")),
   ),
   logWebSocketEvents: Flag.boolean("log-websocket-events").pipe(
-    Flag.withDescription("WebSocket event logging toggle (equivalent to AGENTSMITH_LOG_WS_EVENTS)."),
+    Flag.withDescription(
+      "WebSocket event logging toggle (equivalent to AGENTSMITH_LOG_WS_EVENTS).",
+    ),
     Flag.withAlias("log-ws-events"),
     Flag.withFallbackConfig(optionalBooleanConfig("AGENTSMITH_LOG_WS_EVENTS")),
   ),

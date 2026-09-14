@@ -101,9 +101,9 @@ describe("resolvePreviousWorktreeSeed", () => {
 
 describe("resolvePreviousWorktreeLabel", () => {
   it("includes the branch when known", () => {
-    expect(resolvePreviousWorktreeLabel({ branch: "agentsmith/fix-thing", worktreePath: "/wt" })).toBe(
-      "Previous worktree (agentsmith/fix-thing)",
-    );
+    expect(
+      resolvePreviousWorktreeLabel({ branch: "agentsmith/fix-thing", worktreePath: "/wt" }),
+    ).toBe("Previous worktree (agentsmith/fix-thing)");
     expect(resolvePreviousWorktreeLabel({ branch: null, worktreePath: "/wt" })).toBe(
       "Previous worktree",
     );
@@ -504,7 +504,9 @@ describe("resolveCurrentWorkspaceLabel", () => {
   });
 
   it("describes the active checkout as a worktree when one is attached", () => {
-    expect(resolveCurrentWorkspaceLabel("/repo/.agentsmith/worktrees/feature-a")).toBe("Current worktree");
+    expect(resolveCurrentWorkspaceLabel("/repo/.agentsmith/worktrees/feature-a")).toBe(
+      "Current worktree",
+    );
   });
 });
 

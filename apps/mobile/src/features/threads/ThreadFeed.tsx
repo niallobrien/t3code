@@ -36,7 +36,10 @@ import {
   renderCodexFileCitationsAsMarkdown,
   splitCodexArtifactTemplateMarkdown,
 } from "@agentsmith/client-runtime/codex-markdown-directives";
-import { CHAT_LIST_ANCHOR_OFFSET, resolveChatListAnchoredEndSpace } from "@agentsmith/shared/chatList";
+import {
+  CHAT_LIST_ANCHOR_OFFSET,
+  resolveChatListAnchoredEndSpace,
+} from "@agentsmith/shared/chatList";
 import { imageMimeType } from "@agentsmith/shared/image";
 import { videoMimeType } from "@agentsmith/shared/video";
 import { SymbolView, type AppSymbolName } from "../../components/AppSymbol";
@@ -1889,7 +1892,9 @@ function ThreadFeedPlaceholder(props: {
       }}
     >
       <View className="max-w-[320px] items-center gap-2">
-        <Text className="text-center font-agentsmith-bold text-lg text-foreground">{props.title}</Text>
+        <Text className="text-center font-agentsmith-bold text-lg text-foreground">
+          {props.title}
+        </Text>
         <Text className="text-center text-sm leading-normal text-foreground-secondary">
           {props.detail}
         </Text>

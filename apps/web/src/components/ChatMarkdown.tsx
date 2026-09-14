@@ -475,7 +475,12 @@ const CHAT_MARKDOWN_SANITIZE_SCHEMA = {
   },
   protocols: {
     ...defaultSchema.protocols,
-    href: [...(defaultSchema.protocols?.href ?? []), "file", "agentsmith-citation", "agentsmith-context"],
+    href: [
+      ...(defaultSchema.protocols?.href ?? []),
+      "file",
+      "agentsmith-citation",
+      "agentsmith-context",
+    ],
     src: [...(defaultSchema.protocols?.src ?? []), "file", "agentsmith-context"],
   },
 } satisfies Parameters<typeof rehypeSanitize>[0];

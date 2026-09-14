@@ -157,7 +157,10 @@ describe("index.html boot script", () => {
     { name: "no stored preference on a dark OS", storage: {}, prefersDark: true },
     {
       name: "AgentSmith Chat follows a dark OS",
-      storage: { [THEME_STORAGE_KEY]: "agentsmith-chat", [THEME_FOLLOW_SYSTEM_STORAGE_KEY]: "true" },
+      storage: {
+        [THEME_STORAGE_KEY]: "agentsmith-chat",
+        [THEME_FOLLOW_SYSTEM_STORAGE_KEY]: "true",
+      },
       prefersDark: true,
     },
     {
@@ -191,7 +194,10 @@ describe("index.html boot script", () => {
     },
     {
       name: "a legacy agentsmith-grove preference resolves through the alias",
-      storage: { [THEME_STORAGE_KEY]: "agentsmith-grove", [THEME_FOLLOW_SYSTEM_STORAGE_KEY]: "true" },
+      storage: {
+        [THEME_STORAGE_KEY]: "agentsmith-grove",
+        [THEME_FOLLOW_SYSTEM_STORAGE_KEY]: "true",
+      },
       prefersDark: true,
     },
     {
@@ -259,7 +265,10 @@ describe("index.html boot script", () => {
 
   it("marks built-in and custom themes on the document element", () => {
     const chat = runBootScript({
-      storage: { [THEME_STORAGE_KEY]: "agentsmith-chat", [THEME_FOLLOW_SYSTEM_STORAGE_KEY]: "true" },
+      storage: {
+        [THEME_STORAGE_KEY]: "agentsmith-chat",
+        [THEME_FOLLOW_SYSTEM_STORAGE_KEY]: "true",
+      },
       prefersDark: true,
     });
     expect(chat.themeId).toBe("agentsmith-chat");
@@ -342,7 +351,13 @@ describe("index.html boot script", () => {
   // boot script's hand-maintained copy into a CI-enforced contract: any
   // palette change breaks this test until the copy in index.html is updated.
   it("keeps every built-in boot splash in sync with the real palettes", () => {
-    for (const theme of [AGENTSMITH_CHAT_THEME, GROVE_THEME, OCEAN_THEME, EMBER_THEME, IRIS_THEME]) {
+    for (const theme of [
+      AGENTSMITH_CHAT_THEME,
+      GROVE_THEME,
+      OCEAN_THEME,
+      EMBER_THEME,
+      IRIS_THEME,
+    ]) {
       // The boot script resolves every built-in from a light base appearance.
       expect(theme.appearance).toBe("light");
       for (const mode of ["light", "dark"] as const) {

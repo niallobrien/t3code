@@ -561,7 +561,9 @@ const buildAppUnderTest = (options?: {
 }) =>
   Effect.gen(function* () {
     const fileSystem = yield* FileSystem.FileSystem;
-    const tempBaseDir = yield* fileSystem.makeTempDirectoryScoped({ prefix: "agentsmith-router-test-" });
+    const tempBaseDir = yield* fileSystem.makeTempDirectoryScoped({
+      prefix: "agentsmith-router-test-",
+    });
     const baseDir = options?.config?.baseDir ?? tempBaseDir;
     const devUrl = options?.config?.devUrl;
     const derivedPaths = yield* ServerConfig.deriveServerPaths(baseDir, devUrl);
@@ -1695,7 +1697,9 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
     Effect.gen(function* () {
       const fileSystem = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const staticDir = yield* fileSystem.makeTempDirectoryScoped({ prefix: "agentsmith-router-gate-" });
+      const staticDir = yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "agentsmith-router-gate-",
+      });
       yield* fileSystem.writeFileString(path.join(staticDir, "index.html"), "ready");
       const entered = yield* Deferred.make<void>();
       const ready = yield* Deferred.make<void>();
@@ -1728,7 +1732,9 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
     Effect.gen(function* () {
       const fileSystem = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const staticDir = yield* fileSystem.makeTempDirectoryScoped({ prefix: "agentsmith-router-static-" });
+      const staticDir = yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "agentsmith-router-static-",
+      });
       const indexPath = path.join(staticDir, "index.html");
       yield* fileSystem.writeFileString(indexPath, "<html>router-static-ok</html>");
 
@@ -1744,7 +1750,9 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
     Effect.gen(function* () {
       const fileSystem = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const staticDir = yield* fileSystem.makeTempDirectoryScoped({ prefix: "agentsmith-static-cache-" });
+      const staticDir = yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "agentsmith-static-cache-",
+      });
       const assetPath = path.join(staticDir, "app.js");
       yield* fileSystem.writeFileString(assetPath, 'export const build = "first";');
       yield* buildAppUnderTest({ config: { staticDir } });
@@ -1791,7 +1799,9 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
     Effect.gen(function* () {
       const fileSystem = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const staticDir = yield* fileSystem.makeTempDirectoryScoped({ prefix: "agentsmith-static-html-" });
+      const staticDir = yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "agentsmith-static-html-",
+      });
       const indexPath = path.join(staticDir, "index.html");
       const modifiedAt = DateTime.toDateUtc(DateTime.makeUnsafe("1985-10-26T08:15:00.000Z"));
       yield* fileSystem.writeFileString(indexPath, "<html>old build</html>");
@@ -1831,7 +1841,9 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
     Effect.gen(function* () {
       const fileSystem = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const staticDir = yield* fileSystem.makeTempDirectoryScoped({ prefix: "agentsmith-static-hashes-" });
+      const staticDir = yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "agentsmith-static-hashes-",
+      });
       yield* fileSystem.makeDirectory(path.join(staticDir, "assets"));
       yield* fileSystem.makeDirectory(path.join(staticDir, ".vite"));
       yield* fileSystem.writeFileString(
@@ -1949,7 +1961,9 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
     Effect.gen(function* () {
       const fileSystem = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const staticDir = yield* fileSystem.makeTempDirectoryScoped({ prefix: "agentsmith-static-replace-" });
+      const staticDir = yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "agentsmith-static-replace-",
+      });
       const beforeOpenPath = path.join(staticDir, "before-open.txt");
       const afterOpenPath = path.join(staticDir, "after-open.txt");
       const afterOpenSnapshotPath = path.join(staticDir, "after-open-snapshot.txt");
@@ -2013,7 +2027,9 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
     Effect.gen(function* () {
       const fileSystem = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const staticDir = yield* fileSystem.makeTempDirectoryScoped({ prefix: "agentsmith-static-close-" });
+      const staticDir = yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "agentsmith-static-close-",
+      });
       const filePath = path.join(staticDir, "app.txt");
       const body = "file content\n".repeat(1024);
       yield* fileSystem.writeFileString(filePath, body);
@@ -2272,7 +2288,10 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
 
       const { cookie } = yield* bootstrapBrowserSession();
       const currentCookie = cookie?.split(";")[0] ?? "";
-      const legacyCookie = currentCookie.replace(/^agentsmith_session_[^=]+=/, "agentsmith_session=");
+      const legacyCookie = currentCookie.replace(
+        /^agentsmith_session_[^=]+=/,
+        "agentsmith_session=",
+      );
       const sessionUrl = yield* getHttpServerUrl("/api/auth/session");
       const response = yield* fetchEffect(sessionUrl, {
         headers: { cookie: legacyCookie },
@@ -3177,7 +3196,10 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
         });
 
       const firstResponse = yield* postRelayConfig("user_123", "agentsmithenv_first_credential");
-      const replacementResponse = yield* postRelayConfig("user_456", "agentsmithenv_second_credential");
+      const replacementResponse = yield* postRelayConfig(
+        "user_456",
+        "agentsmithenv_second_credential",
+      );
       const replacementBody = yield* responseJsonEffect<{
         readonly _tag?: string;
         readonly message?: string;
@@ -5516,7 +5538,9 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
       yield* buildAppUnderTest();
       const fileSystem = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const directory = yield* fileSystem.makeTempDirectoryScoped({ prefix: "agentsmith-host-media-" });
+      const directory = yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "agentsmith-host-media-",
+      });
       const wsUrl = yield* getWsServerUrl("/ws");
       const threadId = ThreadId.make("thread-on-another-environment");
 
@@ -5554,7 +5578,9 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
       const fileSystem = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
       const wsUrl = yield* getWsServerUrl("/ws");
-      const directory = yield* fileSystem.makeTempDirectoryScoped({ prefix: "agentsmith-draft-media-" });
+      const directory = yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "agentsmith-draft-media-",
+      });
       yield* fileSystem.writeFileString(path.join(directory, "note.html"), "<p>draft</p>");
 
       yield* Effect.scoped(
@@ -5807,7 +5833,9 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
     Effect.gen(function* () {
       const fs = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const workspaceDir = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-ws-auth-required-" });
+      const workspaceDir = yield* fs.makeTempDirectoryScoped({
+        prefix: "agentsmith-ws-auth-required-",
+      });
       yield* fs.writeFileString(
         path.join(workspaceDir, "needle-file.ts"),
         "export const needle = 1;",
@@ -6809,7 +6837,9 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
     Effect.gen(function* () {
       const fs = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const workspaceDir = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-ws-project-search-" });
+      const workspaceDir = yield* fs.makeTempDirectoryScoped({
+        prefix: "agentsmith-ws-project-search-",
+      });
       yield* fs.writeFileString(
         path.join(workspaceDir, "needle-file.ts"),
         "export const needle = 1;",
@@ -6838,7 +6868,9 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
     Effect.gen(function* () {
       const fs = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const workspaceDir = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-ws-project-files-" });
+      const workspaceDir = yield* fs.makeTempDirectoryScoped({
+        prefix: "agentsmith-ws-project-files-",
+      });
       yield* fs.makeDirectory(path.join(workspaceDir, "src"), { recursive: true });
       yield* fs.writeFileString(
         path.join(workspaceDir, "src", "index.ts"),
@@ -7075,7 +7107,9 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
     Effect.gen(function* () {
       const fs = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const workspaceDir = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-ws-project-write-" });
+      const workspaceDir = yield* fs.makeTempDirectoryScoped({
+        prefix: "agentsmith-ws-project-write-",
+      });
 
       yield* buildAppUnderTest();
 
@@ -7100,7 +7134,9 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
     Effect.gen(function* () {
       const fs = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const parentDir = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-ws-project-create-" });
+      const parentDir = yield* fs.makeTempDirectoryScoped({
+        prefix: "agentsmith-ws-project-create-",
+      });
       const missingWorkspaceRoot = path.join(parentDir, "nested", "new-project");
 
       yield* buildAppUnderTest();
@@ -7357,7 +7393,9 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
   it.effect("routes websocket rpc projects.writeFile errors", () =>
     Effect.gen(function* () {
       const fs = yield* FileSystem.FileSystem;
-      const workspaceDir = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-ws-project-write-" });
+      const workspaceDir = yield* fs.makeTempDirectoryScoped({
+        prefix: "agentsmith-ws-project-write-",
+      });
 
       yield* buildAppUnderTest();
 

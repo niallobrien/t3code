@@ -1,4 +1,8 @@
-import type { EnvironmentId, ServerConfig, ServerSelfUpdateCapability } from "@agentsmith/contracts";
+import type {
+  EnvironmentId,
+  ServerConfig,
+  ServerSelfUpdateCapability,
+} from "@agentsmith/contracts";
 import type { ServerUpdateState } from "@agentsmith/client-runtime/state/server";
 import { compareSemverVersions, parseSemver } from "@agentsmith/shared/semver";
 import * as Schema from "effect/Schema";

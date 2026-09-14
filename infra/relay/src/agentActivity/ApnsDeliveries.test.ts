@@ -529,7 +529,11 @@ describe("ApnsDeliveries", () => {
         makeLayer({
           attempts,
           currentTargets: [
-            { ...target, bundle_id: "com.agentsmith.agentsmith.preview", aps_environment: "sandbox" },
+            {
+              ...target,
+              bundle_id: "com.agentsmith.agentsmith.preview",
+              aps_environment: "sandbox",
+            },
           ],
           config: signingConfig,
           execute,
@@ -2074,7 +2078,9 @@ describe("signed APNs registration metadata", () => {
                   push_token: "unchanged-token",
                   activity_push_token: "unchanged-token",
                   bundle_id:
-                    changed === "bundle" ? "com.agentsmith.agentsmith.preview" : "com.agentsmith.agentsmith.dev",
+                    changed === "bundle"
+                      ? "com.agentsmith.agentsmith.preview"
+                      : "com.agentsmith.agentsmith.dev",
                   aps_environment: changed === "environment" ? "production" : "sandbox",
                 },
               ],

@@ -13,7 +13,10 @@ import {
   Connectivity,
   Wakeups,
 } from "@agentsmith/client-runtime/connection";
-import { managedRelayAccountChanges, managedRelaySessionAtom } from "@agentsmith/client-runtime/relay";
+import {
+  managedRelayAccountChanges,
+  managedRelaySessionAtom,
+} from "@agentsmith/client-runtime/relay";
 import { AuthStandardClientScopes } from "@agentsmith/contracts";
 import * as Context from "effect/Context";
 import * as Effect from "effect/Effect";

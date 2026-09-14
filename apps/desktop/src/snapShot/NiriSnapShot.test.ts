@@ -148,7 +148,9 @@ it("waits for the restored AgentSmith window to map instead of polling", async (
     await original(request, socket);
     if (request === "EventStream")
       send(socket, {
-        WindowOpenedOrChanged: { window: { ...window, id: 4, pid: process.pid, title: "AgentSmith" } },
+        WindowOpenedOrChanged: {
+          window: { ...window, id: 4, pid: process.pid, title: "AgentSmith" },
+        },
       });
   };
   await snapshot.feedback!.activate("AgentSmith");
@@ -197,7 +199,9 @@ it("rejects compositor errors and cleans up its temporary image", async () => {
       send(socket, { Err: "window disappeared" });
     } else await original(request, socket);
   };
-  await expect(captureLinuxWindow("com.agentsmith.AgentSmith")).rejects.toThrow("window disappeared");
+  await expect(captureLinuxWindow("com.agentsmith.AgentSmith")).rejects.toThrow(
+    "window disappeared",
+  );
   expect(await NodeFSP.stat(NodePath.dirname(capturePath!)).catch(() => undefined)).toBeUndefined();
 });
 

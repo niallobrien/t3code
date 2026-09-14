@@ -1373,7 +1373,9 @@ export function NewTaskDraftScreen(props: {
           What should we build
         </Text>
         <View className="max-w-full flex-row items-center justify-center">
-          <Text className="text-2xl font-agentsmith-medium tracking-tight text-foreground">in </Text>
+          <Text className="text-2xl font-agentsmith-medium tracking-tight text-foreground">
+            in{" "}
+          </Text>
           <Pressable
             accessibilityHint="Opens the project picker"
             accessibilityLabel={`Change project from ${selectedProject.title}`}

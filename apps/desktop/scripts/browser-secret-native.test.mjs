@@ -14,7 +14,9 @@ describe.skipIf(hostPlatform !== "linux")("bundled libsecret helper", () => {
   let directory;
   let executable;
   beforeAll(() => {
-    directory = NodeFS.mkdtempSync(NodePath.join(NodeOS.tmpdir(), "agentsmith-browser-secret-test-"));
+    directory = NodeFS.mkdtempSync(
+      NodePath.join(NodeOS.tmpdir(), "agentsmith-browser-secret-test-"),
+    );
     executable = NodePath.join(directory, "agentsmith-browser-secret");
     const root = NodeURL.fileURLToPath(new URL("../../../native/browser-secret/", import.meta.url));
     const flags = NodeChildProcess.execFileSync(
@@ -55,7 +57,12 @@ describe.skipIf(hostPlatform !== "linux")("bundled libsecret helper", () => {
     });
 
   it("builds an executable for the requested architecture into a staged resource directory", () => {
-    const output = NodePath.join(directory, "resources", "browser-secret", "agentsmith-browser-secret");
+    const output = NodePath.join(
+      directory,
+      "resources",
+      "browser-secret",
+      "agentsmith-browser-secret",
+    );
     NodeChildProcess.execFileSync(process.execPath, [
       NodeURL.fileURLToPath(new URL("./build-browser-secret.mjs", import.meta.url)),
       "--arch",
