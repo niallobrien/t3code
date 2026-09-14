@@ -23,7 +23,10 @@ class AgentsmithReviewDiffModule : Module() {
       Prop("selectedRowIdsJson") { view: AgentsmithReviewDiffView, selectedRowIdsJson: String ->
         view.setSelectedRowIdsJson(selectedRowIdsJson)
       }
-      Prop("collapsedCommentIdsJson") { view: AgentsmithReviewDiffView, collapsedCommentIdsJson: String ->
+      Prop("collapsedCommentIdsJson") {
+          view: AgentsmithReviewDiffView,
+          collapsedCommentIdsJson: String
+        ->
         view.setCollapsedCommentIdsJson(collapsedCommentIdsJson)
       }
       Prop("appearanceScheme") { view: AgentsmithReviewDiffView, appearanceScheme: String ->
@@ -54,7 +57,11 @@ class AgentsmithReviewDiffModule : Module() {
         "onToggleComment",
       )
 
-      AsyncFunction("scrollToFile") { view: AgentsmithReviewDiffView, fileId: String, animated: Boolean ->
+      AsyncFunction("scrollToFile") {
+          view: AgentsmithReviewDiffView,
+          fileId: String,
+          animated: Boolean
+        ->
         view.scrollToFile(fileId, animated)
       }
       AsyncFunction("scrollToTop") { view: AgentsmithReviewDiffView, animated: Boolean ->
@@ -66,7 +73,10 @@ class AgentsmithReviewDiffModule : Module() {
       AsyncFunction("setTokensJson") { view: AgentsmithReviewDiffView, tokensJson: String ->
         view.setTokensJson(tokensJson)
       }
-      AsyncFunction("setTokensPatchJson") { view: AgentsmithReviewDiffView, tokensPatchJson: String ->
+      AsyncFunction("setTokensPatchJson") {
+          view: AgentsmithReviewDiffView,
+          tokensPatchJson: String
+        ->
         view.setTokensPatchJson(tokensPatchJson)
       }
 

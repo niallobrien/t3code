@@ -1,6 +1,11 @@
 import { Tooltip, TooltipTrigger, TooltipPopup } from "../ui/tooltip";
 import { scopeThreadRef } from "@agentsmith/client-runtime/environment";
-import type { EnvironmentId, PullRequestRef, ScopedThreadRef, ThreadId } from "@agentsmith/contracts";
+import type {
+  EnvironmentId,
+  PullRequestRef,
+  ScopedThreadRef,
+  ThreadId,
+} from "@agentsmith/contracts";
 import { CheckIcon, LinkIcon, MessageSquareIcon, UnlinkIcon } from "lucide-react";
 import { useState } from "react";
 import { threadPullRequestLinkMode } from "@agentsmith/client-runtime/thread-pull-request-compatibility";

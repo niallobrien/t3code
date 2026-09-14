@@ -1,4 +1,9 @@
-import type { EnvironmentId, EnvironmentMachineKind, VcsRef, ProjectId } from "@agentsmith/contracts";
+import type {
+  EnvironmentId,
+  EnvironmentMachineKind,
+  VcsRef,
+  ProjectId,
+} from "@agentsmith/contracts";
 import * as Schema from "effect/Schema";
 import { toSortableTimestamp } from "../lib/threadSort";
 export {

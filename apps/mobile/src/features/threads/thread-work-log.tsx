@@ -91,7 +91,10 @@ function WorkLogIcon(props: {
   const colorClassName = props.highlighted ? "accent-foreground" : props.colorClassName;
   if (props.icon === "agentsmith") {
     return (
-      <AgentsmithWordmark height={10} {...(colorClassName ? { colorClassName } : { color: props.color })} />
+      <AgentsmithWordmark
+        height={10}
+        {...(colorClassName ? { colorClassName } : { color: props.color })}
+      />
     );
   }
   return (

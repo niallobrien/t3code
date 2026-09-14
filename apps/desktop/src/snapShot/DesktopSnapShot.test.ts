@@ -1013,7 +1013,10 @@ it.effect.each(["win32", "darwin", "linux"] as const)(
         const saved = yield* decodePendingMetadata(metadata);
         assert.equal(saved.source.windowTitle, agentsmith.title);
         assert.equal(saved.source.appName, agentsmith.owner.name);
-        assert.equal(saved.source.accessibleText, `Window from process ${agentsmith.owner.processId}`);
+        assert.equal(
+          saved.source.accessibleText,
+          `Window from process ${agentsmith.owner.processId}`,
+        );
         assert.deepEqual(images, [agentsmith.png]);
         assert.equal(prepareCaptureRevealMock.mock.calls.length, platform === "win32" ? 1 : 0);
         if (platform === "linux") {

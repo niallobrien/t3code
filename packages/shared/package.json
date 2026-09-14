@@ -333,9 +333,9 @@
     "test": "vp test run"
   },
   "dependencies": {
+    "@agentsmith/contracts": "workspace:*",
     "@noble/curves": "catalog:",
     "@noble/hashes": "catalog:",
-    "@agentsmith/contracts": "workspace:*",
     "effect": "catalog:",
     "jose": "catalog:",
     "yaml": "catalog:"

@@ -153,7 +153,9 @@ const serviceUpdateCommand = Command.make("update", serviceReconcileFlags).pipe(
         );
         const result = yield* reconcileService({ allowDowngrade: flags.allowDowngrade });
         if (!result.changed) {
-          yield* Console.log(`AgentSmith service is already using agentsmith@${packageJson.version}.`);
+          yield* Console.log(
+            `AgentSmith service is already using agentsmith@${packageJson.version}.`,
+          );
           return;
         }
         yield* Console.log(

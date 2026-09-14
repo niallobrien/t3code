@@ -34,7 +34,9 @@ describe("ssh auth", () => {
     Effect.gen(function* () {
       const fs = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const directory = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-ssh-askpass-test-" });
+      const directory = yield* fs.makeTempDirectoryScoped({
+        prefix: "agentsmith-ssh-askpass-test-",
+      });
       const env = yield* buildSshChildEnvironment({
         authSecret: "super-secret",
         interactiveAuth: true,
@@ -48,7 +50,10 @@ describe("ssh auth", () => {
       assert.equal(env.AGENTSMITH_SSH_AUTH_SECRET, "super-secret");
       assert.equal(env.DISPLAY, "agentsmith");
       assert.equal(yield* fs.exists(askpassPath), true);
-      assert.include(yield* fs.readFileString(askpassPath), 'printf "%s\\n" "$AGENTSMITH_SSH_AUTH_SECRET"');
+      assert.include(
+        yield* fs.readFileString(askpassPath),
+        'printf "%s\\n" "$AGENTSMITH_SSH_AUTH_SECRET"',
+      );
     }).pipe(
       Effect.provide(Layer.merge(NodeServices.layer, Layer.succeed(HostProcessPlatform, "linux"))),
       Effect.scoped,

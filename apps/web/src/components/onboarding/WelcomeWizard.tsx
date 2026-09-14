@@ -594,8 +594,8 @@ function PairingForm({
             </p>
             <CommandBlock command="npx agentsmith pair" className="mt-2" />
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              Start AgentSmith first, or run <code className="font-mono">npx agentsmith serve</code>. Add{" "}
-              <code className="font-mono">--tailscale</code> to use your tailnet.
+              Start AgentSmith first, or run <code className="font-mono">npx agentsmith serve</code>
+              . Add <code className="font-mono">--tailscale</code> to use your tailnet.
             </p>
           </CollapsiblePanel>
         </Collapsible>

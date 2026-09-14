@@ -120,8 +120,14 @@ describe("ssh tunnel scripts", () => {
       script,
       "AGENTSMITH_RELEASE_BASE_URL='https://github.com/pingdotgg/agentsmith/releases/download'",
     );
-    assert.include(script, 'AGENTSMITH_RUNTIME_DIR="$HOME/.agentsmith/runtime/versions/$AGENTSMITH_ARCHIVE_VERSION"');
-    assert.include(script, 'AGENTSMITH_ARCHIVE="agentsmith-$AGENTSMITH_ARCHIVE_VERSION-$AGENTSMITH_PLATFORM-$AGENTSMITH_ARCH.tar.gz"');
+    assert.include(
+      script,
+      'AGENTSMITH_RUNTIME_DIR="$HOME/.agentsmith/runtime/versions/$AGENTSMITH_ARCHIVE_VERSION"',
+    );
+    assert.include(
+      script,
+      'AGENTSMITH_ARCHIVE="agentsmith-$AGENTSMITH_ARCHIVE_VERSION-$AGENTSMITH_PLATFORM-$AGENTSMITH_ARCH.tar.gz"',
+    );
     assert.include(script, "SHA256SUMS");
     assert.include(script, 'exec "$AGENTSMITH_RUNTIME_DIR/agentsmith" "$@"');
     assert.notInclude(script, "npx");
@@ -515,7 +521,9 @@ describe("ssh tunnel scripts", () => {
                 ...makeSuccessfulProcess(""),
                 exitCode: Effect.succeed(ChildProcessSpawner.ExitCode(1)),
                 stderr: Stream.make(
-                  new TextEncoder().encode("Remote AgentSmith server did not stop within 2 seconds.\n"),
+                  new TextEncoder().encode(
+                    "Remote AgentSmith server did not stop within 2 seconds.\n",
+                  ),
                 ),
               };
             }

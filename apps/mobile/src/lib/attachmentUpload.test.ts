@@ -572,7 +572,9 @@ describe("prepareTurnAttachments", () => {
       "https://environment.example/api/attachments/upload/signed",
       expect.objectContaining({ headers: { "Content-Type": "image/png" } }),
     );
-    expect(mocks.deleteFile).toHaveBeenCalledExactlyOnceWith("file:///cache/agentsmith-upload-uuid");
+    expect(mocks.deleteFile).toHaveBeenCalledExactlyOnceWith(
+      "file:///cache/agentsmith-upload-uuid",
+    );
     expect(prepared.status).toBe("ready");
     if (prepared.status !== "ready") return;
     expect(prepared.attachments).toEqual([

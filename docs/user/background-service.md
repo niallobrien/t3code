@@ -7,8 +7,8 @@ to keep a terminal open.
 
 Run these commands on the machine that will host AgentSmith:
 
-| Task                            | Command                           |
-| ------------------------------- | --------------------------------- |
+| Task                            | Command                                   |
+| ------------------------------- | ----------------------------------------- |
 | Install and start               | `npx agentsmith@latest service install`   |
 | Inspect status and log location | `npx agentsmith@latest service status`    |
 | Update or repair                | `npx agentsmith@latest service update`    |
@@ -109,8 +109,8 @@ that session open.
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | `linger-unavailable`                    | Run `loginctl show-user "$(id -un)" --property=Linger` and check that systemd-logind is available.                             |
 | `user-manager-unavailable`              | Run `systemctl --user status` in a login session for the service user; check your distribution's systemd user-session support. |
-| `service-disabled` or `service-stopped` | Read the log and `systemctl --user status agentsmith.service`, then use the repair command printed by AgentSmith.                     |
-| `restart-pending`                       | A newer version is installed but the service still runs the previous one. Run `agentsmith service restart`.                            |
+| `service-disabled` or `service-stopped` | Read the log and `systemctl --user status agentsmith.service`, then use the repair command printed by AgentSmith.              |
+| `restart-pending`                       | A newer version is installed but the service still runs the previous one. Run `agentsmith service restart`.                    |
 
 On macOS, check **System Settings → General → Login Items** if the service no
 longer starts at login. If agent work cannot access Desktop, Documents, or

@@ -757,7 +757,11 @@ html[data-mobile-composer-route-transition="true"]::view-transition-old(agentsmi
     }
   }
 
-  :is(html[data-theme-id="agentsmith-chat"], html[data-theme-id="ocean"], html[data-theme-id="iris"]) {
+  :is(
+    html[data-theme-id="agentsmith-chat"],
+    html[data-theme-id="ocean"],
+    html[data-theme-id="iris"]
+  ) {
     --stage-night-top: color-mix(in oklch, var(--stage-art-top) 38%, var(--stage-night-base-top));
     --stage-night-mid: color-mix(in oklch, var(--stage-art-mid) 38%, var(--stage-night-base-mid));
     --stage-night-bottom: color-mix(

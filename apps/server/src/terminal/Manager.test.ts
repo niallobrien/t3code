@@ -2269,7 +2269,9 @@ it.layer(
           Layer.provide(ServerSecretStore.layer),
           Layer.provide(SqlitePersistenceMemory),
           Layer.provide(
-            ServerConfig.layerTest(process.cwd(), { prefix: "agentsmith-terminal-provider-restart-" }),
+            ServerConfig.layerTest(process.cwd(), {
+              prefix: "agentsmith-terminal-provider-restart-",
+            }),
           ),
         ),
       ),

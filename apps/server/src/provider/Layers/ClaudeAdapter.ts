@@ -4752,7 +4752,7 @@ export const makeClaudeAdapter = Effect.fn("makeClaudeAdapter")(function* (
         ...(mcpSession
           ? {
               mcpServers: {
-                "agentsmith": {
+                agentsmith: {
                   type: "http",
                   url: mcpSession.endpoint,
                   headers: {

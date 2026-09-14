@@ -376,7 +376,9 @@ export function UsageLimitAccountScreen({ route }: AccountScreenProps) {
             </View>
             {account.redeem && account.limits.resetCredits ? (
               <View className="gap-3 rounded-[24px] border-continuous bg-card p-4">
-                <Text className="text-sm font-agentsmith-medium text-foreground">Reset credits</Text>
+                <Text className="text-sm font-agentsmith-medium text-foreground">
+                  Reset credits
+                </Text>
                 <ResetCredits
                   key={account.key}
                   environmentId={account.redeem.environmentId}

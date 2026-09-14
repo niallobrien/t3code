@@ -11,7 +11,9 @@ interface NativeKeyboardCommandsProps extends ViewProps, PropsWithChildren {
   ) => void;
 }
 
-const NativeKeyboardCommands = requireNativeView<NativeKeyboardCommandsProps>("AgentsmithKeyboardCommands");
+const NativeKeyboardCommands = requireNativeView<NativeKeyboardCommandsProps>(
+  "AgentsmithKeyboardCommands",
+);
 
 export function AgentsmithKeyboardCommands(
   props: PropsWithChildren<{

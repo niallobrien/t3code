@@ -109,7 +109,8 @@ export function getMobileTerminalTheme(
   const base = getPierreTerminalTheme(scheme);
   if (themeId === "agentsmith" || themeId === "material-you") return base;
 
-  const theme = BUILT_IN_THEMES.find((candidate) => candidate.id === themeId) ?? AGENTSMITH_CHAT_THEME;
+  const theme =
+    BUILT_IN_THEMES.find((candidate) => candidate.id === themeId) ?? AGENTSMITH_CHAT_THEME;
   const palette = getThemeColorsForAppearance(theme, scheme) ?? theme.colors;
   const colors = getMobileThemeVariables(themeId, scheme);
   const background = themeColorToNativeColor(palette.terminalBackground);

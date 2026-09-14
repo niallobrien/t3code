@@ -225,7 +225,9 @@ function PrimaryActionButton(props: {
       {props.loading ? (
         <ActivityIndicator colorClassName={String("accent-primary-foreground")} />
       ) : (
-        <Text className="text-base font-agentsmith-bold text-primary-foreground">{props.label}</Text>
+        <Text className="text-base font-agentsmith-bold text-primary-foreground">
+          {props.label}
+        </Text>
       )}
     </Pressable>
   );
@@ -410,7 +412,9 @@ function EmptyEnvironmentState() {
         onPress={() => navigation.dispatch(StackActions.replace("ConnectionsNew"))}
         className="mt-1 rounded-full bg-primary px-4 py-2.5 active:opacity-70"
       >
-        <Text className="text-sm font-agentsmith-bold text-primary-foreground">Add environment</Text>
+        <Text className="text-sm font-agentsmith-bold text-primary-foreground">
+          Add environment
+        </Text>
       </Pressable>
     </View>
   );

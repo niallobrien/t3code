@@ -66,7 +66,9 @@ server.listen(Number(process.env.AGENTSMITH_TEST_PORT ?? 0), "127.0.0.1", () => 
                 },
                 detached: false,
                 stdin: Stream.make(
-                  new TextEncoder().encode(buildRemoteAgentsmithRunnerScript({ nodeScriptPath: cliPath })),
+                  new TextEncoder().encode(
+                    buildRemoteAgentsmithRunnerScript({ nodeScriptPath: cliPath }),
+                  ),
                 ),
               }),
             );

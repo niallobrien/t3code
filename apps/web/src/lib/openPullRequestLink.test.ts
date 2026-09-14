@@ -203,7 +203,10 @@ describe("matchesLinkedPullRequestUrl", () => {
 
   it("rejects a different pull request or host", () => {
     expect(
-      matchesLinkedPullRequestUrl(linkedPullRequest, "https://github.com/pingdotgg/agentsmith/pull/43"),
+      matchesLinkedPullRequestUrl(
+        linkedPullRequest,
+        "https://github.com/pingdotgg/agentsmith/pull/43",
+      ),
     ).toBe(false);
     expect(
       matchesLinkedPullRequestUrl(
@@ -244,7 +247,9 @@ describe("parseChangeRequestUrl", () => {
 
   it("reads a GitLab merge request, nested groups and all", () => {
     expect(
-      parseChangeRequestUrl("https://gitlab.com/agentsmith/platform/agentsmith/-/merge_requests/42"),
+      parseChangeRequestUrl(
+        "https://gitlab.com/agentsmith/platform/agentsmith/-/merge_requests/42",
+      ),
     ).toEqual({
       host: "gitlab.com",
       repository: "agentsmith/platform/agentsmith",
@@ -279,7 +284,9 @@ describe("parseChangeRequestUrl", () => {
       number: 17,
     });
     expect(
-      parseChangeRequestUrl("https://acme.visualstudio.com/platform/_git/agentsmith/pullrequest/17"),
+      parseChangeRequestUrl(
+        "https://acme.visualstudio.com/platform/_git/agentsmith/pullrequest/17",
+      ),
     ).toEqual({
       host: "acme.visualstudio.com",
       repository: "platform/_git/agentsmith",
@@ -288,7 +295,9 @@ describe("parseChangeRequestUrl", () => {
   });
 
   it("survives trailing segments, a trailing slash and a query string", () => {
-    expect(parseChangeRequestUrl("https://github.com/agentsmith/agentsmith/pull/123/files?w=1")).toEqual({
+    expect(
+      parseChangeRequestUrl("https://github.com/agentsmith/agentsmith/pull/123/files?w=1"),
+    ).toEqual({
       host: "github.com",
       repository: "agentsmith/agentsmith",
       number: 123,

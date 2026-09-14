@@ -2278,7 +2278,10 @@ export const makeCodexAdapter = Effect.fn("makeCodexAdapter")(function* (
                     options?.environment ?? process.env,
                     mcpSession,
                   ),
-                  AGENTSMITH_MCP_BEARER_TOKEN: mcpSession.authorizationHeader.replace(/^Bearer\s+/, ""),
+                  AGENTSMITH_MCP_BEARER_TOKEN: mcpSession.authorizationHeader.replace(
+                    /^Bearer\s+/,
+                    "",
+                  ),
                 },
                 appServerArgs: [
                   "-c",

@@ -64,44 +64,44 @@ export const make = Effect.gen(function* () {
   const fileSystem = yield* FileSystem.FileSystem;
   const path = yield* Path.Path;
 
-  const load: AgentsmithProjectFileLoader["Service"]["load"] = Effect.fn("AgentsmithProjectFileLoader.load")(
-    function* (workspaceRoot) {
-      const filePath = path.join(workspaceRoot, AGENTSMITH_PROJECT_FILE_NAME);
-      const raw = yield* fileSystem.readFileString(filePath).pipe(
-        Effect.map(Option.some),
-        Effect.catchTags({
-          PlatformError: (error) =>
-            error.reason._tag === "NotFound"
-              ? Effect.succeed(Option.none<string>())
-              : logAgentsmithProjectFileLoadError(
-                  new AgentsmithProjectFileLoadError({
-                    operation: "read",
-                    workspaceRoot,
-                    filePath,
-                    cause: error,
-                  }),
-                ).pipe(Effect.as(Option.none<string>())),
-        }),
-      );
-      if (Option.isNone(raw)) {
-        return Option.none<AgentsmithProjectFile>();
-      }
-      return yield* decodeAgentsmithProjectFileJson(raw.value).pipe(
-        Effect.map(Option.some),
-        Effect.catchTags({
-          SchemaError: (error) =>
-            logAgentsmithProjectFileLoadError(
-              new AgentsmithProjectFileLoadError({
-                operation: "decode",
-                workspaceRoot,
-                filePath,
-                cause: error,
-              }),
-            ).pipe(Effect.as(Option.none<AgentsmithProjectFile>())),
-        }),
-      );
-    },
-  );
+  const load: AgentsmithProjectFileLoader["Service"]["load"] = Effect.fn(
+    "AgentsmithProjectFileLoader.load",
+  )(function* (workspaceRoot) {
+    const filePath = path.join(workspaceRoot, AGENTSMITH_PROJECT_FILE_NAME);
+    const raw = yield* fileSystem.readFileString(filePath).pipe(
+      Effect.map(Option.some),
+      Effect.catchTags({
+        PlatformError: (error) =>
+          error.reason._tag === "NotFound"
+            ? Effect.succeed(Option.none<string>())
+            : logAgentsmithProjectFileLoadError(
+                new AgentsmithProjectFileLoadError({
+                  operation: "read",
+                  workspaceRoot,
+                  filePath,
+                  cause: error,
+                }),
+              ).pipe(Effect.as(Option.none<string>())),
+      }),
+    );
+    if (Option.isNone(raw)) {
+      return Option.none<AgentsmithProjectFile>();
+    }
+    return yield* decodeAgentsmithProjectFileJson(raw.value).pipe(
+      Effect.map(Option.some),
+      Effect.catchTags({
+        SchemaError: (error) =>
+          logAgentsmithProjectFileLoadError(
+            new AgentsmithProjectFileLoadError({
+              operation: "decode",
+              workspaceRoot,
+              filePath,
+              cause: error,
+            }),
+          ).pipe(Effect.as(Option.none<AgentsmithProjectFile>())),
+      }),
+    );
+  });
 
   return AgentsmithProjectFileLoader.of({ load });
 });

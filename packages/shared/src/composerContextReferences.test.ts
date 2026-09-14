@@ -47,8 +47,9 @@ describe("labels and reference links", () => {
       source: text,
     });
     expect(
-      collectComposerContextReferences(`[${"x".repeat(300)}](agentsmith-context://v1/file/ctx_1)`)[0]
-        ?.label,
+      collectComposerContextReferences(
+        `[${"x".repeat(300)}](agentsmith-context://v1/file/ctx_1)`,
+      )[0]?.label,
     ).toHaveLength(200);
   });
   it("sanitizes labels without touching identity", () => {
@@ -82,12 +83,15 @@ describe("labels and reference links", () => {
   });
 
   it("ignores links whose href does not parse", () => {
-    expect(collectComposerContextReferences("[x](agentsmith-context://v1/image/ctx_1?y)")).toEqual([]);
+    expect(collectComposerContextReferences("[x](agentsmith-context://v1/image/ctx_1?y)")).toEqual(
+      [],
+    );
     expect(collectComposerContextReferences("[x](https://example.com)")).toEqual([]);
   });
 
   it("replaces occurrences in place", () => {
-    const text = "a [x](agentsmith-context://v1/skill/ctx_1) b [y](agentsmith-context://v1/file/ctx_2) c";
+    const text =
+      "a [x](agentsmith-context://v1/skill/ctx_1) b [y](agentsmith-context://v1/file/ctx_2) c";
     expect(replaceComposerContextReferences(text, (o) => `<${o.contextId}>`)).toBe(
       "a <ctx_1> b <ctx_2> c",
     );

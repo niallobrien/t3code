@@ -35,7 +35,9 @@ const configLayer = Layer.effect(
       devAuthToken: Redacted.make(DEV_TOKEN),
     } satisfies ServerConfig.ServerConfig["Service"];
   }),
-).pipe(Layer.provide(ServerConfig.layerTest(process.cwd(), { prefix: "agentsmith-auth-http-test-" })));
+).pipe(
+  Layer.provide(ServerConfig.layerTest(process.cwd(), { prefix: "agentsmith-auth-http-test-" })),
+);
 
 const environmentAuthLayer = EnvironmentAuth.layer.pipe(
   Layer.provide(SqlitePersistenceMemory),
@@ -94,7 +96,9 @@ it.effect("sets the selected browser session cookies through the HTTP route", ()
           );
           expect(devResponse.status).toBe(200);
           const devCookies = devResponse.headers.getSetCookie();
-          const devCookie = devCookies.find((cookie) => cookie.startsWith("agentsmith_dev_session_"));
+          const devCookie = devCookies.find((cookie) =>
+            cookie.startsWith("agentsmith_dev_session_"),
+          );
           expect(devCookie).toContain("HttpOnly");
           expect(devCookie).toContain(`=${DEV_TOKEN};`);
           expect(devCookies).toContainEqual(

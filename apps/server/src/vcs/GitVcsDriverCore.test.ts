@@ -2083,7 +2083,10 @@ it.layer(TestLayer)("GitVcsDriver core integration", (it) => {
 
         assert.equal(yield* git(worktreePath, ["rev-parse", "HEAD"]), remoteHead);
         assert.equal(
-          yield* driver.readConfigValue(worktreePath, "branch.agentsmith/fetched-origin.gh-merge-base"),
+          yield* driver.readConfigValue(
+            worktreePath,
+            "branch.agentsmith/fetched-origin.gh-merge-base",
+          ),
           initialBranch,
         );
         assert.equal(

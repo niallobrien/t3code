@@ -12,7 +12,12 @@
  *
  * @module usageAggregation
  */
-import type { UsageBucket, UsageDay, UsageResolution, UsageTokenTotals } from "@agentsmith/contracts";
+import type {
+  UsageBucket,
+  UsageDay,
+  UsageResolution,
+  UsageTokenTotals,
+} from "@agentsmith/contracts";
 
 import { addTotals, EMPTY_TOTALS, type UsageRecord } from "./usageTranscripts.ts";
 import { cacheSavingsUsd, priceUsage, type RateTable } from "./usagePricing.ts";

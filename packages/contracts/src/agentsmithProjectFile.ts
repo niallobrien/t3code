@@ -83,7 +83,8 @@ export const AgentsmithProjectFile = Schema.Struct({
   scripts: Schema.optionalKey(
     Schema.Array(AgentsmithProjectFileScript)
       .annotate({
-        description: "Project scripts shared with everyone who opens this repository in AgentSmith.",
+        description:
+          "Project scripts shared with everyone who opens this repository in AgentSmith.",
       })
       .check(Schema.isMaxLength(AGENTSMITH_PROJECT_FILE_MAX_SCRIPTS)),
   ),

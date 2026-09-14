@@ -149,7 +149,11 @@ class SubscriptionUsageWidget : AppWidgetProvider() {
       child.setTextViewText(R.id.agentsmith_widget_percent, percent)
       val visibility = if (remaining == null) View.GONE else View.VISIBLE
       child.setViewVisibility(R.id.agentsmith_widget_progress, visibility)
-      if (remaining != null) child.setProgressBar(R.id.agentsmith_widget_progress, 100, remaining, false)
+      if (remaining !=
+        null
+      ) {
+        child.setProgressBar(R.id.agentsmith_widget_progress, 100, remaining, false)
+      }
       val reset = window?.optString("reset")
         ?: context.getString(R.string.agentsmith_subscription_widget_refresh)
       child.setTextViewText(R.id.agentsmith_widget_reset, reset)

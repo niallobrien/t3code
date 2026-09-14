@@ -37,12 +37,12 @@
     "yauzl": "^3.4.0"
   },
   "devDependencies": {
-    "@effect/vitest": "catalog:",
     "@agentsmith/contracts": "workspace:*",
     "@agentsmith/shared": "workspace:*",
     "@agentsmith/ssh": "workspace:*",
     "@agentsmith/tailscale": "workspace:*",
     "@agentsmith/web": "workspace:*",
+    "@effect/vitest": "catalog:",
     "@types/node": "catalog:",
     "@types/yauzl": "^3.4.0",
     "effect-acp": "workspace:*",

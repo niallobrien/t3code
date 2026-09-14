@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vite-plus/test";
-import { BUILT_IN_THEME_IDS, BUILT_IN_THEMES, AGENTSMITH_CHAT_THEME } from "@agentsmith/shared/themePalettes";
+import {
+  BUILT_IN_THEME_IDS,
+  BUILT_IN_THEMES,
+  AGENTSMITH_CHAT_THEME,
+} from "@agentsmith/shared/themePalettes";
 import { readDefaultMobileThemeVariables } from "./mobileTheme.test-support";
 
 import {

@@ -13,8 +13,9 @@ interface AgentsmithMarkdownTextSelectionNativeModule {
   } | null;
 }
 
-const nativeModule =
-  requireOptionalNativeModule<AgentsmithMarkdownTextSelectionNativeModule>("AgentsmithMarkdownTextSelection");
+const nativeModule = requireOptionalNativeModule<AgentsmithMarkdownTextSelectionNativeModule>(
+  "AgentsmithMarkdownTextSelection",
+);
 
 export function installMarkdownCopySanitizer(reactTag: number, contextClipboardConfig = ""): void {
   nativeModule?.installCopySanitizer(reactTag, contextClipboardConfig);

@@ -284,7 +284,9 @@ describe("AssetAccess", () => {
       Effect.gen(function* () {
         const fs = yield* FileSystem.FileSystem;
         const path = yield* Path.Path;
-        const root = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-media-open-rejected-" });
+        const root = yield* fs.makeTempDirectoryScoped({
+          prefix: "agentsmith-media-open-rejected-",
+        });
         const filePath = path.join(root, "recording.mp4");
         const secretPath = path.join(root, "secret.txt");
         yield* fs.writeFileString(filePath, "video");

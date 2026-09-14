@@ -43,12 +43,12 @@ however you run other Node processes.
 Download a release from [GitHub Releases](https://github.com/pingdotgg/agentsmith/releases),
 or use a package manager:
 
-| Platform           | Install                         |
-| ------------------ | ------------------------------- |
+| Platform           | Install                                |
+| ------------------ | -------------------------------------- |
 | Windows            | `winget install AgentSmith.AgentSmith` |
-| macOS              | `brew install --cask agentsmith`   |
-| Arch Linux         | `yay -S agentsmith-bin`             |
-| Arch Linux nightly | `yay -S agentsmith-nightly-bin`     |
+| macOS              | `brew install --cask agentsmith`       |
+| Arch Linux         | `yay -S agentsmith-bin`                |
+| Arch Linux nightly | `yay -S agentsmith-nightly-bin`        |
 
 ### Windows Subsystem for Linux
 
@@ -98,7 +98,7 @@ computer.
 | Cursor      | Install [Cursor CLI](https://cursor.com/cli), then run `agent login`.                        |
 | Grok Build  | Install [Grok Build CLI](https://x.ai/cli), then run `grok login`.                           |
 | OpenCode    | Install [OpenCode](https://opencode.ai), then run `opencode auth login`.                     |
-| Antigravity | Install and sign in with Google from AgentSmith's provider settings.                            |
+| Antigravity | Install and sign in with Google from AgentSmith's provider settings.                         |
 
 Provider CLIs must be on the server's `PATH`. If AgentSmith cannot find one, set its
 **Binary path** in provider settings, especially when using a version manager.

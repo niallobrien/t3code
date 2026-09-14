@@ -245,7 +245,8 @@ describe("DesktopLinuxUrlHandler", () => {
           module: "FileSystem",
           method: "writeFileString",
           description: "read-only filesystem",
-          pathOrDescriptor: "/home/alice/.local/share/applications/com.agentsmith.AgentSmith.desktop",
+          pathOrDescriptor:
+            "/home/alice/.local/share/applications/com.agentsmith.AgentSmith.desktop",
         }),
       });
 

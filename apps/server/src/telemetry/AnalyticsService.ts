@@ -37,7 +37,9 @@ const TelemetryEnvConfig = Config.all({
     Config.withDefault("https://us.i.posthog.com"),
   ),
   enabled: Config.boolean("AGENTSMITH_TELEMETRY_ENABLED").pipe(Config.withDefault(true)),
-  flushBatchSize: Config.number("AGENTSMITH_TELEMETRY_FLUSH_BATCH_SIZE").pipe(Config.withDefault(20)),
+  flushBatchSize: Config.number("AGENTSMITH_TELEMETRY_FLUSH_BATCH_SIZE").pipe(
+    Config.withDefault(20),
+  ),
   maxBufferedEvents: Config.number("AGENTSMITH_TELEMETRY_MAX_BUFFERED_EVENTS").pipe(
     Config.withDefault(1_000),
   ),

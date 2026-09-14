@@ -552,7 +552,8 @@ describe("composer file attachments", () => {
           name: "preview-h264.mp4",
           mimeType: "video/mp4",
           sizeBytes: 620_992,
-          fileUri: "file:///documents/agentsmith-composer-attachments/attachment-id-preview-h264.mp4",
+          fileUri:
+            "file:///documents/agentsmith-composer-attachments/attachment-id-preview-h264.mp4",
         },
       ],
       error: null,
@@ -590,7 +591,8 @@ describe("composer file attachments", () => {
     expect(result.files).toEqual([
       expect.objectContaining({
         name: "Cloud recording.mp4",
-        fileUri: "file:///documents/agentsmith-composer-attachments/attachment-id-Cloud recording.mp4",
+        fileUri:
+          "file:///documents/agentsmith-composer-attachments/attachment-id-Cloud recording.mp4",
       }),
     ]);
     expect(mocks.copy).toHaveBeenCalledWith(cachedUri, result.files[0]!.fileUri);

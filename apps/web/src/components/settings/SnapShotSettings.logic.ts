@@ -1,4 +1,8 @@
-import type { ClientSettingsPatch, DesktopSnapShotState, SnapShotSound } from "@agentsmith/contracts";
+import type {
+  ClientSettingsPatch,
+  DesktopSnapShotState,
+  SnapShotSound,
+} from "@agentsmith/contracts";
 import {
   captureSetupBackend,
   captureSetupDesktopName,

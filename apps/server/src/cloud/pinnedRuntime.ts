@@ -197,7 +197,8 @@ const installFromArchive = Effect.fn("cloud.pinned_runtime.install_archive")(fun
     .writeFile(archivePath, archive)
     .pipe(
       Effect.mapError(
-        (cause) => new PinnedRuntimeInstallError({ step: "writing the agentsmith release archive", cause }),
+        (cause) =>
+          new PinnedRuntimeInstallError({ step: "writing the agentsmith release archive", cause }),
       ),
     );
   const extractStep = "extracting the agentsmith release archive";

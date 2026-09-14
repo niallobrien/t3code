@@ -31,9 +31,9 @@ describe("isTransportConnectionErrorMessage", () => {
   });
 
   it("returns true for the AgentSmith server WebSocket message", () => {
-    expect(isTransportConnectionErrorMessage("Unable to connect to the AgentSmith server WebSocket.")).toBe(
-      true,
-    );
+    expect(
+      isTransportConnectionErrorMessage("Unable to connect to the AgentSmith server WebSocket."),
+    ).toBe(true);
   });
 
   it("returns true for ping timeout", () => {

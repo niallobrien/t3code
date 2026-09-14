@@ -95,7 +95,10 @@ describe("BrowserSession", () => {
       const nondefaultProfile = yield* browserSessions.getPartition("a::b", true, "profile");
 
       assert.strictEqual(legacyDefault, "persist:agentsmith-preview-78f0be89237d77f7a70e");
-      assert.strictEqual(nondefaultProfile, "persist:agentsmith-preview-profile-78f0be89237d77f7a70e");
+      assert.strictEqual(
+        nondefaultProfile,
+        "persist:agentsmith-preview-profile-78f0be89237d77f7a70e",
+      );
       assert.notStrictEqual(nondefaultProfile, legacyDefault);
       assert.isTrue(browserSessions.isPartition(legacyDefault));
       assert.isTrue(browserSessions.isPartition(nondefaultProfile));

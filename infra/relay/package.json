@@ -11,13 +11,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@agentsmith/client-runtime": "workspace:*",
+    "@agentsmith/contracts": "workspace:*",
+    "@agentsmith/shared": "workspace:*",
     "@clerk/backend": "catalog:",
     "@effect/sql-pg": "catalog:",
     "@noble/curves": "catalog:",
     "@noble/hashes": "catalog:",
-    "@agentsmith/client-runtime": "workspace:*",
-    "@agentsmith/contracts": "workspace:*",
-    "@agentsmith/shared": "workspace:*",
     "alchemy": "2.0.0-beta.76",
     "drizzle-orm": "1.0.0-rc.5-ab785fc",
     "effect": "catalog:"

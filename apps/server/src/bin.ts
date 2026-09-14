@@ -40,7 +40,9 @@ class ConnectPublicConfigMissingError extends CliError.UserError {
 const connectUnavailableCommand = Command.make("connect", {
   command: Argument.string("command").pipe(Argument.variadic),
 }).pipe(
-  Command.withDescription("AgentSmith Connect is unavailable in builds without public configuration."),
+  Command.withDescription(
+    "AgentSmith Connect is unavailable in builds without public configuration.",
+  ),
   Command.unlisted,
   Command.withHandler(() =>
     Effect.fail(

@@ -167,9 +167,9 @@ describe("collectComposerInlineTokens", () => {
     expect(
       collectComposerInlineTokens("see [checkout.png](agentsmith-context://v1/image/ctx_abc) ok"),
     ).toEqual([]);
-    expect(collectComposerInlineTokens("see ![ctx_abc](agentsmith-context://v1/image/ctx_abc) ok")).toEqual(
-      [],
-    );
+    expect(
+      collectComposerInlineTokens("see ![ctx_abc](agentsmith-context://v1/image/ctx_abc) ok"),
+    ).toEqual([]);
   });
 
   it("stays fast on unterminated bracket runs", () => {

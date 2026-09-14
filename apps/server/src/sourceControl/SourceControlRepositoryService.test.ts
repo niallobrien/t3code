@@ -82,7 +82,9 @@ function makeLayer(input: {
     Layer.provide(
       ServerConfig.layerTest(
         process.cwd(),
-        input.fileSystem ? "/tmp/agentsmith-source-control-repos" : { prefix: "agentsmith-source-control-repos-" },
+        input.fileSystem
+          ? "/tmp/agentsmith-source-control-repos"
+          : { prefix: "agentsmith-source-control-repos-" },
       ),
     ),
   );

@@ -197,7 +197,9 @@ export const buildSshChildEnvironment = Effect.fn("ssh/auth.buildSshChildEnviron
     ...baseEnv,
     SSH_ASKPASS: sshAskpass,
     SSH_ASKPASS_REQUIRE: "force",
-    ...(input.authSecret === undefined ? {} : { AGENTSMITH_SSH_AUTH_SECRET: input.authSecret ?? "" }),
+    ...(input.authSecret === undefined
+      ? {}
+      : { AGENTSMITH_SSH_AUTH_SECRET: input.authSecret ?? "" }),
     ...(platform === "win32" || baseEnv.DISPLAY || hostDisplay ? {} : { DISPLAY: "agentsmith" }),
   };
 });

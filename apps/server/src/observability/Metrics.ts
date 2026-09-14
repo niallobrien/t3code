@@ -19,13 +19,19 @@ export const rpcRequestDuration = Metric.timer("agentsmith_rpc_request_duration"
   description: "RPC request handling duration.",
 });
 
-export const orchestrationCommandsTotal = Metric.counter("agentsmith_orchestration_commands_total", {
-  description: "Total orchestration commands dispatched.",
-});
+export const orchestrationCommandsTotal = Metric.counter(
+  "agentsmith_orchestration_commands_total",
+  {
+    description: "Total orchestration commands dispatched.",
+  },
+);
 
-export const orchestrationCommandDuration = Metric.timer("agentsmith_orchestration_command_duration", {
-  description: "Orchestration command dispatch duration.",
-});
+export const orchestrationCommandDuration = Metric.timer(
+  "agentsmith_orchestration_command_duration",
+  {
+    description: "Orchestration command dispatch duration.",
+  },
+);
 
 export const orchestrationCommandAckDuration = Metric.timer(
   "agentsmith_orchestration_command_ack_duration",
@@ -54,9 +60,12 @@ export const providerTurnDuration = Metric.timer("agentsmith_provider_turn_durat
   description: "Provider turn request duration.",
 });
 
-export const providerRuntimeEventsTotal = Metric.counter("agentsmith_provider_runtime_events_total", {
-  description: "Total canonical provider runtime events processed.",
-});
+export const providerRuntimeEventsTotal = Metric.counter(
+  "agentsmith_provider_runtime_events_total",
+  {
+    description: "Total canonical provider runtime events processed.",
+  },
+);
 
 export const gitCommandsTotal = Metric.counter("agentsmith_git_commands_total", {
   description: "Total git commands executed by the server runtime.",

@@ -79,14 +79,20 @@ const tailscaleServePortFlag = Flag.integer("tailscale-serve-port").pipe(
 const EnvServerConfig = Config.all({
   logLevel: Config.logLevel("AGENTSMITH_LOG_LEVEL").pipe(Config.withDefault("Info")),
   traceMinLevel: Config.logLevel("AGENTSMITH_TRACE_MIN_LEVEL").pipe(Config.withDefault("Info")),
-  traceTimingEnabled: Config.boolean("AGENTSMITH_TRACE_TIMING_ENABLED").pipe(Config.withDefault(true)),
+  traceTimingEnabled: Config.boolean("AGENTSMITH_TRACE_TIMING_ENABLED").pipe(
+    Config.withDefault(true),
+  ),
   traceFile: Config.string("AGENTSMITH_TRACE_FILE").pipe(
     Config.option,
     Config.map(Option.getOrUndefined),
   ),
-  traceMaxBytes: Config.int("AGENTSMITH_TRACE_MAX_BYTES").pipe(Config.withDefault(10 * 1024 * 1024)),
+  traceMaxBytes: Config.int("AGENTSMITH_TRACE_MAX_BYTES").pipe(
+    Config.withDefault(10 * 1024 * 1024),
+  ),
   traceMaxFiles: Config.int("AGENTSMITH_TRACE_MAX_FILES").pipe(Config.withDefault(10)),
-  traceBatchWindowMs: Config.int("AGENTSMITH_TRACE_BATCH_WINDOW_MS").pipe(Config.withDefault(1_000)),
+  traceBatchWindowMs: Config.int("AGENTSMITH_TRACE_BATCH_WINDOW_MS").pipe(
+    Config.withDefault(1_000),
+  ),
   otlpTracesUrl: Config.string("AGENTSMITH_OTLP_TRACES_URL").pipe(
     Config.option,
     Config.map(Option.getOrUndefined),
@@ -98,14 +104,19 @@ const EnvServerConfig = Config.all({
   otlpExportIntervalMs: Config.int("AGENTSMITH_OTLP_EXPORT_INTERVAL_MS").pipe(
     Config.withDefault(10_000),
   ),
-  otlpServiceName: Config.string("AGENTSMITH_OTLP_SERVICE_NAME").pipe(Config.withDefault("agentsmith-server")),
+  otlpServiceName: Config.string("AGENTSMITH_OTLP_SERVICE_NAME").pipe(
+    Config.withDefault("agentsmith-server"),
+  ),
   mode: Config.schema(ServerConfig.RuntimeMode, "AGENTSMITH_MODE").pipe(
     Config.option,
     Config.map(Option.getOrUndefined),
   ),
   port: Config.port("AGENTSMITH_PORT").pipe(Config.option, Config.map(Option.getOrUndefined)),
   host: Config.string("AGENTSMITH_HOST").pipe(Config.option, Config.map(Option.getOrUndefined)),
-  agentsmithHome: Config.string("AGENTSMITH_HOME").pipe(Config.option, Config.map(Option.getOrUndefined)),
+  agentsmithHome: Config.string("AGENTSMITH_HOME").pipe(
+    Config.option,
+    Config.map(Option.getOrUndefined),
+  ),
   devUrl: Config.url("VITE_DEV_SERVER_URL").pipe(Config.option, Config.map(Option.getOrUndefined)),
   devAllowedOrigins: Config.string("AGENTSMITH_DEV_ALLOWED_ORIGINS").pipe(
     Config.withDefault(""),

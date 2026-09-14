@@ -59,7 +59,10 @@ describe("DesktopEnvironment", () => {
       assert.equal(environment.appDataDirectory, "/Users/alice/Library/Application Support");
       assert.equal(environment.baseDir, "/tmp/agentsmith");
       assert.equal(environment.stateDir, "/tmp/agentsmith/userdata");
-      assert.equal(environment.desktopSettingsPath, "/tmp/agentsmith/userdata/desktop-settings.json");
+      assert.equal(
+        environment.desktopSettingsPath,
+        "/tmp/agentsmith/userdata/desktop-settings.json",
+      );
       assert.equal(environment.clientSettingsPath, "/tmp/agentsmith/userdata/client-settings.json");
       assert.equal(
         environment.savedEnvironmentRegistryPath,
@@ -75,12 +78,18 @@ describe("DesktopEnvironment", () => {
       assert.equal(environment.backendCwd, "/repo");
       assert.equal(environment.appUserModelId, "com.agentsmith.agentsmith.dev");
       assert.equal(environment.linuxWmClass, "agentsmith-dev");
-      assert.equal(environment.linuxDesktopEntryName, "com.agentsmith.AgentSmith.Development.desktop");
+      assert.equal(
+        environment.linuxDesktopEntryName,
+        "com.agentsmith.AgentSmith.Development.desktop",
+      );
       assert.deepEqual(
         Option.map(environment.devServerUrl, (url) => url.href),
         Option.some("http://localhost:5173/"),
       );
-      assert.deepEqual(environment.devRemoteAgentsmithServerEntryPath, Option.some("/remote/server.mjs"));
+      assert.deepEqual(
+        environment.devRemoteAgentsmithServerEntryPath,
+        Option.some("/remote/server.mjs"),
+      );
       assert.deepEqual(environment.configuredBackendPort, Option.some(4949));
       assert.deepEqual(environment.commitHashOverride, Option.some("0123456789abcdef"));
       assert.deepEqual(environment.otlpTracesUrl, Option.some("http://127.0.0.1:4318/v1/traces"));

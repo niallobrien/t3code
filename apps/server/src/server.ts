@@ -745,11 +745,16 @@ const makeServerLayer = Layer.unwrap(
                   Schedule.upTo({ duration: "10 minutes" }),
                 ),
               }),
-              Effect.tap(() => Effect.logInfo("AgentSmith Connect desired link reconciled on startup")),
+              Effect.tap(() =>
+                Effect.logInfo("AgentSmith Connect desired link reconciled on startup"),
+              ),
               Effect.catch((cause) =>
-                Effect.logWarning("Failed to reconcile AgentSmith Connect desired link on startup", {
-                  message: cause.message,
-                }),
+                Effect.logWarning(
+                  "Failed to reconcile AgentSmith Connect desired link on startup",
+                  {
+                    message: cause.message,
+                  },
+                ),
               ),
             );
           }),

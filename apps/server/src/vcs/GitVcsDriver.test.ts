@@ -71,7 +71,9 @@ it.effect("restores empty checkpoints without changing paths outside the workspa
     const path = yield* Path.Path;
     const driver = yield* GitVcsDriver.makeVcsDriverShape();
     for (const nested of [false, true]) {
-      const root = yield* fileSystem.makeTempDirectoryScoped({ prefix: "agentsmith-empty-checkpoint-" });
+      const root = yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "agentsmith-empty-checkpoint-",
+      });
       yield* runGit(root, ["init"]);
       yield* runGit(root, ["config", "user.email", "test@test.com"]);
       yield* runGit(root, ["config", "user.name", "Test"]);

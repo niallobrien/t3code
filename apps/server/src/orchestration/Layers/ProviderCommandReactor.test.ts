@@ -2408,7 +2408,9 @@ describe("ProviderCommandReactor", () => {
     expect(harness.generateThreadTitle.mock.calls[0]?.[0].message).toBe(
       `[effort:high]\\n\\nFix reconnect spinner on resume ${assistantQuoteText}`,
     );
-    expect(harness.generateThreadTitle.mock.calls[0]?.[0].message).not.toContain("agentsmith-citation://");
+    expect(harness.generateThreadTitle.mock.calls[0]?.[0].message).not.toContain(
+      "agentsmith-citation://",
+    );
     const readModel = await harness.readModel();
     const thread = readModel.threads.find((entry) => entry.id === ThreadId.make("thread-1"));
     expect(thread?.title).toBe("Reconnect spinner resume bug");
@@ -2476,7 +2478,9 @@ describe("ProviderCommandReactor", () => {
     expect(harness.generateBranchName.mock.calls[0]?.[0].message).toBe(
       `Add a safer reconnect backoff. ${assistantQuoteText}`,
     );
-    expect(harness.generateBranchName.mock.calls[0]?.[0].message).not.toContain("agentsmith-citation://");
+    expect(harness.generateBranchName.mock.calls[0]?.[0].message).not.toContain(
+      "agentsmith-citation://",
+    );
     expect(harness.refreshStatus.mock.calls[0]?.[0]).toBe("/tmp/provider-project-worktree");
     const readModel = await harness.readModel();
     expect(

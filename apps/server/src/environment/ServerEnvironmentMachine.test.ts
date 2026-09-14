@@ -87,7 +87,11 @@ describe("machineKindFromDmi", () => {
       }),
     ).toBe("cloud");
     expect(
-      machineKindFromDmi({ chassisType: "1", sysVendor: "Amazon EC2", productName: "agentsmith.large" }),
+      machineKindFromDmi({
+        chassisType: "1",
+        sysVendor: "Amazon EC2",
+        productName: "agentsmith.large",
+      }),
     ).toBe("cloud");
   });
 

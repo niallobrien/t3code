@@ -144,7 +144,9 @@ describe("provider installation routing", () => {
       const fs = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
       const platform = yield* HostProcessPlatform;
-      const directory = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-provider-install-route-" });
+      const directory = yield* fs.makeTempDirectoryScoped({
+        prefix: "agentsmith-provider-install-route-",
+      });
       const binary = platform === "win32" ? "agy-test.exe" : "agy-test";
       const executable = path.join(directory, binary);
       yield* fs.writeFileString(executable, "test");

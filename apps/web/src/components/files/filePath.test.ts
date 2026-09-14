@@ -32,11 +32,9 @@ describe("fileBreadcrumbs", () => {
       { label: "Temp", path: "C:\\Temp", kind: "directory" },
       { label: "report.md", path: "C:\\Temp\\report.md", kind: "file" },
     ]);
-    expect(fileBreadcrumbs("agentsmith", "\\\\server\\share\\report.md").map((c) => c.path)).toEqual([
-      "\\\\server",
-      "\\\\server\\share",
-      "\\\\server\\share\\report.md",
-    ]);
+    expect(
+      fileBreadcrumbs("agentsmith", "\\\\server\\share\\report.md").map((c) => c.path),
+    ).toEqual(["\\\\server", "\\\\server\\share", "\\\\server\\share\\report.md"]);
   });
 });
 

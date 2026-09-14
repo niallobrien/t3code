@@ -18,23 +18,28 @@ const antigravityProfile = process.env.AGENTSMITH_ACP_ANTIGRAVITY === "1";
 const emitToolCalls = process.env.AGENTSMITH_ACP_EMIT_TOOL_CALLS === "1";
 const emitInterleavedAssistantToolCalls =
   process.env.AGENTSMITH_ACP_EMIT_INTERLEAVED_ASSISTANT_TOOL_CALLS === "1";
-const emitGenericToolPlaceholders = process.env.AGENTSMITH_ACP_EMIT_GENERIC_TOOL_PLACEHOLDERS === "1";
+const emitGenericToolPlaceholders =
+  process.env.AGENTSMITH_ACP_EMIT_GENERIC_TOOL_PLACEHOLDERS === "1";
 const emitAskQuestion = process.env.AGENTSMITH_ACP_EMIT_ASK_QUESTION === "1";
 const emitXAiAskUserQuestion = process.env.AGENTSMITH_ACP_EMIT_XAI_ASK_USER_QUESTION === "1";
 const emitXAiExitPlanMode = process.env.AGENTSMITH_ACP_EMIT_XAI_EXIT_PLAN_MODE === "1";
 const emitXAiPlanMdWrite = process.env.AGENTSMITH_ACP_EMIT_XAI_PLAN_MD_WRITE === "1";
-const emitXAiPromptCompleteThenHang = process.env.AGENTSMITH_ACP_EMIT_XAI_PROMPT_COMPLETE_THEN_HANG === "1";
+const emitXAiPromptCompleteThenHang =
+  process.env.AGENTSMITH_ACP_EMIT_XAI_PROMPT_COMPLETE_THEN_HANG === "1";
 const emitXAiRateLimitThenHang = process.env.AGENTSMITH_ACP_EMIT_XAI_RATE_LIMIT_THEN_HANG === "1";
 const emitXAiAskUserQuestionThenHang =
   process.env.AGENTSMITH_ACP_EMIT_XAI_ASK_USER_QUESTION_THEN_HANG === "1";
 const emitContentThenHang = process.env.AGENTSMITH_ACP_EMIT_CONTENT_THEN_HANG === "1";
 const emitPlanThenHang = process.env.AGENTSMITH_ACP_EMIT_PLAN_THEN_HANG === "1";
 const emitActiveToolThenHang = process.env.AGENTSMITH_ACP_EMIT_ACTIVE_TOOL_THEN_HANG === "1";
-const emitGrokMonitorPostTurnPoll = process.env.AGENTSMITH_ACP_EMIT_GROK_MONITOR_POST_TURN_POLL === "1";
-const emitGrokBackgroundTaskStarted = process.env.AGENTSMITH_ACP_EMIT_GROK_BACKGROUND_TASK_STARTED === "1";
+const emitGrokMonitorPostTurnPoll =
+  process.env.AGENTSMITH_ACP_EMIT_GROK_MONITOR_POST_TURN_POLL === "1";
+const emitGrokBackgroundTaskStarted =
+  process.env.AGENTSMITH_ACP_EMIT_GROK_BACKGROUND_TASK_STARTED === "1";
 const emitForeignSessionUpdates = process.env.AGENTSMITH_ACP_EMIT_FOREIGN_SESSION_UPDATES === "1";
 const waitForResumeRelease = process.env.AGENTSMITH_ACP_WAIT_FOR_RESUME_RELEASE === "1";
-const completeFirstPromptOnCancel = process.env.AGENTSMITH_ACP_COMPLETE_FIRST_PROMPT_ON_CANCEL === "1";
+const completeFirstPromptOnCancel =
+  process.env.AGENTSMITH_ACP_COMPLETE_FIRST_PROMPT_ON_CANCEL === "1";
 const floodStderr = process.env.AGENTSMITH_ACP_FLOOD_STDERR === "1";
 const hangPromptForever = process.env.AGENTSMITH_ACP_HANG_PROMPT_FOREVER === "1";
 const hangFirstPromptForever = process.env.AGENTSMITH_ACP_HANG_FIRST_PROMPT_FOREVER === "1";
@@ -43,8 +48,10 @@ const omitXAiPromptCompleteStopReason =
   process.env.AGENTSMITH_ACP_OMIT_XAI_PROMPT_COMPLETE_STOP_REASON === "1";
 const failLoadSession = process.env.AGENTSMITH_ACP_FAIL_LOAD_SESSION === "1";
 const emitLoadReplay = process.env.AGENTSMITH_ACP_EMIT_LOAD_REPLAY === "1";
-const hangLoadSessionAfterReplay = process.env.AGENTSMITH_ACP_HANG_LOAD_SESSION_AFTER_REPLAY === "1";
-const delayLoadSessionAfterReplay = process.env.AGENTSMITH_ACP_DELAY_LOAD_SESSION_AFTER_REPLAY === "1";
+const hangLoadSessionAfterReplay =
+  process.env.AGENTSMITH_ACP_HANG_LOAD_SESSION_AFTER_REPLAY === "1";
+const delayLoadSessionAfterReplay =
+  process.env.AGENTSMITH_ACP_DELAY_LOAD_SESSION_AFTER_REPLAY === "1";
 const loadSessionDelayMs = Number(process.env.AGENTSMITH_ACP_LOAD_SESSION_DELAY_MS ?? "5000");
 const emitStaleXAiPromptCompleteBeforeSecondHang =
   process.env.AGENTSMITH_ACP_EMIT_STALE_XAI_PROMPT_COMPLETE_BEFORE_SECOND_HANG === "1";

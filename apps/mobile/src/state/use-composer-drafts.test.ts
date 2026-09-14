@@ -231,7 +231,9 @@ function contextDraft(start: number, count: number): ComposerDraft {
     name: "skill",
   }));
   return {
-    text: records.map((record) => `[Skill](agentsmith-context://v1/skill/${record.contextId})`).join(" "),
+    text: records
+      .map((record) => `[Skill](agentsmith-context://v1/skill/${record.contextId})`)
+      .join(" "),
     context: { version: 1, records },
     attachments: [],
   };
@@ -263,7 +265,9 @@ describe("mobile composer drafts", () => {
       const restored = archived
         ? decoded.cloudDrafts.signedOut.account?.drafts.thread
         : decoded.drafts.thread;
-      expect(restored?.text).toBe("Review these [notes.txt](agentsmith-context://v1/file/legacy-file) ");
+      expect(restored?.text).toBe(
+        "Review these [notes.txt](agentsmith-context://v1/file/legacy-file) ",
+      );
       expect(restored?.attachments).toEqual(legacy.attachments);
       expect(restored?.context?.records).toEqual([
         expect.objectContaining({ kind: "file", attachmentId: file.id }),

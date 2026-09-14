@@ -177,7 +177,10 @@ export default defineConfig({
           "apps/mobile/src/native/AgentsmithComposerEditor.native.tsx",
         ],
         rules: {
-          "agentsmith/no-mobile-uniwind-theme-escape-hatches": ["error", { allowUniwindTheme: true }],
+          "agentsmith/no-mobile-uniwind-theme-escape-hatches": [
+            "error",
+            { allowUniwindTheme: true },
+          ],
         },
       },
       // Legacy manual Effect runners tracked as debt: no net-new occurrences.

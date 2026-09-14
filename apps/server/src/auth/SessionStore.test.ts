@@ -33,7 +33,11 @@ const makeServerConfigLayer = (overrides?: Partial<ServerConfig.ServerConfig["Se
         ...overrides,
       } satisfies ServerConfig.ServerConfig["Service"];
     }),
-  ).pipe(Layer.provide(ServerConfig.layerTest(process.cwd(), { prefix: "agentsmith-auth-session-test-" })));
+  ).pipe(
+    Layer.provide(
+      ServerConfig.layerTest(process.cwd(), { prefix: "agentsmith-auth-session-test-" }),
+    ),
+  );
 
 const makeServerEnvironmentLayer = (environmentId: EnvironmentId) =>
   Layer.succeed(ServerEnvironment.ServerEnvironmentIdentity, {
@@ -126,8 +130,14 @@ it.layer(NodeServices.layer)("SessionStore.layer", (it) => {
           ),
         );
 
-      const original = yield* cookieName("/srv/agentsmith-one", EnvironmentId.make("environment-one"));
-      const moved = yield* cookieName("/srv/agentsmith-moved", EnvironmentId.make("environment-one"));
+      const original = yield* cookieName(
+        "/srv/agentsmith-one",
+        EnvironmentId.make("environment-one"),
+      );
+      const moved = yield* cookieName(
+        "/srv/agentsmith-moved",
+        EnvironmentId.make("environment-one"),
+      );
       const other = yield* cookieName("/srv/agentsmith-one", EnvironmentId.make("environment-two"));
 
       expect(moved).toBe(original);
@@ -184,7 +194,9 @@ it.layer(NodeServices.layer)("SessionStore.layer", (it) => {
   it.effect("invalidates old dev credentials and tickets after rotation or removal", () =>
     Effect.gen(function* () {
       const fs = yield* FileSystem.FileSystem;
-      const baseDir = yield* fs.makeTempDirectoryScoped({ prefix: "agentsmith-dev-auth-rotation-" });
+      const baseDir = yield* fs.makeTempDirectoryScoped({
+        prefix: "agentsmith-dev-auth-rotation-",
+      });
       const oldToken = "old-reusable-dev-auth-token-that-is-long-enough";
       const newToken = "new-reusable-dev-auth-token-that-is-long-enough";
       const initialLayer = yield* makeDiskSessionStoreLayer(baseDir, oldToken);

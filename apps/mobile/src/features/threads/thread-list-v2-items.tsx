@@ -243,7 +243,10 @@ export const ThreadListV2PendingRow = memo(function ThreadListV2PendingRow(props
             workspaceRoot={props.project.workspaceRoot}
           />
         ) : null}
-        <Text className="flex-1 text-sm font-agentsmith-medium text-foreground-muted" numberOfLines={1}>
+        <Text
+          className="flex-1 text-sm font-agentsmith-medium text-foreground-muted"
+          numberOfLines={1}
+        >
           {projectTitle}
         </Text>
         {isDraft ? (

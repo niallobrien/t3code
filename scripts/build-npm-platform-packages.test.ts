@@ -183,10 +183,14 @@ it.layer(NodeServices.layer)("build-npm-platform-packages", (it) => {
       // NODE_PATH stands in for node_modules: require.resolve finds the
       // platform package there exactly as it would after `npm install`.
       const env = { ...process.env, NODE_PATH: fixture.outputDir } as Record<string, string>;
-      const passthrough = yield* run(process.execPath, ["bin/agentsmith.js", "serve", "--port", "1234"], {
-        cwd: launcherDir,
-        env,
-      });
+      const passthrough = yield* run(
+        process.execPath,
+        ["bin/agentsmith.js", "serve", "--port", "1234"],
+        {
+          cwd: launcherDir,
+          env,
+        },
+      );
       assert.equal(passthrough.stdout.trim(), "stub linux-x64 serve --port 1234");
       assert.equal(passthrough.exitCode, 7);
 

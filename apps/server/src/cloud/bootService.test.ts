@@ -49,7 +49,9 @@ it("reads the served AgentSmith home back out of a rendered unit or plist", () =
   });
 
   expect(
-    BootService.bootServiceBaseDirOf(BootService.renderBootServiceUnit(plan("/home/theo/.agentsmith"))),
+    BootService.bootServiceBaseDirOf(
+      BootService.renderBootServiceUnit(plan("/home/theo/.agentsmith")),
+    ),
   ).toBe("/home/theo/.agentsmith");
   // Spaces and specifiers are quoted and escaped on the way in.
   expect(
@@ -170,8 +172,10 @@ const makeHarness = Effect.fn("test.make_boot_service_harness")(function* (
       const failed = command === control.failCommand;
       if (!failed && command === "loginctl enable-linger --no-ask-password 501")
         control.linger = "yes";
-      if (!failed && command === "systemctl --user enable agentsmith.service") control.enabled = true;
-      if (!failed && command === "systemctl --user restart agentsmith.service") control.active = true;
+      if (!failed && command === "systemctl --user enable agentsmith.service")
+        control.enabled = true;
+      if (!failed && command === "systemctl --user restart agentsmith.service")
+        control.active = true;
       if (
         control.stateAfterStop !== undefined &&
         (command === "systemctl --user stop agentsmith.service" ||
@@ -449,7 +453,10 @@ it.layer(NodeServices.layer)("boot service install", (it) => {
           ),
         ).toEqual(
           platform === "linux"
-            ? ["systemctl --user stop agentsmith.service", "systemctl --user restart agentsmith.service"]
+            ? [
+                "systemctl --user stop agentsmith.service",
+                "systemctl --user restart agentsmith.service",
+              ]
             : [
                 "launchctl bootout --wait gui/501/com.agentsmith.agentsmith.service",
                 `launchctl bootstrap gui/501 ${plan.unitPath}`,
@@ -716,9 +723,9 @@ it.layer(NodeServices.layer)("boot service install", (it) => {
       expect(commands.some((command) => command.startsWith("systemctl "))).toBe(false);
       // A bootout can block up to the plist's 90s ExitTimeOut; the runner's
       // 60s default would cancel it and let bootstrap race a loaded job.
-      expect(timeouts.get("launchctl bootout --wait gui/501/com.agentsmith.agentsmith.service")).toEqual(
-        Duration.seconds(120),
-      );
+      expect(
+        timeouts.get("launchctl bootout --wait gui/501/com.agentsmith.agentsmith.service"),
+      ).toEqual(Duration.seconds(120));
     }),
   );
 

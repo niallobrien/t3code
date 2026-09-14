@@ -67,7 +67,9 @@ describe("desktop app control server", () => {
       const platform = yield* HostProcessPlatform;
       const userId = yield* HostProcessUserId;
       yield* Effect.promise(async () => {
-        const root = await NodeFSP.mkdtemp(NodePath.join(NodeOS.tmpdir(), "agentsmith-app-control-test-"));
+        const root = await NodeFSP.mkdtemp(
+          NodePath.join(NodeOS.tmpdir(), "agentsmith-app-control-test-"),
+        );
         const target = makeTarget(NodePath.join(root, "userdata"), platform, userId);
         const received: DesktopAppActivationRequest[] = [];
         const server = await startDesktopAppControlServer({
@@ -106,7 +108,9 @@ describe("desktop app control server", () => {
       const platform = yield* HostProcessPlatform;
       const userId = yield* HostProcessUserId;
       yield* Effect.promise(async () => {
-        const root = await NodeFSP.mkdtemp(NodePath.join(NodeOS.tmpdir(), "agentsmith-app-cancel-test-"));
+        const root = await NodeFSP.mkdtemp(
+          NodePath.join(NodeOS.tmpdir(), "agentsmith-app-cancel-test-"),
+        );
         const target = makeTarget(NodePath.join(root, "userdata"), platform, userId);
         let resolveCanceled: (requestId: string) => void = () => undefined;
         const canceled = new Promise<string>((resolve) => {

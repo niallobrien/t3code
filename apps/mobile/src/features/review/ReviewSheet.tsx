@@ -82,7 +82,9 @@ const SHOWCASE_ENABLED = process.env.EXPO_PUBLIC_SHOWCASE === "1";
 const ReviewNotice = memo(function ReviewNotice(props: { readonly notice: string }) {
   return (
     <View className="border-b border-warning-border bg-warning px-4 py-3">
-      <Text className="text-xs font-agentsmith-bold uppercase text-warning-foreground">Partial diff</Text>
+      <Text className="text-xs font-agentsmith-bold uppercase text-warning-foreground">
+        Partial diff
+      </Text>
       <Text className="text-xs leading-normal text-warning-foreground">{props.notice}</Text>
     </View>
   );
@@ -870,7 +872,9 @@ export function ReviewSheet(props: ReviewSheetProps) {
             {listHeader}
             {!selectedSection ? (
               <View className="border-b border-border bg-card px-4 py-5">
-                <Text className="text-sm font-agentsmith-bold text-foreground">No review diffs</Text>
+                <Text className="text-sm font-agentsmith-bold text-foreground">
+                  No review diffs
+                </Text>
                 <Text className="text-xs leading-normal text-foreground-muted">
                   This thread has no ready turn diffs and the worktree diff is empty.
                 </Text>

@@ -124,7 +124,9 @@ describe("parseGitHubRepositoryNameWithOwnerFromRemoteUrl", () => {
       parseGitHubRepositoryNameWithOwnerFromRemoteUrl("git@github.com:AgentSmith/AgentSmith.git"),
     ).toBe("AgentSmith/AgentSmith");
     expect(
-      parseGitHubRepositoryNameWithOwnerFromRemoteUrl("https://github.com/AgentSmith/AgentSmith.git"),
+      parseGitHubRepositoryNameWithOwnerFromRemoteUrl(
+        "https://github.com/AgentSmith/AgentSmith.git",
+      ),
     ).toBe("AgentSmith/AgentSmith");
     expect(
       parseGitHubRepositoryNameWithOwnerFromRemoteUrl("ssh://github.com/AgentSmith/AgentSmith.git"),

@@ -39,7 +39,9 @@ export const DesktopConfig = Config.all({
   agentsmithHome: trimmedString("AGENTSMITH_HOME"),
   devServerUrl: Config.url("VITE_DEV_SERVER_URL").pipe(Config.option),
   appUserModelIdOverride: trimmedString("AGENTSMITH_DESKTOP_APP_USER_MODEL_ID"),
-  devRemoteAgentsmithServerEntryPath: trimmedString("AGENTSMITH_DEV_REMOTE_AGENTSMITH_SERVER_ENTRY_PATH"),
+  devRemoteAgentsmithServerEntryPath: trimmedString(
+    "AGENTSMITH_DEV_REMOTE_AGENTSMITH_SERVER_ENTRY_PATH",
+  ),
   configuredBackendPort: Config.port("AGENTSMITH_PORT").pipe(Config.option),
   commitHashOverride: trimmedString("AGENTSMITH_COMMIT_HASH"),
   desktopLanHostOverride: trimmedString("AGENTSMITH_DESKTOP_LAN_HOST"),

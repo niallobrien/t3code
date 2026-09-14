@@ -427,7 +427,13 @@ describe("theme files", () => {
   });
 
   it("includes the dual-mode maintainer themes", () => {
-    for (const theme of [AGENTSMITH_CHAT_THEME, GROVE_THEME, OCEAN_THEME, EMBER_THEME, IRIS_THEME]) {
+    for (const theme of [
+      AGENTSMITH_CHAT_THEME,
+      GROVE_THEME,
+      OCEAN_THEME,
+      EMBER_THEME,
+      IRIS_THEME,
+    ]) {
       expect(getThemeDefinition(theme.id)).toBe(theme);
       expect(getThemeModes(theme)).toEqual(["light", "dark"]);
       expect(theme.sidebarArtwork).toBe(true);
@@ -1011,14 +1017,22 @@ describe("stored theme preferences", () => {
     // The dark-variant alias keeps its raw form: it still carries a mode hint.
     expect(canonicalThemePreference("agentsmith-chat-dark")).toBe("agentsmith-chat-dark");
     // A stored mix that predates the rename resolves to the new ids.
-    expect(parseThemeHalves(JSON.stringify({ light: "agentsmith-ocean", dark: "agentsmith-grove" }))).toEqual({
+    expect(
+      parseThemeHalves(JSON.stringify({ light: "agentsmith-ocean", dark: "agentsmith-grove" })),
+    ).toEqual({
       light: OCEAN_THEME.id,
       dark: GROVE_THEME.id,
     });
   });
 
   it("recognizes only preferences the runtime can render", () => {
-    for (const preference of ["light", "dark", "system", AGENTSMITH_CHAT_THEME.id, GROVE_THEME.id]) {
+    for (const preference of [
+      "light",
+      "dark",
+      "system",
+      AGENTSMITH_CHAT_THEME.id,
+      GROVE_THEME.id,
+    ]) {
       expect(isKnownThemePreference(preference)).toBe(true);
     }
     expect(isKnownThemePreference(`${GROVE_THEME.id}:dark`)).toBe(false);

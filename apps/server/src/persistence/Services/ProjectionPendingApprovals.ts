@@ -102,4 +102,6 @@ export interface ProjectionPendingApprovalRepositoryShape {
 export class ProjectionPendingApprovalRepository extends Context.Service<
   ProjectionPendingApprovalRepository,
   ProjectionPendingApprovalRepositoryShape
->()("agentsmith/persistence/Services/ProjectionPendingApprovals/ProjectionPendingApprovalRepository") {}
+>()(
+  "agentsmith/persistence/Services/ProjectionPendingApprovals/ProjectionPendingApprovalRepository",
+) {}

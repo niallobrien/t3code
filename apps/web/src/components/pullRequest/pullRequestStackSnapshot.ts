@@ -1,4 +1,8 @@
-import type { PullRequestRef, PullRequestStack, ThreadPullRequestLink } from "@agentsmith/contracts";
+import type {
+  PullRequestRef,
+  PullRequestStack,
+  ThreadPullRequestLink,
+} from "@agentsmith/contracts";
 
 /** Saved native membership is enough for navigation, but never supplies action head SHAs. */
 export function savedPullRequestStack(

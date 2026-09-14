@@ -185,7 +185,8 @@ describe("ChatMarkdown workspace images", () => {
   });
 
   it("keeps a tall image placeholder and loaded image at the same proportional bounds", () => {
-    const markdown = '<img src=".agentsmith/workspace-image.svg" alt="sized" width="96" height="128">';
+    const markdown =
+      '<img src=".agentsmith/workspace-image.svg" alt="sized" width="96" height="128">';
     const loadedStyle = firstInlineStyle(render(markdown));
     testState.assetState = "loading";
     const loadingStyle = firstInlineStyle(render(markdown));
