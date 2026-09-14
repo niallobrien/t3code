@@ -91,12 +91,12 @@ class AgentsmithComposerEditorModule : Module() {
       Prop("lineHeight") { view: AgentsmithComposerEditorView, lineHeight: Double ->
         view.setLineHeight(lineHeight.toFloat())
       }
-      Prop("contentInsetVertical") { view: AgentsmithComposerEditorView, contentInsetVertical: Double ->
-        view.setContentInsetVertical(contentInsetVertical.toInt())
+      Prop("contentInsetVertical") { view: AgentsmithComposerEditorView, inset: Double ->
+        view.setContentInsetVertical(inset.toInt())
       }
 
-      Prop("singleLineCentered") { view: AgentsmithComposerEditorView, singleLineCentered: Boolean ->
-        view.setSingleLineCentered(singleLineCentered)
+      Prop("singleLineCentered") { view: AgentsmithComposerEditorView, enabled: Boolean ->
+        view.setSingleLineCentered(enabled)
       }
       Prop("editable") { view: AgentsmithComposerEditorView, editable: Boolean ->
         view.setEditable(editable)
