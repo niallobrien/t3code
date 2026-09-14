@@ -7,7 +7,7 @@ import {
   ThreadId,
   type OrchestrationEvent,
   type OrchestrationThread,
-} from "@t3tools/contracts";
+} from "@agentsmith/contracts";
 import * as Effect from "effect/Effect";
 import * as Option from "effect/Option";
 import { HttpClient, HttpClientResponse } from "effect/unstable/http";
@@ -59,7 +59,7 @@ const target = new PrimaryConnectionTarget({
   wsBaseUrl: "wss://remote.example.test/ws",
 });
 const responses = {
-  "/.well-known/t3/environment": {
+  "/.well-known/agentsmith/environment": {
     environmentId: target.environmentId,
     label: target.label,
     platform: { os: "linux", arch: "x64" },

@@ -1,5 +1,5 @@
-import { formatComposerContextReference } from "@t3tools/shared/composerContextReferences";
-import type { ComposerContextId } from "@t3tools/contracts";
+import { formatComposerContextReference } from "@agentsmith/shared/composerContextReferences";
+import type { ComposerContextId } from "@agentsmith/contracts";
 import {
   $applyNodeReplacement,
   DecoratorNode,

@@ -100,13 +100,13 @@ export interface RelayPublicConfig {
 
 const publicConfigEnvEntries = (config: RelayPublicConfig) =>
   ({
-    T3CODE_RELAY_URL: config.relayUrl,
-    T3CODE_MOBILE_OTLP_TRACES_URL: config.mobileTracingUrl,
-    T3CODE_MOBILE_OTLP_TRACES_DATASET: config.mobileTracingDataset,
-    T3CODE_MOBILE_OTLP_TRACES_TOKEN: config.mobileTracingToken,
-    T3CODE_RELAY_CLIENT_OTLP_TRACES_URL: config.clientTracingUrl,
-    T3CODE_RELAY_CLIENT_OTLP_TRACES_DATASET: config.clientTracingDataset,
-    T3CODE_RELAY_CLIENT_OTLP_TRACES_TOKEN: config.clientTracingToken,
+    AGENTSMITH_RELAY_URL: config.relayUrl,
+    AGENTSMITH_MOBILE_OTLP_TRACES_URL: config.mobileTracingUrl,
+    AGENTSMITH_MOBILE_OTLP_TRACES_DATASET: config.mobileTracingDataset,
+    AGENTSMITH_MOBILE_OTLP_TRACES_TOKEN: config.mobileTracingToken,
+    AGENTSMITH_RELAY_CLIENT_OTLP_TRACES_URL: config.clientTracingUrl,
+    AGENTSMITH_RELAY_CLIENT_OTLP_TRACES_DATASET: config.clientTracingDataset,
+    AGENTSMITH_RELAY_CLIENT_OTLP_TRACES_TOKEN: config.clientTracingToken,
   }) as const;
 
 export function reconcileRootEnvPublicConfig(contents: string, config: RelayPublicConfig): string {
@@ -138,8 +138,8 @@ export function reconcileRootEnvRelayUrl(contents: string, relayUrl: string): st
     clientTracingToken: "",
   })
     .split("\n")
-    .filter((line) => !line.startsWith("T3CODE_MOBILE_OTLP_TRACES_"))
-    .filter((line) => !line.startsWith("T3CODE_RELAY_CLIENT_OTLP_TRACES_"))
+    .filter((line) => !line.startsWith("AGENTSMITH_MOBILE_OTLP_TRACES_"))
+    .filter((line) => !line.startsWith("AGENTSMITH_RELAY_CLIENT_OTLP_TRACES_"))
     .join("\n");
 }
 
@@ -167,9 +167,9 @@ export function serializeGithubOutput(entries: Readonly<Record<string, string | 
 
 export function serializeRelayClientTracingEnvironment(config: RelayPublicConfig): string {
   return serializeGithubOutput({
-    T3CODE_RELAY_CLIENT_OTLP_TRACES_URL: config.clientTracingUrl,
-    T3CODE_RELAY_CLIENT_OTLP_TRACES_DATASET: config.clientTracingDataset,
-    T3CODE_RELAY_CLIENT_OTLP_TRACES_TOKEN: config.clientTracingToken,
+    AGENTSMITH_RELAY_CLIENT_OTLP_TRACES_URL: config.clientTracingUrl,
+    AGENTSMITH_RELAY_CLIENT_OTLP_TRACES_DATASET: config.clientTracingDataset,
+    AGENTSMITH_RELAY_CLIENT_OTLP_TRACES_TOKEN: config.clientTracingToken,
   });
 }
 
@@ -337,7 +337,7 @@ export function publicConfigFromOutput(output: unknown): RelayPublicConfig | nul
 const readRelayPublicConfig = Effect.fn("relay.deploy.readState")(function* (stage: string) {
   const state = yield* State.State;
   const service = yield* state;
-  const output = yield* service.getOutput({ stack: "T3CodeRelay", stage });
+  const output = yield* service.getOutput({ stack: "AgentSmithRelay", stage });
   const publicConfig = publicConfigFromOutput(output);
   if (publicConfig === null) {
     return yield* new RelayDeployError({
@@ -487,7 +487,7 @@ export const relayDeployCommand = Command.make(
     ),
   },
   deploy,
-).pipe(Command.withDescription("Deploy the T3 Code relay through Alchemy."));
+).pipe(Command.withDescription("Deploy the AgentSmith relay through Alchemy."));
 
 if (import.meta.main) {
   Command.run(relayDeployCommand, { version: "0.0.0" }).pipe(

@@ -1,7 +1,7 @@
 import * as Equal from "effect/Equal";
 import { shallow } from "zustand/vanilla/shallow";
-import { renderCodexDirectivesForCopy } from "@t3tools/client-runtime/codex-markdown-directives";
-import { commandProgramName } from "@t3tools/client-runtime/work-log/command-label";
+import { renderCodexDirectivesForCopy } from "@agentsmith/client-runtime/codex-markdown-directives";
+import { commandProgramName } from "@agentsmith/client-runtime/work-log/command-label";
 import {
   liveActivityToolStatus,
   normalizeCompactToolLabel,
@@ -11,11 +11,11 @@ import {
   toolGroupAction,
   toolGroupSummaryKind,
   type ToolGroupSummaryKind,
-} from "@t3tools/client-runtime/work-log/presentation";
+} from "@agentsmith/client-runtime/work-log/presentation";
 export {
   normalizeCompactToolLabel,
   toolGroupAction,
-} from "@t3tools/client-runtime/work-log/presentation";
+} from "@agentsmith/client-runtime/work-log/presentation";
 import {
   formatDuration,
   inferCheckpointTurnCountByTurnId,
@@ -33,7 +33,7 @@ import {
   type OrchestrationLatestTurn,
   type TurnId,
   type WorktreeSetupSnapshot,
-} from "@t3tools/contracts";
+} from "@agentsmith/contracts";
 import { formatWorkspaceRelativePath } from "../../filePathDisplay";
 
 const TIMELINE_MINIMAP_ITEM_SPACING = 8;
@@ -342,7 +342,7 @@ export type MessagesTimelineRow =
       summaryKind: ToolGroupSummaryKind;
       toolSurface?: WorkLogEntry["toolSurface"];
       toolIcon?: WorkLogEntry["toolIcon"];
-      summaryToolIcon?: "browser" | "device" | "t3-code" | "pull-request";
+      summaryToolIcon?: "browser" | "device" | "agentsmith" | "pull-request";
       hasFailure: boolean;
     }
   | {

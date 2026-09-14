@@ -12,7 +12,7 @@ import {
   ThreadLinkedPullRequest,
   TurnId,
   ProviderInstanceId,
-} from "@t3tools/contracts";
+} from "@agentsmith/contracts";
 import * as Option from "effect/Option";
 import * as NodeServices from "@effect/platform-node/NodeServices";
 import { assert, it } from "@effect/vitest";
@@ -61,12 +61,12 @@ const exists = (filePath: string) =>
     return fileInfo._tag === "Success";
   });
 
-const BaseTestLayer = makeProjectionPipelinePrefixedTestLayer("t3-projection-pipeline-test-");
+const BaseTestLayer = makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-pipeline-test-");
 const encodeThreadLinkedPullRequest = Schema.encodeSync(
   Schema.fromJsonString(ThreadLinkedPullRequest),
 );
 
-it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-cursor-batch-")))(
+it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-cursor-batch-")))(
   "OrchestrationProjectionPipeline cursor batches",
   (it) => {
     it.effect("writes a project and all projector cursors in two statements", () =>
@@ -114,7 +114,7 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-curs
   },
 );
 
-it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-import-shell-")))(
+it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-import-shell-")))(
   "imported thread shell projection",
   (it) => {
     it.effect("does not mark imported user messages as queued work in thread shells", () =>
@@ -210,7 +210,7 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-import-shell-")
   },
 );
 
-it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-branch-pr-projection-")))(
+it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-branch-pr-projection-")))(
   "branch pull request projection",
   (it) => {
     it.effect("persists branch pull request updates without changing manual links", () =>
@@ -250,14 +250,14 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-branch-pr-proje
         yield* projectionPipeline.projectEvent(created);
         const linkedPullRequest = {
           projectId,
-          repository: "pingdotgg/t3code",
+          repository: "pingdotgg/agentsmith",
           number: 42,
-          url: "https://github.com/pingdotgg/t3code/pull/42",
+          url: "https://github.com/pingdotgg/agentsmith/pull/42",
         };
         const branchPullRequest = {
           ...linkedPullRequest,
           number: 43,
-          url: "https://github.com/pingdotgg/t3code/pull/43",
+          url: "https://github.com/pingdotgg/agentsmith/pull/43",
         };
         const updates = [
           { payload: { linkedPullRequest, branchPullRequest }, expected: branchPullRequest },
@@ -620,7 +620,7 @@ it.layer(BaseTestLayer)("OrchestrationProjectionPipeline", (it) => {
   );
 });
 
-it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-base-")))(
+it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-base-")))(
   "OrchestrationProjectionPipeline",
   (it) => {
     it.effect("stores message attachment references without mutating payloads", () =>
@@ -687,7 +687,7 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-base-")))(
   },
 );
 
-it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-pull-requests-")))(
+it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-pull-requests-")))(
   "OrchestrationProjectionPipeline pull request links",
   (it) => {
     it.effect("projects link, sync, unlink, legacy replay and delete into the link table", () =>
@@ -777,9 +777,9 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-pull
             threadId,
             link: {
               host: "github.com",
-              repository: "pingdotgg/t3code",
+              repository: "pingdotgg/agentsmith",
               number: 42,
-              url: "https://github.com/pingdotgg/t3code/pull/42",
+              url: "https://github.com/pingdotgg/agentsmith/pull/42",
               source: "created",
               linkedAt: "2026-01-01T00:00:02.000Z",
               snapshot: null,
@@ -802,7 +802,7 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-pull
           },
           {
             host: "github.com",
-            repository: "pingdotgg/t3code",
+            repository: "pingdotgg/agentsmith",
             number: 42,
             source: "created",
             linkedAt: "2026-01-01T00:00:02.000Z",
@@ -829,7 +829,7 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-pull
           payload: {
             threadId,
             host: "github.com",
-            repository: "pingdotgg/t3code",
+            repository: "pingdotgg/agentsmith",
             number: 42,
             snapshot,
             stack: null,
@@ -842,7 +842,7 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-pull
           payload: {
             threadId,
             host: "github.com",
-            repository: "pingdotgg/t3code",
+            repository: "pingdotgg/agentsmith",
             number: 99,
             snapshot,
             stack: null,
@@ -880,7 +880,7 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-pull
           payload: {
             threadId,
             host: "GitHub.COM",
-            repository: "PingDotGG/T3Code",
+            repository: "PingDotGG/AgentSmith",
             number: 42,
             updatedAt: "2026-01-01T00:00:05.000Z",
           },
@@ -930,9 +930,9 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-pull
             threadId,
             link: {
               host: "github.com",
-              repository: "pingdotgg/t3code",
+              repository: "pingdotgg/agentsmith",
               number: 43,
-              url: "https://github.com/pingdotgg/t3code/pull/43",
+              url: "https://github.com/pingdotgg/agentsmith/pull/43",
               source: "agent",
               linkedAt: "2026-01-01T00:00:06.000Z",
               snapshot: null,
@@ -956,7 +956,7 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-pull
   },
 );
 
-it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-attachments-safe-")))(
+it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-safe-")))(
   "OrchestrationProjectionPipeline",
   (it) => {
     it.effect("preserves mixed image attachment metadata as-is", () =>
@@ -1167,7 +1167,7 @@ it.layer(BaseTestLayer)("OrchestrationProjectionPipeline", (it) => {
 });
 
 it.layer(
-  Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-attachments-overwrite-")),
+  Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-overwrite-")),
 )("OrchestrationProjectionPipeline", (it) => {
   it.effect("overwrites stored attachment references when a message updates attachments", () =>
     Effect.gen(function* () {
@@ -1311,7 +1311,7 @@ it.layer(
 });
 
 it.layer(
-  Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-attachments-rollback-")),
+  Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-rollback-")),
 )("OrchestrationProjectionPipeline", (it) => {
   it.effect("does not persist attachment files when projector transaction rolls back", () =>
     Effect.gen(function* () {
@@ -1455,7 +1455,7 @@ it.layer(
 });
 
 it.layer(
-  Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-attachments-overwrite-")),
+  Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-overwrite-")),
 )("OrchestrationProjectionPipeline", (it) => {
   it.effect("prunes reverted attachments only after every projector commits", () =>
     Effect.gen(function* () {
@@ -1539,7 +1539,7 @@ it.layer(
           threadId,
           turnId: TurnId.make("turn-keep"),
           checkpointTurnCount: 1,
-          checkpointRef: CheckpointRef.make("refs/t3/checkpoints/thread-revert-files/turn/1"),
+          checkpointRef: CheckpointRef.make("refs/agentsmith/checkpoints/thread-revert-files/turn/1"),
           status: "ready",
           files: [],
           assistantMessageId: MessageId.make("message-keep"),
@@ -1599,7 +1599,7 @@ it.layer(
           threadId,
           turnId: TurnId.make("turn-remove"),
           checkpointTurnCount: 2,
-          checkpointRef: CheckpointRef.make("refs/t3/checkpoints/thread-revert-files/turn/2"),
+          checkpointRef: CheckpointRef.make("refs/agentsmith/checkpoints/thread-revert-files/turn/2"),
           status: "ready",
           files: [],
           assistantMessageId: MessageId.make("message-remove"),
@@ -1808,7 +1808,7 @@ it.layer(
   );
 });
 
-it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-attachments-revert-")))(
+it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-revert-")))(
   "OrchestrationProjectionPipeline",
   (it) => {
     it.effect("removes thread attachment directory when thread is deleted", () =>
@@ -1953,7 +1953,7 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-atta
   },
 );
 
-it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-attachments-delete-")))(
+it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-delete-")))(
   "OrchestrationProjectionPipeline",
   (it) => {
     it.effect("ignores unsafe thread ids for attachment cleanup paths", () =>
@@ -1996,7 +1996,7 @@ it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-atta
   },
 );
 
-it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("t3-projection-attachments-replay-")))(
+it.layer(Layer.fresh(makeProjectionPipelinePrefixedTestLayer("agentsmith-projection-attachments-replay-")))(
   "OrchestrationProjectionPipeline",
   (it) => {
     it.effect("replaying a superseded thread.deleted keeps the re-created thread's files", () =>
@@ -2829,7 +2829,7 @@ it.layer(BaseTestLayer)("OrchestrationProjectionPipeline", (it) => {
             threadId: ThreadId.make("thread-conflict"),
             turnId: TurnId.make("turn-completed"),
             checkpointTurnCount: 1,
-            checkpointRef: CheckpointRef.make("refs/t3/checkpoints/thread-conflict/turn/1"),
+            checkpointRef: CheckpointRef.make("refs/agentsmith/checkpoints/thread-conflict/turn/1"),
             status: "ready",
             files: [],
             assistantMessageId: MessageId.make("assistant-conflict"),
@@ -3466,7 +3466,7 @@ it.layer(BaseTestLayer)("OrchestrationProjectionPipeline", (it) => {
             threadId: ThreadId.make("thread-shell-summary"),
             turnId: TurnId.make("turn-shell-summary-1"),
             checkpointTurnCount: 1,
-            checkpointRef: CheckpointRef.make("refs/t3/checkpoints/thread-shell-summary/1"),
+            checkpointRef: CheckpointRef.make("refs/agentsmith/checkpoints/thread-shell-summary/1"),
             status: "ready",
             files: [],
             assistantMessageId: MessageId.make("message-shell-summary-assistant"),
@@ -3833,7 +3833,7 @@ it.layer(BaseTestLayer)("OrchestrationProjectionPipeline", (it) => {
           threadId: ThreadId.make("thread-revert"),
           turnId: TurnId.make("turn-1"),
           checkpointTurnCount: 1,
-          checkpointRef: CheckpointRef.make("refs/t3/checkpoints/thread-revert/turn/1"),
+          checkpointRef: CheckpointRef.make("refs/agentsmith/checkpoints/thread-revert/turn/1"),
           status: "ready",
           files: [],
           assistantMessageId: MessageId.make("assistant-keep"),
@@ -3877,7 +3877,7 @@ it.layer(BaseTestLayer)("OrchestrationProjectionPipeline", (it) => {
           threadId: ThreadId.make("thread-revert"),
           turnId: TurnId.make("turn-2"),
           checkpointTurnCount: 2,
-          checkpointRef: CheckpointRef.make("refs/t3/checkpoints/thread-revert/turn/2"),
+          checkpointRef: CheckpointRef.make("refs/agentsmith/checkpoints/thread-revert/turn/2"),
           status: "ready",
           files: [],
           assistantMessageId: MessageId.make("assistant-remove"),
@@ -3969,7 +3969,7 @@ it.layer(BaseTestLayer)("OrchestrationProjectionPipeline", (it) => {
   );
 });
 
-it.layer(makeProjectionPipelinePrefixedTestLayer("t3-pending-turn-terminal-test-"))(
+it.layer(makeProjectionPipelinePrefixedTestLayer("agentsmith-pending-turn-terminal-test-"))(
   "OrchestrationProjectionPipeline pending turn cleanup",
   (it) => {
     it.effect("clears pending turn starts when startup reaches a terminal session state", () =>
@@ -4221,7 +4221,7 @@ it.effect("restores pending turn-start metadata across projection pipeline resta
     Effect.provide(
       Layer.provideMerge(
         ServerConfig.layerTest(process.cwd(), {
-          prefix: "t3-projection-pipeline-restart-",
+          prefix: "agentsmith-projection-pipeline-restart-",
         }),
         NodeServices.layer,
       ),
@@ -4241,7 +4241,7 @@ const engineLayer = it.layer(
     Layer.provideMerge(SqlitePersistenceMemory),
     Layer.provideMerge(
       ServerConfig.layerTest(process.cwd(), {
-        prefix: "t3-projection-pipeline-engine-dispatch-",
+        prefix: "agentsmith-projection-pipeline-engine-dispatch-",
       }),
     ),
     Layer.provideMerge(NodeServices.layer),

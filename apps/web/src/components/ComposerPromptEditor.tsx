@@ -10,12 +10,12 @@ import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
 import {
   type ComposerContextClipboardFragment,
   type ServerProviderSkill,
-} from "@t3tools/contracts";
+} from "@agentsmith/contracts";
 import {
   COMPOSER_CONTEXT_CLIPBOARD_MIME,
   encodeComposerContextClipboardHtml,
-} from "@t3tools/shared/composerContextClipboard";
-import { serializeComposerFileLink } from "@t3tools/shared/composerTrigger";
+} from "@agentsmith/shared/composerContextClipboard";
+import { serializeComposerFileLink } from "@agentsmith/shared/composerTrigger";
 import {
   $applyNodeReplacement,
   $createRangeSelectionFromDom,
@@ -100,7 +100,7 @@ import {
   ComposerContextRecordsContext,
   type ComposerDraftContextRecords,
 } from "./composerContextPresentation";
-import { formatProviderSkillDisplayName } from "@t3tools/client-runtime/providerSkills";
+import { formatProviderSkillDisplayName } from "@agentsmith/client-runtime/providerSkills";
 import { Tooltip, TooltipPopup, TooltipTrigger } from "./ui/tooltip";
 import { registerComposerInlineTokenPaste } from "./composerInlineTokenPaste";
 import { didComposerSelectionChangeVisibly } from "./composerSelection";
@@ -2088,7 +2088,7 @@ export function ComposerPromptEditor({
   const initialSkillMetadataRef = useRef(skillMetadataByName(skills));
   const initialConfig = useMemo<InitialConfigType>(
     () => ({
-      namespace: "t3tools-composer-editor",
+      namespace: "agentsmith-composer-editor",
       editable: true,
       nodes: [
         ComposerMentionNode,

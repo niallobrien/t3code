@@ -1,59 +1,59 @@
-# Install T3 Code
+# Install AgentSmith
 
-T3 Code runs coding agents on your computer and lets you control them from its
+AgentSmith runs coding agents on your computer and lets you control them from its
 desktop, web, or mobile app. Set up the machine where the agents will work first.
 
 ## Requirements
 
-`npx t3` needs Node.js only to run npm itself; the CLI it installs is a
+`npx agentsmith` needs Node.js only to run npm itself; the CLI it installs is a
 self-contained executable. SSH hosts and WSL backends need Node.js 22.16+
 (22.x), 23.11+ (23.x), or 24.10 and later. The native desktop app includes its
 server runtime.
 
 You need an installed, authenticated provider before starting a thread. You can
-launch T3 Code and configure providers afterwards.
+launch AgentSmith and configure providers afterwards.
 
 ## Run without installing
 
 ```bash
-npx t3@latest
+npx agentsmith@latest
 ```
 
 This starts the server and opens the local web app. Run
-`npx t3@latest --help` for command-line options.
+`npx agentsmith@latest --help` for command-line options.
 
 The executable is built for Apple Silicon Macs, Linux, and Windows. There is
 no Intel Mac build of it, because Node cannot produce a single executable for
 that platform; the Intel desktop app is unaffected. To run a standalone server
 on an Intel Mac, build it from source. You need Node.js 24 and `vp` (see
-[Install vp](https://github.com/pingdotgg/t3code#install-vp)):
+[Install vp](https://github.com/pingdotgg/agentsmith#install-vp)):
 
 ```bash
-git clone https://github.com/pingdotgg/t3code
-cd t3code && vp i && vp run build:desktop
+git clone https://github.com/pingdotgg/agentsmith
+cd agentsmith && vp i && vp run build:desktop
 node apps/server/dist/bin.mjs
 ```
 
-A server run this way is a plain Node program: `t3 update` and the background
+A server run this way is a plain Node program: `agentsmith update` and the background
 service do not apply, so update it with `git pull` and a rebuild, and start it
 however you run other Node processes.
 
 ## Desktop app
 
-Download a release from [GitHub Releases](https://github.com/pingdotgg/t3code/releases),
+Download a release from [GitHub Releases](https://github.com/pingdotgg/agentsmith/releases),
 or use a package manager:
 
 | Platform           | Install                         |
 | ------------------ | ------------------------------- |
-| Windows            | `winget install T3Tools.T3Code` |
-| macOS              | `brew install --cask t3-code`   |
-| Arch Linux         | `yay -S t3code-bin`             |
-| Arch Linux nightly | `yay -S t3code-nightly-bin`     |
+| Windows            | `winget install AgentSmith.AgentSmith` |
+| macOS              | `brew install --cask agentsmith`   |
+| Arch Linux         | `yay -S agentsmith-bin`             |
+| Arch Linux nightly | `yay -S agentsmith-nightly-bin`     |
 
 ### Windows Subsystem for Linux
 
 Choose a WSL distro in **Settings → Connections** to run agents and projects
-there. Install Node.js and provider CLIs inside that distro. T3 Code installs its
+there. Install Node.js and provider CLIs inside that distro. AgentSmith installs its
 matching server runtime there automatically; the first launch after an app
 update can take longer.
 
@@ -62,21 +62,21 @@ update can take longer.
 With the desktop app already running on the same machine:
 
 ```bash
-npx t3 app
+npx agentsmith app
 ```
 
 This opens a new thread for the current directory, adding the project if needed.
-Pass a path, such as `npx t3 app ../my-project`, to open another directory. It requires
+Pass a path, such as `npx agentsmith app ../my-project`, to open another directory. It requires
 the desktop app, so a standalone server or an SSH session is not enough. If the
 command cannot reach the app, start or update the desktop app and try again.
 
 ## Mobile app
 
-Install T3 Code from the
-[App Store](https://apps.apple.com/us/app/t3-code-remote-claude-more/id6787819824) or
-[Google Play](https://play.google.com/store/apps/details?id=com.t3tools.t3code).
+Install AgentSmith from the
+[App Store](https://apps.apple.com/us/app/agentsmith-remote-claude-more/id6787819824) or
+[Google Play](https://play.google.com/store/apps/details?id=com.agentsmith.agentsmith).
 The phone connects to a server on another machine. Follow
-[remote access](./remote-access.md) to link it through T3 Connect or a pairing URL.
+[remote access](./remote-access.md) to link it through AgentSmith Connect or a pairing URL.
 
 If the app crashes during launch, open Settings → Diagnostics on the next launch
 that succeeds. It lists startup crashes from the last 7 days with the error and
@@ -98,15 +98,15 @@ computer.
 | Cursor      | Install [Cursor CLI](https://cursor.com/cli), then run `agent login`.                        |
 | Grok Build  | Install [Grok Build CLI](https://x.ai/cli), then run `grok login`.                           |
 | OpenCode    | Install [OpenCode](https://opencode.ai), then run `opencode auth login`.                     |
-| Antigravity | Install and sign in with Google from T3 Code's provider settings.                            |
+| Antigravity | Install and sign in with Google from AgentSmith's provider settings.                            |
 
-Provider CLIs must be on the server's `PATH`. If T3 Code cannot find one, set its
+Provider CLIs must be on the server's `PATH`. If AgentSmith cannot find one, set its
 **Binary path** in provider settings, especially when using a version manager.
 Cursor's executable is `cursor-agent`, although its login command is
 `agent login`. Antigravity can use its managed runtime without a `PATH` entry.
 
 When a provider CLI is behind its latest release, its provider card shows the
-available version. **Update now** appears only when T3 Code can tell which
+available version. **Update now** appears only when AgentSmith can tell which
 installer owns the CLI (its own update command, Homebrew, or a global npm, pnpm,
 bun, or Vite+ install) and runs that installer. Otherwise update the CLI the same
 way you installed it. Homebrew installs compare against the version Homebrew
@@ -114,7 +114,7 @@ offers, which can trail the npm release by a few hours.
 
 Add another provider instance for a separate account or configuration. Each
 instance can have its own environment variables, such as API keys or a custom
-base URL. Mark secret values as sensitive; after saving, T3 Code does not display
+base URL. Mark secret values as sensitive; after saving, AgentSmith does not display
 their original values.
 
 For provider-specific setup and accounts, see [Codex](./providers-codex.md),
@@ -127,4 +127,4 @@ For provider-specific setup and accounts, see [Codex](./providers-codex.md),
 - [Permission modes](./permission-modes.md): choose when agents ask before acting.
 - [Remote access](./remote-access.md): connect from another device.
 - [Running in the background](./background-service.md): keep a Linux or macOS host available.
-- [Updating T3 Code](./updating.md): update the app and connected servers.
+- [Updating AgentSmith](./updating.md): update the app and connected servers.

@@ -1,15 +1,15 @@
-import { ComposerContextId } from "@t3tools/contracts";
-import type { AssistantCitation, ComposerContextClipboardFragment } from "@t3tools/contracts";
+import { ComposerContextId } from "@agentsmith/contracts";
+import type { AssistantCitation, ComposerContextClipboardFragment } from "@agentsmith/contracts";
 import {
   COMPOSER_CONTEXT_CLIPBOARD_MIME,
   decodeComposerContextFragment,
   decodeComposerContextClipboardHtml,
-} from "@t3tools/shared/composerContextClipboard";
+} from "@agentsmith/shared/composerContextClipboard";
 import {
   collectComposerContextReferences,
   formatComposerContextReference,
   replaceComposerContextReferences,
-} from "@t3tools/shared/composerContextReferences";
+} from "@agentsmith/shared/composerContextReferences";
 import {
   $createLineBreakNode,
   $createTextNode,

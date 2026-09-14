@@ -6,10 +6,10 @@ import { getMobileThemeRuntimeVariables } from "./mobileThemeVariables";
 
 describe("mobile theme runtime variables", () => {
   it("derives the standard runtime palette from global.css", () => {
-    expect(getMobileThemeRuntimeVariables("t3-code", "light")).toEqual(
+    expect(getMobileThemeRuntimeVariables("agentsmith", "light")).toEqual(
       readDefaultMobileThemeVariables("light"),
     );
-    expect(getMobileThemeRuntimeVariables("t3-code", "dark")).toEqual(
+    expect(getMobileThemeRuntimeVariables("agentsmith", "dark")).toEqual(
       readDefaultMobileThemeVariables("dark"),
     );
   });

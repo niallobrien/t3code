@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["AgentsmithComposerEditorModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.agentsmithcomposereditor.AgentsmithComposerEditorModule"]
+  }
+}

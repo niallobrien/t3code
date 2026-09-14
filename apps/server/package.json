@@ -1,14 +1,14 @@
 {
-  "name": "t3",
+  "name": "agentsmith",
   "version": "0.0.40",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pingdotgg/t3code",
+    "url": "https://github.com/pingdotgg/agentsmith",
     "directory": "apps/server"
   },
   "bin": {
-    "t3": "./dist/bin.mjs"
+    "agentsmith": "./dist/bin.mjs"
   },
   "files": [
     "dist"
@@ -38,11 +38,11 @@
   },
   "devDependencies": {
     "@effect/vitest": "catalog:",
-    "@t3tools/contracts": "workspace:*",
-    "@t3tools/shared": "workspace:*",
-    "@t3tools/ssh": "workspace:*",
-    "@t3tools/tailscale": "workspace:*",
-    "@t3tools/web": "workspace:*",
+    "@agentsmith/contracts": "workspace:*",
+    "@agentsmith/shared": "workspace:*",
+    "@agentsmith/ssh": "workspace:*",
+    "@agentsmith/tailscale": "workspace:*",
+    "@agentsmith/web": "workspace:*",
     "@types/node": "catalog:",
     "@types/yauzl": "^3.4.0",
     "effect-acp": "workspace:*",

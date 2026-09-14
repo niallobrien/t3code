@@ -1,0 +1,10 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["AgentsmithTerminalModule"],
+    "podspecPath": "AgentsmithTerminalNative.podspec"
+  },
+  "android": {
+    "modules": ["expo.modules.agentsmithterminal.AgentsmithTerminalModule"]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["AgentsmithNativeControlsModule", "AgentsmithKeyboardCommandsModule"]
+  },
+  "android": {
+    "modules": [
+      "expo.modules.agentsmithnativecontrols.AgentsmithNativeControlsModule",
+      "expo.modules.agentsmithnativecontrols.AgentsmithKeyboardCommandsModule"
+    ]
+  }
+}

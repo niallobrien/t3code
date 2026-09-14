@@ -1,5 +1,5 @@
 {
-  "name": "@t3tools/shared",
+  "name": "@agentsmith/shared",
   "private": true,
   "type": "module",
   "exports": {
@@ -119,9 +119,9 @@
       "types": "./src/threadEnvMode.ts",
       "import": "./src/threadEnvMode.ts"
     },
-    "./t3ProjectFile": {
-      "types": "./src/t3ProjectFile.ts",
-      "import": "./src/t3ProjectFile.ts"
+    "./agentsmithProjectFile": {
+      "types": "./src/agentsmithProjectFile.ts",
+      "import": "./src/agentsmithProjectFile.ts"
     },
     "./orchestrationTiming": {
       "types": "./src/orchestrationTiming.ts",
@@ -335,7 +335,7 @@
   "dependencies": {
     "@noble/curves": "catalog:",
     "@noble/hashes": "catalog:",
-    "@t3tools/contracts": "workspace:*",
+    "@agentsmith/contracts": "workspace:*",
     "effect": "catalog:",
     "jose": "catalog:",
     "yaml": "catalog:"

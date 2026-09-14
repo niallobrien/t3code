@@ -1,14 +1,14 @@
 included:
-  - ios/T3Code
-  - modules/t3-composer-editor/ios
-  - modules/t3-native-controls/ios
-  - modules/t3-terminal/ios
-  - modules/t3-review-diff/ios
+  - ios/AgentSmith
+  - modules/agentsmith-composer-editor/ios
+  - modules/agentsmith-native-controls/ios
+  - modules/agentsmith-terminal/ios
+  - modules/agentsmith-review-diff/ios
 
 excluded:
   - ios/Pods
   - ios/build
-  - modules/t3-terminal/Vendor
+  - modules/agentsmith-terminal/Vendor
 
 reporter: xcode
 
