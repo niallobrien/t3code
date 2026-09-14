@@ -8,6 +8,7 @@ import {
   pullRequestSurfaceId,
   selectActiveRightPanel,
   selectActiveRightPanelSurface,
+  selectAdjacentRightPanelSurface,
   selectSelectedRightPanelSurface,
   selectThreadRightPanelState,
   useRightPanelStore,
@@ -916,5 +917,47 @@ describe("rightPanelStore", () => {
         (surface) => surface.id,
       ),
     ).toEqual(["terminal:term-1", "browser:tab-b", "browser:tab-c"]);
+  });
+});
+
+describe("selectAdjacentRightPanelSurface", () => {
+  it("steps in both directions and wraps at the ends", () => {
+    useRightPanelStore.getState().openTerminal(refA, "term-1");
+    useRightPanelStore.getState().openBrowser(refA, "tab-a");
+    useRightPanelStore.getState().openFile(refA, "src/index.ts");
+    const surfaces = selectThreadRightPanelState(
+      useRightPanelStore.getState().byThreadKey,
+      refA,
+    ).surfaces;
+    expect(surfaces.map((surface) => surface.id)).toEqual([
+      "terminal:term-1",
+      "browser:tab-a",
+      "file:src/index.ts",
+    ]);
+
+    expect(selectAdjacentRightPanelSurface(surfaces, "terminal:term-1", 1)?.id).toBe(
+      "browser:tab-a",
+    );
+    expect(selectAdjacentRightPanelSurface(surfaces, "file:src/index.ts", 1)?.id).toBe(
+      "terminal:term-1",
+    );
+    expect(selectAdjacentRightPanelSurface(surfaces, "terminal:term-1", -1)?.id).toBe(
+      "file:src/index.ts",
+    );
+    expect(selectAdjacentRightPanelSurface(surfaces, "file:src/index.ts", -1)?.id).toBe(
+      "browser:tab-a",
+    );
+  });
+
+  it("falls back to the first surface without an active id and returns null when empty", () => {
+    useRightPanelStore.getState().openTerminal(refA, "term-1");
+    useRightPanelStore.getState().openBrowser(refA, "tab-a");
+    const surfaces = selectThreadRightPanelState(
+      useRightPanelStore.getState().byThreadKey,
+      refA,
+    ).surfaces;
+
+    expect(selectAdjacentRightPanelSurface(surfaces, null, 1)?.id).toBe("terminal:term-1");
+    expect(selectAdjacentRightPanelSurface([], "terminal:term-1", 1)).toBeNull();
   });
 });

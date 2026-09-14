@@ -53,6 +53,14 @@ a shortcut.
 
 ## Commands with special behavior
 
+`sidebar.toggle`, `terminal.toggle`, and `rightPanel.toggle` focus the panel
+first when it is already open but unfocused; press the shortcut again to hide it.
+
+`rightPanel.addSurface` opens the right panel's add-surface menu; each entry has
+a letter shortcut. `rightPanel.nextSurface` and `rightPanel.previousSurface`
+cycle the panel's open tabs; their defaults only fire while the right panel has
+focus.
+
 `thread.stop` interrupts the running turn in the focused thread. It has no default
 shortcut; assign one in **Settings → Keybindings**.
 

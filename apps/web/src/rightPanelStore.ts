@@ -909,3 +909,16 @@ export function selectSelectedRightPanelSurface(
   const state = selectThreadRightPanelState(byThreadKey, ref);
   return state.surfaces.find((surface) => surface.id === state.activeSurfaceId) ?? null;
 }
+
+/** The surface `delta` tabs away from the active one, wrapping at the ends. */
+export function selectAdjacentRightPanelSurface(
+  surfaces: ReadonlyArray<RightPanelSurface>,
+  activeSurfaceId: string | null | undefined,
+  delta: 1 | -1,
+): RightPanelSurface | null {
+  if (surfaces.length === 0) return null;
+  const activeIndex =
+    activeSurfaceId == null ? -1 : surfaces.findIndex((surface) => surface.id === activeSurfaceId);
+  const nextIndex = activeIndex < 0 ? 0 : (activeIndex + delta + surfaces.length) % surfaces.length;
+  return surfaces[nextIndex] ?? null;
+}

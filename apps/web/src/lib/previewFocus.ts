@@ -13,3 +13,7 @@ export function isPreviewFocused(): boolean {
   if (activeElement.tagName.toLowerCase() === "webview") return true;
   return activeElement.closest("[data-preview-panel-mode]") !== null;
 }
+
+export function focusPreviewPanel(): void {
+  document.querySelector<HTMLElement>("[data-preview-panel-mode]")?.focus();
+}

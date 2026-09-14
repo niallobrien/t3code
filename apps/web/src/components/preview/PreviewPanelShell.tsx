@@ -120,8 +120,9 @@ export function PreviewPanelShell(props: {
   return (
     <div
       ref={hostRef}
+      tabIndex={-1}
       className={cn(
-        "relative flex h-full min-h-0 min-w-0 max-w-full flex-col self-stretch bg-background",
+        "relative flex h-full min-h-0 min-w-0 max-w-full flex-col self-stretch bg-background outline-none",
         isInline
           ? maximized
             ? "flex-1 border-l border-border"

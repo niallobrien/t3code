@@ -176,6 +176,7 @@ import {
   pullRequestSurface,
   selectActiveRightPanel,
   selectActiveRightPanelSurface,
+  selectAdjacentRightPanelSurface,
   selectThreadRightPanelState,
   type RightPanelSurface,
   useRightPanelStore,
@@ -207,7 +208,7 @@ import { isThreadOwnPullRequest } from "./pullRequest/pullRequestDetail.logic";
 import { PullRequestDetailPanel } from "./pullRequest/PullRequestDetailPanel";
 import { PullRequestDetailGhost } from "./pullRequest/PullRequestGhosts";
 import { PullRequestsUnavailableState } from "./pullRequest/PullRequestsUnavailableState";
-import { RightPanelTabs } from "./RightPanelTabs";
+import { RightPanelTabs, type RightPanelTabsHandle } from "./RightPanelTabs";
 import { AgentsPanel } from "./AgentsPanel";
 import { LinkPullRequestDialogHost } from "./pullRequest/LinkPullRequestDialog";
 import { ThreadPullRequestsPanel } from "./pullRequest/ThreadPullRequestsPanel";
@@ -263,7 +264,7 @@ import { useOpenPanelPullRequestUrl } from "../hooks/useOpenPanelPullRequestUrl"
 import { useThreadActions } from "../hooks/useThreadActions";
 import { resolveAppModelSelectionForInstance } from "../modelSelection";
 import { confirmTerminalClose, isTerminalCloseConfirmPending } from "../lib/terminalCloseConfirm";
-import { isPreviewFocused } from "../lib/previewFocus";
+import { focusPreviewPanel, isPreviewFocused } from "../lib/previewFocus";
 import { getTerminalFocusOwner } from "../lib/terminalFocus";
 import {
   preventRepeatedTerminalCloseShortcut,
@@ -1716,6 +1717,8 @@ export default function ChatView(props: ChatViewProps) {
   const shouldUseRightPanelSheet = useMediaQuery(RIGHT_PANEL_INLINE_LAYOUT_MEDIA_QUERY);
   const isMobileViewport = useMediaQuery("max-sm");
   const [terminalFocusRequestId, setTerminalFocusRequestId] = useState(0);
+  const inlineRightPanelTabsRef = useRef<RightPanelTabsHandle | null>(null);
+  const sheetRightPanelTabsRef = useRef<RightPanelTabsHandle | null>(null);
   const [pullRequestDialogState, setPullRequestDialogState] =
     useState<PullRequestDialogState | null>(null);
   const [terminalUiLaunchContext, setTerminalUiLaunchContext] =
@@ -6496,6 +6499,11 @@ export default function ChatView(props: ChatViewProps) {
       if (command === "terminal.toggle") {
         event.preventDefault();
         event.stopPropagation();
+        // Open but unfocused: claim focus first so a second press toggles.
+        if (terminalUiState.terminalOpen && terminalFocusOwner === null) {
+          setTerminalFocusRequestId((value) => value + 1);
+          return;
+        }
         toggleTerminalVisibility();
         return;
       }
@@ -6503,7 +6511,43 @@ export default function ChatView(props: ChatViewProps) {
       if (command === "rightPanel.toggle") {
         event.preventDefault();
         event.stopPropagation();
+        // Open but unfocused: claim focus first so a second press toggles.
+        if (rightPanelOpen && !shortcutContext.previewFocus) {
+          if (renderedRightPanelSurface?.kind === "terminal") {
+            setTerminalFocusRequestId((value) => value + 1);
+          } else {
+            focusPreviewPanel();
+          }
+          return;
+        }
         toggleRightPanel();
+        return;
+      }
+
+      if (command === "rightPanel.addSurface") {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!rightPanelOpen) return;
+        inlineRightPanelTabsRef.current?.openAddSurfaceMenu();
+        sheetRightPanelTabsRef.current?.openAddSurfaceMenu();
+        return;
+      }
+
+      if (command === "rightPanel.nextSurface" || command === "rightPanel.previousSurface") {
+        event.preventDefault();
+        event.stopPropagation();
+        const panelState = selectThreadRightPanelState(
+          useRightPanelStore.getState().byThreadKey,
+          activeThreadRef,
+        );
+        if (!panelState.isOpen) return;
+        const target = selectAdjacentRightPanelSurface(
+          panelState.surfaces,
+          panelState.activeSurfaceId,
+          command === "rightPanel.nextSurface" ? 1 : -1,
+        );
+        if (!target) return;
+        activateRightPanelSurface(target);
         return;
       }
 
@@ -6644,6 +6688,9 @@ export default function ChatView(props: ChatViewProps) {
     confirmAndUnpinThread,
     copyActiveThreadReference,
     previewPanelOpen,
+    rightPanelOpen,
+    renderedRightPanelSurface,
+    activateRightPanelSurface,
     toggleRightPanel,
     toggleRightPanelMaximized,
     toggleTerminalVisibility,
@@ -9402,6 +9449,7 @@ export default function ChatView(props: ChatViewProps) {
           agentsAvailable
           deviceAvailable={activeThreadRef !== null}
           liveAgentCount={agentPanelModel.liveCount}
+          addSurfaceMenuRef={inlineRightPanelTabsRef}
         >
           {rightPanelContent}
         </RightPanelTabs>
@@ -9460,6 +9508,7 @@ export default function ChatView(props: ChatViewProps) {
             agentsAvailable
             deviceAvailable={activeThreadRef !== null}
             liveAgentCount={agentPanelModel.liveCount}
+            addSurfaceMenuRef={sheetRightPanelTabsRef}
           >
             {rightPanelContent}
           </RightPanelTabs>
